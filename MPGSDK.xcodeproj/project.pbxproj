@@ -12,6 +12,11 @@
 		6FE9A7811F6960C700B7B56A /* RegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7801F6960C700B7B56A /* RegionTests.swift */; };
 		6FE9A7821F6960C700B7B56A /* RegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7801F6960C700B7B56A /* RegionTests.swift */; };
 		6FE9A7831F6960C700B7B56A /* RegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7801F6960C700B7B56A /* RegionTests.swift */; };
+		6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7841F69632300B7B56A /* Gateway.swift */; };
+		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
+		6FE9A7881F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
+		6FE9A7891F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
+		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
 		8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
 		8933C7861EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
 		8933C7871EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
@@ -55,6 +60,9 @@
 		52D6DA0F1BF000BD002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE9A77E1F6960B700B7B56A /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		6FE9A7801F6960C700B7B56A /* RegionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionTests.swift; sourceTree = "<group>"; };
+		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
+		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
+		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
 		8933C7841EB5B820000D00A4 /* MPGSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDK.swift; sourceTree = "<group>"; };
 		8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDKTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* MPGSDK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDK.plist; sourceTree = "<group>"; };
@@ -156,7 +164,9 @@
 			isa = PBXGroup;
 			children = (
 				8933C7841EB5B820000D00A4 /* MPGSDK.swift */,
+				6FE9A78A1F69644100B7B56A /* BuildConfig.swift */,
 				6FE9A77E1F6960B700B7B56A /* Region.swift */,
+				6FE9A7841F69632300B7B56A /* Gateway.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -166,6 +176,7 @@
 			children = (
 				8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */,
 				6FE9A7801F6960C700B7B56A /* RegionTests.swift */,
+				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
 			);
 			name = Tests;
 			path = Tests/MGPSDKTests;
@@ -468,6 +479,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FE9A77F1F6960B700B7B56A /* Region.swift in Sources */,
+				6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */,
+				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +491,7 @@
 			files = (
 				8933C7901EB5B82D000D00A4 /* MPGSDKTests.swift in Sources */,
 				6FE9A7811F6960C700B7B56A /* RegionTests.swift in Sources */,
+				6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +525,7 @@
 			files = (
 				8933C78F1EB5B82C000D00A4 /* MPGSDKTests.swift in Sources */,
 				6FE9A7821F6960C700B7B56A /* RegionTests.swift in Sources */,
+				6FE9A7881F69633000B7B56A /* GatewayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +535,7 @@
 			files = (
 				8933C78E1EB5B82C000D00A4 /* MPGSDKTests.swift in Sources */,
 				6FE9A7831F6960C700B7B56A /* RegionTests.swift in Sources */,
+				6FE9A7891F69633000B7B56A /* GatewayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
