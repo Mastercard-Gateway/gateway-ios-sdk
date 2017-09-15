@@ -3,10 +3,11 @@ import XCTest
 
 class GatewayTests: XCTestCase {
     
-    var testSubject: Gateway!
+    var testSubject: Gateway! = {
+        return try? Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789", apiVersion: 9)
+    }()
     
     override func setUp() {
-//        testSubject = try Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789", apiVersion: 9)
         super.setUp()
     }
     
@@ -37,7 +38,6 @@ class GatewayTests: XCTestCase {
     }
     
     func testAPIPath() {
-        testSubject = try! Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789", apiVersion: 9)
         XCTAssertEqual(testSubject.apiPath, "api/rest/version/9")
     }
     
@@ -53,5 +53,28 @@ class GatewayTests: XCTestCase {
                 XCTFail("Init threw unexpected exception")
             }
         }
+    }
+    
+    func testVerifyTrustedCertificatesDefaults() {
+        XCTAssertEqual(testSubject.trustedCertificates, ["default" : BuildConfig.intermediateCa])
+    }
+    
+    func testClearAllTrustedCertifictes() {
+        testSubject.clearTrustedCertificates()
+        XCTAssertEqual(testSubject.trustedCertificates, [:])
+    }
+    
+    func testAddTrustedCertificate() {
+        let mockCertificate = Data(base64Encoded: "AQIDBAUGBwgJ")!
+        testSubject.clearTrustedCertificates()
+        testSubject.addTrustedCertificate(mockCertificate, alias: "mock")
+        
+        XCTAssertEqual(testSubject.trustedCertificates, ["mock": mockCertificate])
+    }
+
+    func testRemoveTrustedCertificate() {
+        testSubject.addTrustedCertificate(Data(), alias: "mock")
+        testSubject.removeTrustedCertificate(alias: "mock")
+        XCTAssertEqual(testSubject.trustedCertificates, ["default" : BuildConfig.intermediateCa])
     }
 }
