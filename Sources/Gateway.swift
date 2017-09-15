@@ -1,6 +1,6 @@
 import Foundation
 
-public class Gateway {
+public class Gateway: NSObject {
     public var apiHost: String
     public var apiVersion: Int
     public var merchantId: String

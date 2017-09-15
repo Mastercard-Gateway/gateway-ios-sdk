@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52D6D9871BEFF229002C0205 /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* MPGSDK.framework */; };
+		6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */; };
 		6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4BEC851F698751002C64A3 /* GatewayError.swift */; };
 		6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7841F69632300B7B56A /* Gateway.swift */; };
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
@@ -55,6 +56,7 @@
 		52D6D9E21BEFFF6E002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gateway+URLSessionDelegate.swift"; sourceTree = "<group>"; };
 		6F4BEC851F698751002C64A3 /* GatewayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayError.swift; sourceTree = "<group>"; };
 		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				8933C7841EB5B820000D00A4 /* MPGSDK.swift */,
 				6FE9A78A1F69644100B7B56A /* BuildConfig.swift */,
 				6FE9A7841F69632300B7B56A /* Gateway.swift */,
+				6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
 			);
 			path = Sources;
@@ -477,6 +480,7 @@
 				6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */,
 				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */,
+				6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
