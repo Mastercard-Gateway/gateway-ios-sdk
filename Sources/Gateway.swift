@@ -41,4 +41,8 @@ public class Gateway: NSObject {
     public func removeTrustedCertificate(alias: String) {
         trustedCertificates[alias] = nil
     }
+    
+    public func update(session: String withCard card: Card, completion: (GatewayResult<>) -> Void ) {
+        
+    }
 }
