@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52D6D9871BEFF229002C0205 /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* MPGSDK.framework */; };
+		6F24484B1F75688C0032030D /* URLSessionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24484A1F75688C0032030D /* URLSessionMocks.swift */; };
 		6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F244D021F701895009A1E9E /* GatewayResult.swift */; };
 		6F244D051F70195D009A1E9E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F244D041F70195D009A1E9E /* Card.swift */; };
 		6F244D081F701ABF009A1E9E /* UpdateSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */; };
@@ -26,7 +27,8 @@
 		6F6559F61F71B60400EACB94 /* SourceOfFunds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559F51F71B60400EACB94 /* SourceOfFunds.swift */; };
 		6F6559F81F7298C300EACB94 /* Provided.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559F71F7298C300EACB94 /* Provided.swift */; };
 		6F6559FA1F729A5200EACB94 /* Expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559F91F729A5200EACB94 /* Expiry.swift */; };
-		6F6559FC1F729A8600EACB94 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559FB1F729A8600EACB94 /* Error.swift */; };
+		6F6559FC1F729A8600EACB94 /* GatewayResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */; };
+		6F74626A1F72E165007F5663 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7462691F72E165007F5663 /* ErrorResponse.swift */; };
 		6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7841F69632300B7B56A /* Gateway.swift */; };
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A7881F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
@@ -73,6 +75,7 @@
 		52D6D9E21BEFFF6E002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F24484A1F75688C0032030D /* URLSessionMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMocks.swift; sourceTree = "<group>"; };
 		6F244D021F701895009A1E9E /* GatewayResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayResult.swift; sourceTree = "<group>"; };
 		6F244D041F70195D009A1E9E /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSessionResponse.swift; sourceTree = "<group>"; };
@@ -91,7 +94,8 @@
 		6F6559F51F71B60400EACB94 /* SourceOfFunds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceOfFunds.swift; sourceTree = "<group>"; };
 		6F6559F71F7298C300EACB94 /* Provided.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provided.swift; sourceTree = "<group>"; };
 		6F6559F91F729A5200EACB94 /* Expiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expiry.swift; sourceTree = "<group>"; };
-		6F6559FB1F729A8600EACB94 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayResponseError.swift; sourceTree = "<group>"; };
+		6F7462691F72E165007F5663 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
@@ -206,7 +210,7 @@
 				6F6559F31F71B5D300EACB94 /* Session.swift */,
 				6F6559F51F71B60400EACB94 /* SourceOfFunds.swift */,
 				6F6559F71F7298C300EACB94 /* Provided.swift */,
-				6F6559FB1F729A8600EACB94 /* Error.swift */,
+				6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -218,6 +222,7 @@
 				6FE9A78A1F69644100B7B56A /* BuildConfig.swift */,
 				6FE9A7841F69632300B7B56A /* Gateway.swift */,
 				6F244D0B1F701D82009A1E9E /* GatewayRequest.swift */,
+				6F7462691F72E165007F5663 /* ErrorResponse.swift */,
 				6F244D0D1F701E78009A1E9E /* HttpRequest.swift */,
 				6F244D061F701961009A1E9E /* Models */,
 				6F244D021F701895009A1E9E /* GatewayResult.swift */,
@@ -234,6 +239,7 @@
 			children = (
 				8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
+				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
 			);
 			name = Tests;
 			path = Tests/MGPSDKTests;
@@ -422,16 +428,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "{ORGANIZATION}";
 				TargetAttributes = {
 					52D6D97B1BEFF229002C0205 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					52D6D9851BEFF229002C0205 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					52D6D9E11BEFFF6E002C0205 = {
 						CreatedOnToolsVersion = 7.1;
@@ -537,6 +543,7 @@
 			files = (
 				6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */,
 				6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */,
+				6F24484B1F75688C0032030D /* URLSessionMocks.swift in Sources */,
 				6F6559EA1F71B19600EACB94 /* Address.swift in Sources */,
 				6F6559F21F71B4FD00EACB94 /* Device.swift in Sources */,
 				6F244D0C1F701D82009A1E9E /* GatewayRequest.swift in Sources */,
@@ -549,7 +556,8 @@
 				6F244D081F701ABF009A1E9E /* UpdateSessionResponse.swift in Sources */,
 				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
 				6F6559EE1F71B41600EACB94 /* Billing.swift in Sources */,
-				6F6559FC1F729A8600EACB94 /* Error.swift in Sources */,
+				6F74626A1F72E165007F5663 /* ErrorResponse.swift in Sources */,
+				6F6559FC1F729A8600EACB94 /* GatewayResponseError.swift in Sources */,
 				6F6559F01F71B4AC00EACB94 /* Customer.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */,
 				6F244D0E1F701E78009A1E9E /* HttpRequest.swift in Sources */,
@@ -640,14 +648,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -674,9 +688,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG -Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -691,14 +706,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -719,7 +740,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -746,7 +767,7 @@
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
 			name = Debug;
 		};
@@ -768,7 +789,7 @@
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
 			name = Release;
 		};
@@ -781,7 +802,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -794,7 +814,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -814,7 +833,6 @@
 				PRODUCT_NAME = MPGSDK;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -837,7 +855,6 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -859,7 +876,6 @@
 				PRODUCT_NAME = MPGSDK;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -882,7 +898,6 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -907,7 +922,6 @@
 				PRODUCT_NAME = MPGSDK;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -931,7 +945,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -946,7 +959,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -962,7 +974,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -974,7 +985,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
@@ -988,7 +998,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;

@@ -20,7 +20,7 @@ public struct GatewayResponseError: Codable {
     public let supportCode: String?
     public let validationType: ValidationType?
     
-    public let init(cause: Cause? = nil, explination: String? = nil, field: String? = nil, supportCode: String? = nil, validationType: ValidationType? = nil) {
+    public init(cause: Cause? = nil, explination: String? = nil, field: String? = nil, supportCode: String? = nil, validationType: ValidationType? = nil) {
         self.cause = cause
         self.explination = explination
         self.field = field
