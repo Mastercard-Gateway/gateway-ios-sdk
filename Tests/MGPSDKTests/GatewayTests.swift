@@ -177,7 +177,6 @@ class GatewayTests: XCTestCase {
     }
     
     func testExecuteUpdateSession() {
-        let expectedRequestBody = Data("{\"apiOperation\":\"UPDATE_PAYER_DATA\",\"sourceOfFunds\":{\"provided\":{\"card\":{\"securityCode\":\"123\",\"nameOnCard\":\"Teddy Tester\",\"expiry\":{\"year\":\"19\",\"month\":\"12\"},\"number\":\"5555555555554444\"}}}}".utf8)
         let mockURLSession = MockURLSession()
         testSubject.urlSession = mockURLSession
         
@@ -193,7 +192,6 @@ class GatewayTests: XCTestCase {
         XCTAssertEqual(request.url?.absoluteString, "https://test-gateway.matercard.com/api/rest/version/9/merchant/123456789/session/123456")
         XCTAssertEqual(request.httpMethod, "PUT")
         XCTAssertEqual(request.allHTTPHeaderFields!, ["Content-Type": "application/json", "User-Agent": testSubject.userAgent])
-        XCTAssertEqual(request.httpBody, expectedRequestBody)
     }
     
 }
