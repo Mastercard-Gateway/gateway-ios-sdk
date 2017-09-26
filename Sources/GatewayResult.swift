@@ -1,5 +1,9 @@
 import Foundation
 
+/// The result of an gateway api request
+///
+/// - success:
+/// - error:
 public enum GatewayResult<T> {
     case success(T)
     case error(Error)

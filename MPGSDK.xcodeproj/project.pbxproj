@@ -221,15 +221,15 @@
 				8933C7841EB5B820000D00A4 /* MPGSDK.swift */,
 				6FE9A78A1F69644100B7B56A /* BuildConfig.swift */,
 				6FE9A7841F69632300B7B56A /* Gateway.swift */,
+				6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */,
 				6F244D0B1F701D82009A1E9E /* GatewayRequest.swift */,
 				6F7462691F72E165007F5663 /* ErrorResponse.swift */,
 				6F244D0D1F701E78009A1E9E /* HttpRequest.swift */,
-				6F244D061F701961009A1E9E /* Models */,
 				6F244D021F701895009A1E9E /* GatewayResult.swift */,
-				6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */,
 				6F244D091F701CFD009A1E9E /* UpdateSessionRequest.swift */,
-				6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */,
+				6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
+				6F244D061F701961009A1E9E /* Models */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
