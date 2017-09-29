@@ -70,7 +70,6 @@
 		6F6559F91F729A5200EACB94 /* Expiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expiry.swift; sourceTree = "<group>"; };
 		6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayResponseError.swift; sourceTree = "<group>"; };
 		6F7462691F72E165007F5663 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
-		6F91205F1F7AB84000CD573F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
@@ -102,7 +101,6 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
-				6F91205F1F7AB84000CD573F /* README.md */,
 				8933C7811EB5B7E0000D00A4 /* Sources */,
 				8933C7831EB5B7EB000D00A4 /* Tests */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
