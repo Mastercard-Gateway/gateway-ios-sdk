@@ -128,7 +128,7 @@
                                                                 <color key="textColor" red="1" green="0.35686274509803922" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Josh Monroe" placeholder="Name on card" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="odq-X9-Gph">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Name on card" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="odq-X9-Gph">
                                                                 <rect key="frame" x="0.0" y="25.666666666666686" width="315" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="uGI-Ay-21Z"/>
@@ -161,7 +161,7 @@
                                                                 <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="5111111111111118" placeholder="Card Number" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="MuI-D6-bK6">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Card Number" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="MuI-D6-bK6">
                                                                 <rect key="frame" x="0.0" y="25.666666666666657" width="315" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="kyh-20-76S"/>
@@ -197,7 +197,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xcO-IV-v3a">
                                                                 <rect key="frame" x="0.0" y="152" width="315" height="20"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="12" placeholder="MM" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="93Y-MQ-f5a">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="MM" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="93Y-MQ-f5a">
                                                                         <rect key="frame" x="0.0" y="0.0" width="147.33333333333334" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="ysZ-Pf-6Eb"/>
@@ -215,7 +215,7 @@
                                                                         <color key="textColor" red="0.46274509800000002" green="0.53333333329999999" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="18" placeholder="YY" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="G16-Ko-bAs">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="YY" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="G16-Ko-bAs">
                                                                         <rect key="frame" x="168" y="0.0" width="147" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="yfT-SX-niw"/>
@@ -250,7 +250,7 @@
                                                                 <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="999" placeholder="CVV" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="iB2-nE-XQr">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="CVV" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="iB2-nE-XQr">
                                                                 <rect key="frame" x="0.0" y="25.666666666666629" width="315" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="ZFa-42-ZHL"/>
@@ -465,8 +465,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <action selector="confirmAction:" destination="Q0x-7h-8B8" eventType="touchUpInside" id="daj-ea-u8g"/>
                                             <action selector="continueAction:" destination="1xt-uq-J8O" eventType="touchUpInside" id="1vq-sV-Vcc"/>
-                                            <segue destination="Daw-4u-ske" kind="show" id="nbP-Ry-hsO"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -486,11 +486,13 @@
                     <navigationItem key="navigationItem" id="aJ4-qW-MZ3"/>
                     <connections>
                         <outlet property="cardNumberField" destination="gtS-av-cqP" id="RKz-uJ-muo"/>
+                        <segue destination="Daw-4u-ske" kind="show" identifier="showSuccess" id="Geo-g4-8LI"/>
+                        <segue destination="0zb-QJ-Ddj" kind="show" identifier="showError" id="bgz-I8-dOY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QN-7o-a2e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1626" y="30"/>
+            <point key="canvasLocation" x="1663" y="30"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="eM6-xq-nuH">
@@ -589,7 +591,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKi-TW-DnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="pWO-Cn-a1I" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2424" y="30"/>
+            <point key="canvasLocation" x="2550" y="-301"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="UA1-mK-Swo">
@@ -695,12 +697,112 @@
             </objects>
             <point key="canvasLocation" x="28" y="772"/>
         </scene>
+        <!--Result View Controller-->
+        <scene sceneID="njZ-wa-PYD">
+            <objects>
+                <viewController id="0zb-QJ-Ddj" customClass="ResultViewController" customModule="MPGSDK_iOS_Sample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6NY-z6-9SA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpi-1Q-JRu">
+                                <rect key="frame" x="142.66666666666666" y="361" width="90" height="90"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="45"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.10000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="layer.shadowOffset">
+                                        <point key="value" x="0.0" y="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="x" translatesAutoresizingMaskIntoConstraints="NO" id="e32-XO-YQ2">
+                                <rect key="frame" x="142.66666666666666" y="361" width="90" height="90"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="1cb-w5-TpD"/>
+                                    <constraint firstAttribute="height" constant="90" id="uC4-DH-xa0"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="45"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.070000000000000007"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="layer.shadowOffset">
+                                        <point key="value" x="0.0" y="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="900" layoutMarginsFollowReadableWidth="YES" text="Your payment was denied!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gL0-KD-lzu">
+                                <rect key="frame" x="74" y="304.66666666666669" width="228" height="22"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQt-rb-cE5">
+                                <rect key="frame" x="30" y="724" width="315" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="tK4-7i-qVz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Start again">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="continueAction:" destination="1xt-uq-J8O" eventType="touchUpInside" id="GLP-Bz-xqu"/>
+                                    <segue destination="jmy-Cr-4mA" kind="unwind" unwindAction="restartCheckoutWithSegue:" id="PAX-g5-bcH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="trailing" secondItem="xpi-1Q-JRu" secondAttribute="trailing" id="0Cm-n1-eol"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="bottom" secondItem="xpi-1Q-JRu" secondAttribute="bottom" id="61F-Zp-mgQ"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="top" secondItem="xpi-1Q-JRu" secondAttribute="top" id="AXm-cB-uah"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="leading" secondItem="xpi-1Q-JRu" secondAttribute="leading" id="Idz-nm-HdD"/>
+                            <constraint firstItem="xpi-1Q-JRu" firstAttribute="top" secondItem="gL0-KD-lzu" secondAttribute="bottom" constant="35" id="RYe-ZW-Uvy"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="centerX" secondItem="gL0-KD-lzu" secondAttribute="centerX" id="Rle-Xc-9Zg"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="centerY" secondItem="6NY-z6-9SA" secondAttribute="centerY" id="XXg-4e-s9V"/>
+                            <constraint firstItem="e32-XO-YQ2" firstAttribute="centerX" secondItem="6NY-z6-9SA" secondAttribute="centerX" id="a0r-YV-7lU"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="gL0-KD-lzu" secondAttribute="trailing" id="aFb-qT-Kpa"/>
+                            <constraint firstItem="Gxp-xX-cm6" firstAttribute="trailing" secondItem="cQt-rb-cE5" secondAttribute="trailing" constant="30" id="eWP-oA-oZn"/>
+                            <constraint firstItem="cQt-rb-cE5" firstAttribute="leading" secondItem="Gxp-xX-cm6" secondAttribute="leading" constant="30" id="uzB-Wb-vip"/>
+                            <constraint firstItem="gL0-KD-lzu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6NY-z6-9SA" secondAttribute="leadingMargin" id="wyT-aU-cLf"/>
+                            <constraint firstItem="Gxp-xX-cm6" firstAttribute="bottom" secondItem="cQt-rb-cE5" secondAttribute="bottom" constant="10" id="xlr-wN-dDz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gxp-xX-cm6"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YeC-ic-u4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="jmy-Cr-4mA" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2550" y="366"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Chair" width="297" height="297"/>
         <image name="Logo" width="126" height="22"/>
         <image name="activityIndicator" width="75" height="75"/>
         <image name="check" width="43" height="36"/>
+        <image name="x" width="29" height="29"/>
     </resources>
     <color key="tintColor" red="1" green="0.35686274509803922" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
 </document>

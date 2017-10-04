@@ -30,9 +30,12 @@ class ProductViewController: UIViewController {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
                 case .success(let response):
-                    // do something
-                    self.sessionId = response.session.id
-                    self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
+                    if case .success = response.result {
+                        self.sessionId = response.session.id
+                        self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
+                    } else {
+                        self.showError()
+                    }
                 case .error(_):
                     self.showError()
                 }

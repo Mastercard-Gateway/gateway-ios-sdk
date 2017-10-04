@@ -30,6 +30,20 @@ class MerchantAPI {
         task.resume()
     }
     
+    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<CompleteSessionResponse>) -> Void) {
+        var completeURLComp = URLComponents(url: merchantServerURL.appendingPathComponent("transaction.php"), resolvingAgainstBaseURL: false)!
+        completeURLComp.queryItems = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]
+        var request = URLRequest(url: completeURLComp.url!)
+        request.httpMethod = "PUT"
+        
+        let payload = CompleteSessionRequest(amount: amount, currency: currency, sessionId: sessionId)
+        let encoder = JSONEncoder()
+        request.httpBody = try? encoder.encode(payload)
+        
+        let task = urlSession.dataTask(with: request, completionHandler: responseHandler(completion))
+        task.resume()
+    }
+    
     fileprivate func responseHandler<T: Decodable>(_ completion: @escaping (Result<T>) -> Void) -> (Data?, URLResponse?, Error?) -> Void {
         return { (data, response, error) in
             if let error = error {
