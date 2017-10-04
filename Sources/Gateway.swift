@@ -23,7 +23,7 @@ public class Gateway: NSObject {
     }
     
     
-    /// remove all trusted TLS certificates.
+    /// remove all custom trusted TLS certificates.
     public func clearTrustedCertificates() {
         trustedCertificates = [:]
     }
@@ -97,7 +97,7 @@ public class Gateway: NSObject {
     }
     
     // MARK: - INTERNAL & PRIVATE
-    var trustedCertificates: [String: Data] = ["default" : BuildConfig.intermediateCa]
+    var trustedCertificates: [String: Data] = [:]
     lazy var urlSession: URLSession = {
         URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
     }()

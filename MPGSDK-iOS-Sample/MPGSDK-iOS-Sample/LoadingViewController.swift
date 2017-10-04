@@ -2,11 +2,11 @@ import UIKit
 
 public class LoadingViewController: UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView?
     
-    @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var titleView: UIView?
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var descriptionLabel: UILabel?
     
     @IBInspectable let duration: CFTimeInterval = 1.2
     fileprivate let kAnimationKey = "rotation"
@@ -48,16 +48,16 @@ public class LoadingViewController: UIViewController {
     }
     
     fileprivate func sync() {
-        titleView.isHidden = (localizedTitle == nil && localizedDescription == nil)
-        titleLabel.isHidden = (localizedTitle == nil)
-        titleLabel.text = localizedTitle
-        descriptionLabel.isHidden = (localizedDescription == nil)
-        descriptionLabel.text = localizedDescription
+        titleView?.isHidden = (localizedTitle == nil && localizedDescription == nil)
+        titleLabel?.isHidden = (localizedTitle == nil)
+        titleLabel?.text = localizedTitle
+        descriptionLabel?.isHidden = (localizedDescription == nil)
+        descriptionLabel?.text = localizedDescription
     }
     
     public func startAnimating() {
         
-        if imageView.layer.animation(forKey: kAnimationKey) == nil {
+        if imageView?.layer.animation(forKey: kAnimationKey) == nil {
             let animate = CABasicAnimation(keyPath: "transform.rotation")
             animate.duration = duration
             animate.repeatCount = Float.infinity
@@ -68,6 +68,6 @@ public class LoadingViewController: UIViewController {
     }
     
     public func stopAnimating() {
-        imageView.layer.removeAllAnimations()
+        imageView?.layer.removeAllAnimations()
     }
 }

@@ -18,7 +18,7 @@ extension Gateway: URLSessionDelegate {
         }
         
         for cert in rawCertsFrom(trust: serverTrust) {
-            if trustedCertificates.values.contains(cert) {
+            if BuildConfig.intermediateCas.contains(cert) || trustedCertificates.values.contains(cert) {
                 completionHandler(.performDefaultHandling, URLCredential(trust: serverTrust))
                 return
             }
@@ -35,7 +35,7 @@ extension Gateway: URLSessionDelegate {
             let serverCertificate = SecTrustGetCertificateAtIndex(trust, index)
             if let serverCertificate = serverCertificate {
                 let serverCertificateData = SecCertificateCopyData(serverCertificate)
-                let data = serverCertificateData as NSData as Data // https://bugs.swift.org/browse/SR-1797
+                let data = serverCertificateData as Data
                 certs.append(data)
             }
         }
