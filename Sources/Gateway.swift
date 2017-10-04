@@ -1,5 +1,10 @@
 import Foundation
 
+/** The public interface to the Gateway SDK.
+ ```
+ let gateway = try Gateway(url: "https://your-gateway-url.com", merchantId: "your-merchant-id")
+ ```
+ */
 public class Gateway: NSObject {
     /// Construct a new instance of the gateway.
     ///

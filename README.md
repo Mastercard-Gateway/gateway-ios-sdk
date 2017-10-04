@@ -27,11 +27,14 @@ let gateway = try Gateway(url: "<#YOUR GATEWAY URL#>", merchantId: "<#YOUR MERCH
 ```
 ### Step 3
 Call the gateway to update the session with a payment card.
+
 > The session should be a session id that was obtained by using your merchant services to contact the gateway.
+
 If the session was succesfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 
 ```
-_ = gateway.updateSession("<#session id#>", nameOnCard: "<#name on card#>", cardNumber: "<#card number#>", securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
+_ = gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
+            securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
     switch result {
     case .success(let response):
         print(response.sessionId)
