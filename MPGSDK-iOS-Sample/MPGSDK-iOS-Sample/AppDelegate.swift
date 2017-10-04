@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // setup the merchant API
-        MerchantAPI.shared = MerchantAPI(url: URL(string: "https://moistest.herokuapp.com")!)
+        MerchantAPI.shared = MerchantAPI(url: URL(string: "<#YOUR MERCHANT SERVER URL#>")!)
         
         return true
     }

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:GatewaySample.playground">
+   </FileRef>
+   <FileRef
       location = "group:MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.xcodeproj">
    </FileRef>
    <FileRef
