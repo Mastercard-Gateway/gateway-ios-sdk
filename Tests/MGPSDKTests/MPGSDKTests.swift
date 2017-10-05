@@ -1,8 +1,8 @@
 import Foundation
 import XCTest
-import MGPSDK
+import MPGSDK
 
-class MGPSDKTests: XCTestCase {
+class MPGSDKTests: XCTestCase {
     func testExample() {
         
     }
