@@ -10,18 +10,42 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var continueButton: UIButton!
     var loadingViewController: LoadingViewController!
     
+    
+    /// The session id provided from the previous view that we desire to update with a payment source.
     var sessionId: String?
     
-    var gateway: Gateway!
+    // MARK: - Gateway Setup
+    // Plug your gateway url and merchant id to create an instance of the gateway interface
+    var gateway: Gateway = try! Gateway(url: "<#https://your-gateway-url-com#>", merchantId: "<#your-merchant-id#>")
+
+    // MARK: - Update the session
+    // Call the gateway to update the session.
+    func updateSession() {
+        _ = gateway.updateSession(sessionId!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
+    }
     
+    // MARK: - Handle the Update Response
+    // Call the gateway to update the session.
+    fileprivate func updateSessionHandler(_ result: GatewayResult<UpdateSessionRequest.responseType>) {
+        DispatchQueue.main.async {
+            self.loadingViewController.dismiss(animated: true) {
+                switch result {
+                case .success(let response):
+                    self.performSegue(withIdentifier: "showConfirmation", sender: nil)
+                case .error(_):
+                    self.showError()
+                }
+            }
+        }
+    }
+    
+    // MARK: - Sample View Controller Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadingViewController = storyboard!.instantiateViewController(withIdentifier: "loading") as! LoadingViewController
         loadingViewController.localizedTitle = "Please Wait"
         loadingViewController.localizedDescription = "updating session with payment information"
-        
-        gateway = try! Gateway(url: "<#YOUR GATEWAY URL#>", merchantId: "<#YOUR MERCHANT ID#>")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,23 +81,6 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     @IBAction func continueAction(_ sender: Any) {
         present(loadingViewController, animated: true) {
             self.updateSession()
-        }
-    }
-    
-    func updateSession() {
-        _ = gateway.updateSession(sessionId!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
-    }
-    
-    fileprivate func updateSessionHandler(_ result: GatewayResult<UpdateSessionRequest.responseType>) {
-        DispatchQueue.main.async {
-            self.loadingViewController.dismiss(animated: true) {
-                switch result {
-                case .success(let response):
-                    self.performSegue(withIdentifier: "showConfirmation", sender: nil)
-                case .error(_):
-                    self.showError()
-                }
-            }
         }
     }
     

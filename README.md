@@ -43,3 +43,15 @@ _ = gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", car
     }
 }
 ```
+## Sample App
+Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  The sample app is designed to work in with the sample merchant server available at [https://github.com/Mastercard/gateway-test-merchant-server](https://github.com/Mastercard/gateway-test-merchant-server).
+Making a payment with the Gateway SDK is a three step process.
+1. The mobile app uses a merchant server to securely create a session on the gateway.
+2. The app prompts the user to enter their payment details and the gateway SDK is used to update the session with the payment card.
+3. The merchant server securely completes the payment.
+
+In the sample app, these three steps can are performed using the sample merchant server and gateway sdk in the ProductViewController, PaymentViewController and ConfirmationViewController.
+
+To try out the sample app, simply fill in the URL for your sample merchant server url in the AppDelegate and your gateway url and merchant id in the PaymentViewController.
+
+For more information, visit [https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html](https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html)
