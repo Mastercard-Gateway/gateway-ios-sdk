@@ -66,7 +66,7 @@ class GatewayTests: XCTestCase {
     }
     
     func testVerifyTrustedCertificatesDefaults() {
-        XCTAssertEqual(testSubject.trustedCertificates, ["default" : BuildConfig.intermediateCa])
+        XCTAssertEqual(testSubject.trustedCertificates, [:])
     }
     
     func testClearAllTrustedCertifictes() {
@@ -85,7 +85,7 @@ class GatewayTests: XCTestCase {
     func testRemoveTrustedCertificate() {
         testSubject.addTrustedCertificate(Data(), alias: "mock")
         testSubject.removeTrustedCertificate(alias: "mock")
-        XCTAssertEqual(testSubject.trustedCertificates, ["default" : BuildConfig.intermediateCa])
+        XCTAssertEqual(testSubject.trustedCertificates, [:])
     }
     
     func testExecuteRequestSendsCorrectRequest() {

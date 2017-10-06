@@ -8,6 +8,8 @@ public protocol GatewayRequest {
     associatedtype responseType: GatewayResponse
 }
 
+
+/// Any response object that can be decoded
 public protocol GatewayResponse: Decodable {
     
 }

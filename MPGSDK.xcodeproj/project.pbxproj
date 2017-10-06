@@ -126,7 +126,7 @@
 			path = Configs;
 			sourceTree = "<group>";
 		};
-		6F244D061F701961009A1E9E /* Models */ = {
+		6F244D061F701961009A1E9E /* API Models */ = {
 			isa = PBXGroup;
 			children = (
 				6F244D041F70195D009A1E9E /* Card.swift */,
@@ -142,7 +142,7 @@
 				6F6559F71F7298C300EACB94 /* Provided.swift */,
 				6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */,
 			);
-			path = Models;
+			path = "API Models";
 			sourceTree = "<group>";
 		};
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
@@ -159,7 +159,7 @@
 				6F244D091F701CFD009A1E9E /* UpdateSessionRequest.swift */,
 				6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
-				6F244D061F701961009A1E9E /* Models */,
+				6F244D061F701961009A1E9E /* API Models */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -470,7 +470,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.gateway.MGPSDK-iOS";
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -492,7 +492,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.gateway.MGPSDK-iOS";
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

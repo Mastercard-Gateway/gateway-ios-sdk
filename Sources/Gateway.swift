@@ -20,7 +20,7 @@ public class Gateway: NSObject {
     /// Construct a new instance of the gateway.
     ///
     /// - Parameters:
-    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com"
+    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com".
     ///   - merchantId: a valid merchant ID
     /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
     public convenience init(url: String, merchantId: String) throws {
@@ -102,15 +102,24 @@ public class Gateway: NSObject {
     }
     
     // MARK: - INTERNAL & PRIVATE
+    
+    /// A dictionary containing any additional tls certificates that the sdk should trust
     var trustedCertificates: [String: Data] = [:]
+    
+    /// The url session used to send any requests made by the api
     lazy var urlSession: URLSession = {
         URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
     }()
+    
+    /// The json deocder that will be used to parse all responses into model objects
     lazy var decoder: JSONDecoder = JSONDecoder()
     
+    /// The url for the api including the version ad merchant id
     let apiURL: URL
     
-    private static func ApiPathFor(url: String, merchantId: String, apiVersion: Int) throws -> URL {
+    // parse and construct a url string with path using the host from the provided url, apiVersion and merchantId.
+    fileprivate static func ApiPathFor(url: String, merchantId: String, apiVersion: Int) throws -> URL {
+        // check to make sure the provided api contains a host since that is all that the service uses.
         guard let urlComponents = URLComponents(string: url), let apiHost = urlComponents.host else {
             throw GatewayError.invalidApiUrl(url)
         }
@@ -122,6 +131,7 @@ public class Gateway: NSObject {
         return apiURL
     }
     
+    // Build a url request from the GatewayRequest.  This method also adds the User-Agent and Content-Type
     private func build<T: GatewayRequest>(request: T) -> URLRequest {
         let httpRequest = request.httpRequest
         let requestURL = apiURL.appendingPathComponent(httpRequest.path)
@@ -133,7 +143,8 @@ public class Gateway: NSObject {
         request.httpBody = httpRequest.payload
         return request
     }
-    
+
+    /// The User-Agent string that is sent when connecting to the gateway.  This string will include appear as Gateway-iOS-SDK/1.0
     var userAgent: String {
         let bundle = Bundle.init(for: Gateway.self)
         let version = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "0.0"
