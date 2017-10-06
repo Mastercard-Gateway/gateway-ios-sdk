@@ -12,8 +12,9 @@ public struct UpdateSessionRequest: GatewayRequest, Encodable {
     public var session: Session?
     public var sourceOfFunds: SourceOfFunds?
     
-    public var sessionId: String
+    public let sessionId: String
     
+    // providing the coding keys to keep the sessionId from being serialized into the json payload.
     private enum CodingKeys : String, CodingKey {
         case apiOperation
         case correlationId

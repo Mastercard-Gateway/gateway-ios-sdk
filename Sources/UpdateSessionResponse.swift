@@ -1,9 +1,9 @@
 import Foundation
 
 public struct UpdateSessionResponse: GatewayResponse {
-    public var correlationId: String?
-    public var sessionId: String
-    public var version: String
+    public let correlationId: String?
+    public let sessionId: String
+    public let version: String
     
     private enum CodingKeys : String, CodingKey {
         case correlationId

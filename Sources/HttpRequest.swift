@@ -1,5 +1,6 @@
 import Foundation
 
+/// A generic HTTP recest that could be easily transformed into a url request
 public struct HTTPRequest {
     public enum Method: String {
         case get = "GET"
@@ -10,11 +11,11 @@ public struct HTTPRequest {
         case trace = "TRACE"
     }
     
-    public var path: String
-    public var method: Method
-    public var payload: Data?
-    public var contentType: String
-    public var headers: [String: String]
+    public let path: String
+    public let method: Method
+    public let payload: Data?
+    public let contentType: String
+    public let headers: [String: String]
     
     public init(path: String = "", method: Method = .get, payload: Data? = nil, contentType: String = "", headers: [String: String] = [:]) {
         self.path = path
