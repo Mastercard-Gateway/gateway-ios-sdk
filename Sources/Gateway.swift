@@ -62,6 +62,7 @@ public class Gateway: NSObject {
     ///   - expiryYY: The card expiration year (format: YY)
     ///   - completion: A callback to handle the success or error of the network operation
     /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    @discardableResult
     public func updateSession(_ session: String, nameOnCard: String, cardNumber: String, securityCode: String, expiryMM: String, expiryYY: String, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask {
         let card = Card(nameOnCard: nameOnCard, number: cardNumber, securityCode: securityCode, expiry: Expiry(month: expiryMM, year: expiryYY))
         var request = UpdateSessionRequest(sessionId: session)
@@ -76,6 +77,7 @@ public class Gateway: NSObject {
     ///   - request: The request to be executed
     ///   - completion: The result of the operation.  This will be either .success containing the response or .error containing either a network error or gateway error response.
     /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    @discardableResult
     public func execute<T: GatewayRequest>(request: T, completion: @escaping (GatewayResult<T.responseType>) -> Void) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: build(request: request)) { (data, response, error) in
             if let error = error {

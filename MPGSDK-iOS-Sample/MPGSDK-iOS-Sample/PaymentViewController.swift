@@ -21,7 +21,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Update the session
     // Call the gateway to update the session.
     func updateSession() {
-        _ = gateway.updateSession(sessionId!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
+        gateway.updateSession(sessionId!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
     }
     
     // MARK: - Handle the Update Response
