@@ -9,22 +9,22 @@ public class Gateway: NSObject {
     /// Construct a new instance of the gateway.
     ///
     /// - Parameters:
-    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com"
-    ///   - merchantId: a valid merchant ID
-    ///   - apiVersion: the current api version.  See [Gateway API Versions](https://test-gateway.mastercard.com/api/documentation/apiDocumentation/rest-json/index.html) for a list of available version numbers
-    /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
-    public init(url: String, merchantId: String, apiVersion: Int) throws {
-        self.apiURL = try Gateway.ApiPathFor(url: url, merchantId: merchantId, apiVersion: apiVersion)
-    }
-    
-    /// Construct a new instance of the gateway.
-    ///
-    /// - Parameters:
     ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com".
     ///   - merchantId: a valid merchant ID
     /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
     public convenience init(url: String, merchantId: String) throws {
         try self.init(url: url, merchantId: merchantId, apiVersion: BuildConfig.defaultAPIVersion)
+    }
+    
+    /// Construct a new instance of the gateway.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com"
+    ///   - merchantId: a valid merchant ID
+    ///   - apiVersion: the current api version.  See [Gateway API Versions](https://test-gateway.mastercard.com/api/documentation/apiDocumentation/rest-json/index.html) for a list of available version numbers
+    /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
+    private init(url: String, merchantId: String, apiVersion: Int) throws {
+        self.apiURL = try Gateway.ApiPathFor(url: url, merchantId: merchantId, apiVersion: apiVersion)
     }
     
     
