@@ -84,6 +84,8 @@ Making a payment with the Gateway SDK is a three step process.
 
 In the sample app, these three steps can are performed using the Gateway Test Merchant Server and gateway sdk in the ProductViewController, PaymentViewController and ConfirmationViewController.
 
+###Initialize the Sample App
+
 To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test transaction.
 
 ```
