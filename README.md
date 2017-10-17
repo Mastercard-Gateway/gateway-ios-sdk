@@ -1,5 +1,5 @@
 # Gateway SDK
-This is a Swift SDK for taking payments with the Gateway.
+Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a checkout session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple transaction.
 
 ## Compatibility
 
