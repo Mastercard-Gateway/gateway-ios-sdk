@@ -17,6 +17,17 @@
 import UIKit
 import MPGSDK
 
+// TEST Gateway Merchant ID
+let gatewayMerchantId = "<#your-merchant-id#>"
+
+// Gateway Base URL
+let gatewayBaseUrl = "<#https://your-gateway-url-com#>"
+
+// TEST Merchant Server URL (test server app deployed to Heroku)
+// For more information, see: https://github.com/Mastercard/gateway-test-merchant-server
+// ex: https://{your-app-name}.herokuapp.com
+let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // setup the merchant API with the url for your sample merchant server.  Information on the sample merchant server can be found at https://github.com/Mastercard/gateway-test-merchant-server
-        MerchantAPI.shared = MerchantAPI(url: URL(string: "<#YOUR MERCHANT SERVER URL#>")!)
+        MerchantAPI.shared = MerchantAPI(url: URL(string: merchantServerUrl)!)
         
         return true
     }

@@ -84,6 +84,19 @@ Making a payment with the Gateway SDK is a three step process.
 
 In the sample app, these three steps can are performed using the Gateway Test Merchant Server and gateway sdk in the ProductViewController, PaymentViewController and ConfirmationViewController.
 
-To try out the sample app, simply fill in the URL for your sample merchant server url in the AppDelegate and your gateway url and merchant id in the PaymentViewController.
+To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test transaction.
+
+```
+// TEST Gateway Merchant ID
+let gatewayMerchantId = "<#your-merchant-id#>"
+
+// Gateway Base URL
+let gatewayBaseUrl = "<#https://your-gateway-url-com#>"
+
+// TEST Merchant Server URL (test server app deployed to Heroku)
+// For more information, see: https://github.com/Mastercard/gateway-test-merchant-server
+// ex: https://{your-app-name}.herokuapp.com
+let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
+```
 
 For more information, visit [https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html](https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html)

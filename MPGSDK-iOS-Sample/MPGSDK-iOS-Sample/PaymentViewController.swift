@@ -31,8 +31,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     var sessionId: String?
     
     // MARK: - Gateway Setup
-    // Plug your gateway url and merchant id to create an instance of the gateway interface
-    var gateway: Gateway = try! Gateway(url: "<#https://your-gateway-url-com#>", merchantId: "<#your-merchant-id#>")
+    var gateway: Gateway = try! Gateway(url: gatewayBaseUrl, merchantId: gatewayMerchantId)
 
     // MARK: - Update the session
     // Call the gateway to update the session.
