@@ -19,7 +19,7 @@ If you do not want to use carthage, you can download the sdk manually and add th
 ### Step 1 - Import the SDK
 Import the Gateway SDK into your project
 
-```
+```swift
 import MPGSDK
 ```
 ### Step 2 - Configure the SDK
@@ -30,7 +30,7 @@ let gateway = try Gateway(url: "<#YOUR GATEWAY URL#>", merchantId: "<#YOUR MERCH
 ```
 
 The SDK strictly enforces certificate pinning for added security. If you have a custom base URL (ie. NOT a mastercard.com domain), you will also need to provide the PEM-encoded SSL public certificate for that domain. We recommend using the intermediate certificate since it typically has a longer life-span than server certificates.
-```
+```swift
 let customCert = Data(base64Encoded: "MIIFAzCCA+ugAwIBAgIEUdNg7jANBgkq...")!
 gateway.addTrustedCertificate(customCert, "mycustomCert")
 ```
@@ -42,7 +42,7 @@ Call the gateway to update the session with a payment card.
 
 If the session was successfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 
-```
+```swift
 gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
             securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
     switch result {
@@ -57,7 +57,7 @@ gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", cardNum
 You can also construct a Card object and pass that as argument to the SDK.
 
 
-```
+```swift
 let card = Card(nameOnCard: "<#name on card#>",
                 cardNumber: "<#card number#>",
                 securityCode: "<#security code#>",
@@ -88,7 +88,7 @@ In the sample app, these three steps can are performed using the Gateway Test Me
 
 To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test transaction.
 
-```
+```swift
 // TEST Gateway Merchant ID
 let gatewayMerchantId = "<#your-merchant-id#>"
 
