@@ -81,11 +81,21 @@ public class Gateway: NSObject {
     @discardableResult
     public func updateSession(_ session: String, nameOnCard: String, cardNumber: String, securityCode: String, expiryMM: String, expiryYY: String, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask {
         let card = Card(nameOnCard: nameOnCard, number: cardNumber, securityCode: securityCode, expiry: Expiry(month: expiryMM, year: expiryYY))
+        return updateSession(session, card: card, completion: completion)
+    }
+    
+    /// Update a gateway session with a payment card.
+    ///
+    /// - Parameters:
+    ///   - session: A session ID from the gateway
+    ///   - card: The card to use as the payment method
+    /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    @discardableResult
+    public func updateSession(_ session: String, card: Card, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask {
         var request = UpdateSessionRequest(sessionId: session)
         request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
         return execute(request: request, completion: completion)
     }
-    
     
     /// Execute a request against the gateway.
     ///
