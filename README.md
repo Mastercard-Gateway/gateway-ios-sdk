@@ -1,6 +1,10 @@
 # Gateway SDK
 Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a checkout session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple transaction.
 
+## Basic Transaction Flow Diagram
+
+![Transaction Flow](./transaction-flow.png "Transaction Flow")
+
 ## Compatibility
 
 The gateway SDK requires **iOS 8+** and is compatible with **Swift 4** projects. Therefore you must use **Xcode 9** when using the Gateway SDK.
