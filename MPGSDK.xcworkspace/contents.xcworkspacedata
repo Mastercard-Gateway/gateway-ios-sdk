@@ -2,15 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GatewaySample.playground">
-   </FileRef>
-   <FileRef
-      location = "group:MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.xcodeproj">
+      location = "group:LICENSE">
    </FileRef>
    <FileRef
       location = "group:README.md">
    </FileRef>
    <FileRef
       location = "group:MPGSDK.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:GatewaySample.playground">
+   </FileRef>
+   <FileRef
+      location = "group:MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.xcodeproj">
    </FileRef>
 </Workspace>

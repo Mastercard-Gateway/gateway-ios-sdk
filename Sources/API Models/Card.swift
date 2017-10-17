@@ -16,19 +16,16 @@
 
 import Foundation
 
-/// The result of an gateway api request
-///
-/// - success:
-/// - error:
-public enum GatewayResult<T> {
-    case success(T)
-    case error(Error)
+public struct Card: Codable {
+    public let nameOnCard: String?
+    public let number: String?
+    public let securityCode: String?
+    public let expiry: Expiry?
     
-    public init(_ result: T) {
-        self = .success(result)
-    }
-    
-    public init(_ result: Error) {
-        self = .error(result)
+    public init(nameOnCard: String? = nil, number: String? = nil, securityCode: String? = nil, expiry: Expiry? = nil) {
+        self.nameOnCard = nameOnCard
+        self.number = number
+        self.securityCode = securityCode
+        self.expiry = expiry
     }
 }

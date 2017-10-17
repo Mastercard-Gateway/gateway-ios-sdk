@@ -16,19 +16,12 @@
 
 import Foundation
 
-/// The result of an gateway api request
-///
-/// - success:
-/// - error:
-public enum GatewayResult<T> {
-    case success(T)
-    case error(Error)
+public struct Expiry: Codable {
+    public let month: String?
+    public let year: String?
     
-    public init(_ result: T) {
-        self = .success(result)
-    }
-    
-    public init(_ result: Error) {
-        self = .error(result)
+    public init(month: String? = nil, year: String? = nil) {
+        self.month = month
+        self.year = year
     }
 }

@@ -487,7 +487,7 @@
                     <connections>
                         <outlet property="cardNumberField" destination="gtS-av-cqP" id="RKz-uJ-muo"/>
                         <segue destination="Daw-4u-ske" kind="show" identifier="showSuccess" id="Geo-g4-8LI"/>
-                        <segue destination="0zb-QJ-Ddj" kind="show" identifier="showError" id="bgz-I8-dOY"/>
+                        <segue destination="0zb-QJ-Ddj" kind="show" identifier="showFailure" id="bgz-I8-dOY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QN-7o-a2e" userLabel="First Responder" sceneMemberID="firstResponder"/>

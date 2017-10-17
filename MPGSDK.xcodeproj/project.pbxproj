@@ -33,7 +33,6 @@
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
 		8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
-		8933C7901EB5B82D000D00A4 /* MPGSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,6 @@
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
 		8933C7841EB5B820000D00A4 /* MPGSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDK.swift; sourceTree = "<group>"; };
-		8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDKTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* MPGSDK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDK.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* MPGSDKTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDKTests.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,7 +124,7 @@
 			path = Configs;
 			sourceTree = "<group>";
 		};
-		6F244D061F701961009A1E9E /* Models */ = {
+		6F244D061F701961009A1E9E /* API Models */ = {
 			isa = PBXGroup;
 			children = (
 				6F244D041F70195D009A1E9E /* Card.swift */,
@@ -142,7 +140,7 @@
 				6F6559F71F7298C300EACB94 /* Provided.swift */,
 				6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */,
 			);
-			path = Models;
+			path = "API Models";
 			sourceTree = "<group>";
 		};
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
@@ -159,7 +157,7 @@
 				6F244D091F701CFD009A1E9E /* UpdateSessionRequest.swift */,
 				6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
-				6F244D061F701961009A1E9E /* Models */,
+				6F244D061F701961009A1E9E /* API Models */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -167,7 +165,6 @@
 		8933C7831EB5B7EB000D00A4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8933C7891EB5B82A000D00A4 /* MPGSDKTests.swift */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
 				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
 			);
@@ -331,7 +328,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7901EB5B82D000D00A4 /* MPGSDKTests.swift in Sources */,
 				6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,7 +466,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.gateway.MGPSDK-iOS";
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -492,7 +488,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.MGPSDK.MGPSDK-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.gateway.MGPSDK-iOS";
 				PRODUCT_NAME = MPGSDK;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

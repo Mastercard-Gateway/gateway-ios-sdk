@@ -16,19 +16,18 @@
 
 import Foundation
 
-/// The result of an gateway api request
-///
-/// - success:
-/// - error:
-public enum GatewayResult<T> {
-    case success(T)
-    case error(Error)
+public struct Contact: Codable {
+    public let email: String?
+    public let firstName: String?
+    public let lastName: String?
+    public let mobilePhone: String?
+    public let phone: String?
     
-    public init(_ result: T) {
-        self = .success(result)
-    }
-    
-    public init(_ result: Error) {
-        self = .error(result)
+    public init(email: String? = nil, firstName: String? = nil, lastName: String? = nil, mobilePhone: String? = nil, phone: String? = nil) {
+        self.email = email
+        self.firstName = firstName
+        self.lastName = lastName
+        self.mobilePhone = mobilePhone
+        self.phone = phone
     }
 }
