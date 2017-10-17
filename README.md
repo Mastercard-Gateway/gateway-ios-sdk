@@ -5,8 +5,7 @@ This is a Swift SDK for taking payments with the Gateway.
 
 The gateway SDK requires **iOS 8+** and is compatible with **Swift 4** projects. Therefore you must use **Xcode 9** when using the Gateway SDK.
 
-## Installation
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+## Installation [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 We recommend using [Carthage]( https://github.com/Carthage/Carthage) to integrate the Gateway SDK into your project.
 
@@ -29,6 +28,13 @@ Initialize the SDK with your Gateway API URL and merchant ID.
 ```
 let gateway = try Gateway(url: "<#YOUR GATEWAY URL#>", merchantId: "<#YOUR MERCHANT ID#>")
 ```
+
+The SDK strictly enforces certificate pinning for added security. If you have a custom base URL (ie. NOT a mastercard.com domain), you will also need to provide the PEM-encoded SSL public certificate for that domain. We recommend using the intermediate certificate since it typically has a longer life-span than server certificates.
+```
+let customCert = Data(base64Encoded: "MIIFAzCCA+ugAwIBAgIEUdNg7jANBgkq...")!
+gateway.addTrustedCertificate(customCert, "mycustomCert")
+```
+
 ### Step 3 - Updating a Session with Card Information
 Call the gateway to update the session with a payment card.
 
