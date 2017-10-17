@@ -10,7 +10,7 @@ The gateway SDK requires **iOS 8+** and is compatible with **Swift 4** projects.
 We recommend using [Carthage]( https://github.com/Carthage/Carthage) to integrate the Gateway SDK into your project.
 
 ```
-github "<#github project name#>#"
+github "<#github project name#>"
 ```
 
 If you do not want to use carthage, you can download the sdk manually and add the MPGSDK as a sub project manually.
