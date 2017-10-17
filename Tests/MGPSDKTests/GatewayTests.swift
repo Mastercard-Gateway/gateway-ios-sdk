@@ -33,12 +33,12 @@ class GatewayTests: XCTestCase {
     var mockSuccsessResponseJSON = Data("""
     {
         \"sessionId\": \"123456\",
-        \"version\": \"2\"
+        \"version\": \"44\"
     }
     """.utf8)
     
     var testSubject: Gateway! = {
-        return try? Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789", apiVersion: 9)
+        return try? Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789")
     }()
     
     override func setUp() {
@@ -58,18 +58,9 @@ class GatewayTests: XCTestCase {
         XCTAssertEqual(testSubject.apiURL.absoluteString, "https://test-gateway.matercard.com/api/rest/version/\(BuildConfig.defaultAPIVersion)/merchant/123456789")
     }
     
-    func testInitWithCustomAPIVersion() {
-        do {
-            testSubject = try Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789", apiVersion: 9)
-        } catch {
-            XCTFail("Init with valid parameters failed")
-        }
-        XCTAssertEqual(testSubject.apiURL.absoluteString, "https://test-gateway.matercard.com/api/rest/version/9/merchant/123456789")
-    }
-    
     func testInitWithBadUrlParameterFails() {
         do {
-            testSubject = try Gateway(url: "server", merchantId: "123456789", apiVersion: 9)
+            testSubject = try Gateway(url: "server", merchantId: "123456789")
             XCTFail("Init with bad server name was succesfull")
         } catch {
             switch error {
@@ -205,7 +196,7 @@ class GatewayTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(request.url?.absoluteString, "https://test-gateway.matercard.com/api/rest/version/9/merchant/123456789/session/123456")
+        XCTAssertEqual(request.url?.absoluteString, "https://test-gateway.matercard.com/api/rest/version/44/merchant/123456789/session/123456")
         XCTAssertEqual(request.httpMethod, "PUT")
         XCTAssertEqual(request.allHTTPHeaderFields!, ["Content-Type": "application/json", "User-Agent": testSubject.userAgent])
     }

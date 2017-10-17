@@ -45,7 +45,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
-                case .success(let response):
+                case .success(_):
                     self.performSegue(withIdentifier: "showConfirmation", sender: nil)
                 case .error(_):
                     self.showError()
