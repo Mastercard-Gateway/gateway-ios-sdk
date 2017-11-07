@@ -1,4 +1,4 @@
-# Gateway SDK
+# Gateway SDK [![Build Status](https://travis-ci.org/Mastercard/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard/gateway-ios-sdk)
 Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a checkout session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple transaction.
 
 ## Basic Transaction Flow Diagram
