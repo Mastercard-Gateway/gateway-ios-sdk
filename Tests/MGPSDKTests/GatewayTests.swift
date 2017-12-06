@@ -73,26 +73,30 @@ class GatewayTests: XCTestCase {
     }
     
     func testVerifyTrustedCertificatesDefaults() {
-        XCTAssertEqual(testSubject.trustedCertificates, [:])
+        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
     }
     
     func testClearAllTrustedCertifictes() {
         testSubject.clearTrustedCertificates()
-        XCTAssertEqual(testSubject.trustedCertificates, [:])
+        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
     }
     
     func testAddTrustedCertificate() {
-        let mockCertificate = Data(base64Encoded: "AQIDBAUGBwgJ")!
-        testSubject.clearTrustedCertificates()
-        testSubject.addTrustedCertificate(mockCertificate, alias: "mock")
+        try! testSubject.addTrustedCertificate(customCertString, alias: "mycustomCert")
         
-        XCTAssertEqual(testSubject.trustedCertificates, ["mock": mockCertificate])
+        
+        let testDerData = try! Data(contentsOf: Bundle.init(for: X509CertTests.self).url(forResource: "testcert", withExtension: "cer")!)
+        testSubject.clearTrustedCertificates()
+        XCTAssertNoThrow(try testSubject.addTrustedCertificate(testDerData, alias: "mock"))
+        
+        XCTAssertEqual(testSubject.trustedCertificates["mock"]!.derData, testDerData)
     }
 
     func testRemoveTrustedCertificate() {
-        testSubject.addTrustedCertificate(Data(), alias: "mock")
+        let testDerData = try! Data(contentsOf: Bundle.init(for: X509CertTests.self).url(forResource: "testcert", withExtension: "cer")!)
+        XCTAssertNoThrow(try testSubject.addTrustedCertificate(testDerData, alias: "mock"))
         testSubject.removeTrustedCertificate(alias: "mock")
-        XCTAssertEqual(testSubject.trustedCertificates, [:])
+        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
     }
     
     func testExecuteRequestSendsCorrectRequest() {

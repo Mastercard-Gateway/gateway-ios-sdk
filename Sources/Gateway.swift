@@ -52,12 +52,22 @@ public class Gateway: NSObject {
     /// Add a certificate to trust when connecting to the gateway via TLS
     ///
     /// - Parameters:
-    ///   - certificate: A PEM encoded x509 certificate
+    ///   - certificate: data representing an X.509 certificate
     ///   - alias: A string to identify the certificate
-    public func addTrustedCertificate(_ certificate: Data, alias: String) {
-        trustedCertificates[alias] = certificate
+    /// - Throws: 'CertificateError.invalidFormat' if a certificate could not be parsed from the provided data.
+    public func addTrustedCertificate(_ der: Data, alias: String) throws {
+        trustedCertificates[alias] = try X509Cert(der: der)
     }
     
+    /// Add a certificate to trust when connecting to the gateway via TLS
+    ///
+    /// - Parameters:
+    ///   - certificate: PEM or Base64 string representing an X.509 certificate
+    ///   - alias: A string to identify the certificate
+    /// - Throws: 'CertificateError.invalidFormat' if a certificate could not be parsed from the provided string.
+    public func addTrustedCertificate(_ pem: String, alias: String) throws {
+        trustedCertificates[alias] = try X509Cert(pem: pem)
+    }
     
     /// Remove a specific trusted certificate
     ///
@@ -65,7 +75,6 @@ public class Gateway: NSObject {
     public func removeTrustedCertificate(alias: String) {
         trustedCertificates[alias] = nil
     }
-    
     
     /// Update a gateway session with a payment card.
     ///
@@ -132,7 +141,7 @@ public class Gateway: NSObject {
     // MARK: - INTERNAL & PRIVATE
     
     /// A dictionary containing any additional tls certificates that the sdk should trust
-    var trustedCertificates: [String: Data] = [:]
+    var trustedCertificates: [String: X509Cert] = [:]
     
     /// The url session used to send any requests made by the api
     lazy var urlSession: URLSession = {
