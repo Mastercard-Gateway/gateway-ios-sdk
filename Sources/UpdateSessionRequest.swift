@@ -46,9 +46,11 @@ public struct UpdateSessionRequest: GatewayRequest, Encodable {
         self.sessionId = sessionId
     }
     
+    /// The json deocder that will be used to parse all responses into model objects
+    var encoder: JSONEncoder = JSONEncoder()
+    
     public var httpRequest: HTTPRequest {
-        let jsonCoder = JSONEncoder()
-        let payload = try? jsonCoder.encode(self)
+        let payload = try? encoder.encode(self)
         return HTTPRequest(path: "session/\(sessionId)", method: .put, payload: payload, contentType: "application/json")
     }
 }

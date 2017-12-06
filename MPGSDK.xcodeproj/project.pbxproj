@@ -29,6 +29,10 @@
 		6F6559FA1F729A5200EACB94 /* Expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559F91F729A5200EACB94 /* Expiry.swift */; };
 		6F6559FC1F729A8600EACB94 /* GatewayResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */; };
 		6F74626A1F72E165007F5663 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7462691F72E165007F5663 /* ErrorResponse.swift */; };
+		6F961E551FD7389800181E17 /* X509CertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F961E541FD7389800181E17 /* X509CertTests.swift */; };
+		6F961E5A1FD73C9500181E17 /* testcert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6F961E571FD739E300181E17 /* testcert.cer */; };
+		6F961E5B1FD73C9900181E17 /* testcert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 6F961E581FD739F800181E17 /* testcert.pem */; };
+		6F9FAE841FD6E2F4005D246C /* X509Cert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FAE831FD6E2F4005D246C /* X509Cert.swift */; };
 		6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7841F69632300B7B56A /* Gateway.swift */; };
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
@@ -69,6 +73,10 @@
 		6F6559F91F729A5200EACB94 /* Expiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expiry.swift; sourceTree = "<group>"; };
 		6F6559FB1F729A8600EACB94 /* GatewayResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayResponseError.swift; sourceTree = "<group>"; };
 		6F7462691F72E165007F5663 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		6F961E541FD7389800181E17 /* X509CertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509CertTests.swift; sourceTree = "<group>"; };
+		6F961E571FD739E300181E17 /* testcert.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = testcert.cer; sourceTree = "<group>"; };
+		6F961E581FD739F800181E17 /* testcert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testcert.pem; sourceTree = "<group>"; };
+		6F9FAE831FD6E2F4005D246C /* X509Cert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = X509Cert.swift; sourceTree = "<group>"; };
 		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
@@ -143,6 +151,15 @@
 			path = "API Models";
 			sourceTree = "<group>";
 		};
+		6F961E561FD739B000181E17 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6F961E581FD739F800181E17 /* testcert.pem */,
+				6F961E571FD739E300181E17 /* testcert.cer */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +174,7 @@
 				6F244D091F701CFD009A1E9E /* UpdateSessionRequest.swift */,
 				6F244D071F701ABF009A1E9E /* UpdateSessionResponse.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
+				6F9FAE831FD6E2F4005D246C /* X509Cert.swift */,
 				6F244D061F701961009A1E9E /* API Models */,
 			);
 			path = Sources;
@@ -165,7 +183,9 @@
 		8933C7831EB5B7EB000D00A4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6F961E561FD739B000181E17 /* Resources */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
+				6F961E541FD7389800181E17 /* X509CertTests.swift */,
 				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
 			);
 			name = Tests;
@@ -287,6 +307,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F961E5B1FD73C9900181E17 /* testcert.pem in Resources */,
+				6F961E5A1FD73C9500181E17 /* testcert.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +322,7 @@
 				6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */,
 				6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */,
 				6F24484B1F75688C0032030D /* URLSessionMocks.swift in Sources */,
+				6F9FAE841FD6E2F4005D246C /* X509Cert.swift in Sources */,
 				6F6559EA1F71B19600EACB94 /* Address.swift in Sources */,
 				6F6559F21F71B4FD00EACB94 /* Device.swift in Sources */,
 				6F244D0C1F701D82009A1E9E /* GatewayRequest.swift in Sources */,
@@ -329,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */,
+				6F961E551FD7389800181E17 /* X509CertTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

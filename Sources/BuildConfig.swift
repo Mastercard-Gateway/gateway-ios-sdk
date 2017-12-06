@@ -18,7 +18,7 @@ import Foundation
 
 struct BuildConfig {
     static let defaultAPIVersion: Int = 44
-    fileprivate static let intermidateCaStrings: [String] = [
+    static let intermidateCaStrings: [String] = [
         """
         MIIFAzCCA+ugAwIBAgIEUdNg7jANBgkqhkiG9w0BAQsFADCBvjELMAkGA1UEBhMC\
         VVMxFjAUBgNVBAoTDUVudHJ1c3QsIEluYy4xKDAmBgNVBAsTH1NlZSB3d3cuZW50\
@@ -77,5 +77,4 @@ struct BuildConfig {
         fuc46qX1D2lnGyC1EktHnL3lazAZFuFC
         """
         ]
-    static let intermediateCas: [Data] = intermidateCaStrings.map { return Data(base64Encoded: $0)! }
 }
