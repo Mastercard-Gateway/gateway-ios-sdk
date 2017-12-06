@@ -116,7 +116,7 @@ openssl x509 -inform der -in gateway_cert.cer -out gateway_cert.pem
 Open this PEM file in a text editor and copy the entire contents to a static variable in your project. You can reference this variable when adding an additional trusted certificate to the SDK.
 
 ## Sample App
-Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server](https://github.com/Mastercard/gateway-test-merchant-server)**. Follow the instructions for that project and copy the resulting URL of the instance you create.
+Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
 
 Making a payment with the Gateway SDK is a three step process.
 1. The mobile app uses a merchant server to securely create a session on the gateway.
@@ -143,3 +143,6 @@ let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
 ```
 
 For more information, visit [https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html](https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html)
+
+[Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
+[certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning
