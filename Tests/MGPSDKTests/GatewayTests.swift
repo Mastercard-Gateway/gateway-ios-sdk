@@ -82,9 +82,6 @@ class GatewayTests: XCTestCase {
     }
     
     func testAddTrustedCertificate() {
-        try! testSubject.addTrustedCertificate(customCertString, alias: "mycustomCert")
-        
-        
         let testDerData = try! Data(contentsOf: Bundle.init(for: X509CertTests.self).url(forResource: "testcert", withExtension: "cer")!)
         testSubject.clearTrustedCertificates()
         XCTAssertNoThrow(try testSubject.addTrustedCertificate(testDerData, alias: "mock"))
