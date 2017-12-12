@@ -1,9 +1,9 @@
 # Gateway SDK [![Build Status](https://travis-ci.org/Mastercard/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard/gateway-ios-sdk)
-Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a checkout session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple transaction.
+Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
-## Basic Transaction Flow Diagram
+## Basic Payment Flow Diagram
 
-![Transaction Flow](./transaction-flow.png "Transaction Flow")
+![Payment Flow](./payment-flow.png "Payment Flow")
 
 ## Compatibility
 
@@ -127,7 +127,7 @@ In the sample app, these three steps can are performed using the Gateway Test Me
 
 ### Initialize the Sample App
 
-To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test transaction.
+To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test payment.
 
 ```swift
 // TEST Gateway Merchant ID
