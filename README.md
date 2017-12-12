@@ -105,9 +105,9 @@ One easy method of retrieving this certificate is to download it through your br
 1. Select the *Security* tab in the inspector and click *View certificate*
 1. In the popup window, click on the intermediate certificate (most likely the middle certificate in the chain)
 1. In the info window below, drag the large certificate icon onto your desktop, downloading the *.cer* file to your machine
-1. Rename this file to something simple, like *gateway_cert.cer*, and copy it into your project's *raw* (or *assets*) directory
+1. Rename this file to something simple, like *gateway_cert.cer*, and add it to your project.
 
-With the certificate now stored in your app, you can add it as a parameter to the Gateway SDK as an InputStream.
+With the certificate now stored in your app, you load the certificate data from the file and provide it to the Gateway SDK as a trusted certificate.
 
 If you prefer to store the certificate as a String constant rather than a resource file, you can convert the certificate to PEM format using the following command:
 ```
