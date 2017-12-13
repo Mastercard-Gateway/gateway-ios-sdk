@@ -37,8 +37,8 @@ class GatewayTests: XCTestCase {
     }
     """.utf8)
     
-    var testSubject: Gateway! = {
-        return try? Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789")
+    var testSubject: Gateway = {
+        return Gateway(region: .test, merchantId: "123456789")
     }()
     
     override func setUp() {
@@ -50,51 +50,13 @@ class GatewayTests: XCTestCase {
     }
     
     func testInitWithDefaultAPIVersion() {
-        do {
-            testSubject = try Gateway(url: "https://test-gateway.matercard.com", merchantId: "123456789")
-        } catch {
-            XCTFail("Init with valid parameters failed")
-        }
-        XCTAssertEqual(testSubject.apiURL.absoluteString, "https://test-gateway.matercard.com/api/rest/version/\(BuildConfig.defaultAPIVersion)/merchant/123456789")
-    }
-    
-    func testInitWithBadUrlParameterFails() {
-        do {
-            testSubject = try Gateway(url: "server", merchantId: "123456789")
-            XCTFail("Init with bad server name was succesfull")
-        } catch {
-            switch error {
-            case GatewayError.invalidApiUrl(let url):
-                XCTAssertEqual(url, "server")
-            default:
-                XCTFail("Init threw unexpected exception")
-            }
-        }
-    }
-    
-    func testVerifyTrustedCertificatesDefaults() {
-        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
-    }
-    
-    func testClearAllTrustedCertifictes() {
-        testSubject.clearTrustedCertificates()
-        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
-    }
-    
-    func testAddTrustedCertificate() {
-        let testDerData = try! Data(contentsOf: Bundle.init(for: X509CertTests.self).url(forResource: "testcert", withExtension: "cer")!)
-        testSubject.clearTrustedCertificates()
-        XCTAssertNoThrow(try testSubject.addTrustedCertificate(testDerData, alias: "mock"))
+        testSubject =  Gateway(region: .test, merchantId: "123456789")
         
-        XCTAssertEqual(testSubject.trustedCertificates["mock"]!.derData, testDerData)
+        XCTAssertEqual(testSubject.region, .test)
+        XCTAssertEqual(testSubject.merchantId, "123456789")
+        XCTAssertEqual(testSubject.apiVersion, BuildConfig.defaultAPIVersion)
     }
 
-    func testRemoveTrustedCertificate() {
-        let testDerData = try! Data(contentsOf: Bundle.init(for: X509CertTests.self).url(forResource: "testcert", withExtension: "cer")!)
-        XCTAssertNoThrow(try testSubject.addTrustedCertificate(testDerData, alias: "mock"))
-        testSubject.removeTrustedCertificate(alias: "mock")
-        XCTAssertEqual(testSubject.trustedCertificates.count, 0)
-    }
     
     func testExecuteRequestSendsCorrectRequest() {
         let mockURLSession = MockURLSession()
@@ -197,7 +159,7 @@ class GatewayTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(request.url?.absoluteString, "https://test-gateway.matercard.com/api/rest/version/44/merchant/123456789/session/123456")
+        XCTAssertEqual(request.url!.absoluteString, "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/123456")
         XCTAssertEqual(request.httpMethod, "PUT")
         XCTAssertEqual(request.allHTTPHeaderFields!, ["Content-Type": "application/json", "User-Agent": testSubject.userAgent])
     }

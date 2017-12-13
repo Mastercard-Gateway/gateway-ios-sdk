@@ -18,10 +18,10 @@ import UIKit
 import MPGSDK
 
 // TEST Gateway Merchant ID
-let gatewayMerchantId = "<#your-merchant-id#>"
+let gatewayMerchantId = "<#YOUR MERCHANT ID#>"
 
-// Gateway Base URL
-let gatewayBaseUrl = "<#https://your-gateway-url-com#>"
+// Gateway Region
+let gatewayRegion = GatewayRegion.<#YOUR GATEWAY REGION#>
 
 // TEST Merchant Server URL (test server app deployed to Heroku)
 // For more information, see: https://github.com/Mastercard/gateway-test-merchant-server
