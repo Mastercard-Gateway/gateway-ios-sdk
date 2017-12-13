@@ -50,8 +50,6 @@ extension Gateway: URLSessionDelegate {
     fileprivate func trustedCertificatesData() -> [Data] {
         // parse the build config's certs
         var certData: [X509Cert] = BuildConfig.intermidateCaStrings.map { try! X509Cert(pem: $0) }
-        // append the certs provided to the gateway by integrators
-        certData += trustedCertificates.values
         return certData.map { $0.derData }
     }
     
