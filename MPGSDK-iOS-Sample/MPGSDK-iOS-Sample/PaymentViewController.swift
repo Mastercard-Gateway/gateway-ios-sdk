@@ -31,7 +31,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     var sessionId: String?
     
     // MARK: - Gateway Setup
-    var gateway: Gateway = try! Gateway(url: gatewayBaseUrl, merchantId: gatewayMerchantId)
+    var gateway: Gateway = Gateway(region: gatewayRegion, merchantId: gatewayMerchantId)
 
     // MARK: - Update the session
     // Call the gateway to update the session.

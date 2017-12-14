@@ -22,59 +22,29 @@ import Foundation
  ```
  */
 public class Gateway: NSObject {
-    /// Construct a new instance of the gateway.
-    ///
-    /// - Parameters:
-    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com".
-    ///   - merchantId: a valid merchant ID
-    /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
-    public convenience init(url: String, merchantId: String) throws {
-        try self.init(url: url, merchantId: merchantId, apiVersion: BuildConfig.defaultAPIVersion)
-    }
     
     /// Construct a new instance of the gateway.
     ///
     /// - Parameters:
-    ///   - url: The URL of the gateway services.  For instance, "https://test-gateway.mastercard.com"
+    ///   - region: the region in which the merchant is registered with the gateway
+    ///   - merchantId: a valid merchant ID
+    public convenience init(region: GatewayRegion, merchantId: String) {
+        self.init(region: region, merchantId: merchantId, apiVersion: BuildConfig.defaultAPIVersion)
+    }
+    
+    
+    /// Construct a new instance of the gateway.
+    ///
+    /// - Parameters:
+    ///   - region: the region in which the merchant is registered with the gateway
     ///   - merchantId: a valid merchant ID
     ///   - apiVersion: the current api version.  See [Gateway API Versions](https://test-gateway.mastercard.com/api/documentation/apiDocumentation/rest-json/index.html) for a list of available version numbers
-    /// - Throws: GatewayError.invalidApiUrl if the host can not be parsed from the supplied url
-    private init(url: String, merchantId: String, apiVersion: Int) throws {
-        self.apiURL = try Gateway.ApiPathFor(url: url, merchantId: merchantId, apiVersion: apiVersion)
+    private init(region: GatewayRegion, merchantId: String, apiVersion: Int) {
+        self.region = region
+        self.merchantId = merchantId
+        self.apiVersion = apiVersion
     }
     
-    
-    /// remove all custom trusted TLS certificates.
-    public func clearTrustedCertificates() {
-        trustedCertificates = [:]
-    }
-    
-    /// Add a certificate to trust when connecting to the gateway via TLS
-    ///
-    /// - Parameters:
-    ///   - certificate: data representing an X.509 certificate
-    ///   - alias: A string to identify the certificate
-    /// - Throws: 'CertificateError.invalidFormat' if a certificate could not be parsed from the provided data.
-    public func addTrustedCertificate(_ der: Data, alias: String) throws {
-        trustedCertificates[alias] = try X509Cert(der: der)
-    }
-    
-    /// Add a certificate to trust when connecting to the gateway via TLS
-    ///
-    /// - Parameters:
-    ///   - certificate: PEM or Base64 string representing an X.509 certificate
-    ///   - alias: A string to identify the certificate
-    /// - Throws: 'CertificateError.invalidFormat' if a certificate could not be parsed from the provided string.
-    public func addTrustedCertificate(_ pem: String, alias: String) throws {
-        trustedCertificates[alias] = try X509Cert(pem: pem)
-    }
-    
-    /// Remove a specific trusted certificate
-    ///
-    /// - Parameter alias: The string identifying the certificate to remove
-    public func removeTrustedCertificate(alias: String) {
-        trustedCertificates[alias] = nil
-    }
     
     /// Update a gateway session with a payment card.
     ///
@@ -140,9 +110,6 @@ public class Gateway: NSObject {
     
     // MARK: - INTERNAL & PRIVATE
     
-    /// A dictionary containing any additional tls certificates that the sdk should trust
-    var trustedCertificates: [String: X509Cert] = [:]
-    
     /// The url session used to send any requests made by the api
     lazy var urlSession: URLSession = {
         URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
@@ -151,21 +118,17 @@ public class Gateway: NSObject {
     /// The json deocder that will be used to parse all responses into model objects
     lazy var decoder: JSONDecoder = JSONDecoder()
     
-    /// The url for the api including the version ad merchant id
-    let apiURL: URL
+    /// The region the merchant is located in
+    public let region: GatewayRegion
     
-    // parse and construct a url string with path using the host from the provided url, apiVersion and merchantId.
-    fileprivate static func ApiPathFor(url: String, merchantId: String, apiVersion: Int) throws -> URL {
-        // check to make sure the provided api contains a host since that is all that the service uses.
-        guard let urlComponents = URLComponents(string: url), let apiHost = urlComponents.host else {
-            throw GatewayError.invalidApiUrl(url)
-        }
-        
-        guard let apiURL = URL(string: "https://\(apiHost)/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)") else {
-            throw GatewayError.invalidApiUrl(url)
-        }
-        
-        return apiURL
+    /// The merchant's id on the Gateway
+    public let merchantId: String
+    
+    /// The Gateway API version the sdk is using
+    public let apiVersion: Int
+    
+    private var apiURL: URL {
+        return URL(string: "https://\(region.urlPrefix)-gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
     }
     
     // Build a url request from the GatewayRequest.  This method also adds the User-Agent and Content-Type

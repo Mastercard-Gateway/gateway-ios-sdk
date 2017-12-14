@@ -49,10 +49,7 @@ extension Gateway: URLSessionDelegate {
     // The raw DER data from all the certificates the gateway is configured to trust.
     fileprivate func trustedCertificatesData() -> [Data] {
         // parse the build config's certs
-        var certData: [X509Cert] = BuildConfig.intermidateCaStrings.map { try! X509Cert(pem: $0) }
-        // append the certs provided to the gateway by integrators
-        certData += trustedCertificates.values
-        return certData.map { $0.derData }
+        return BuildConfig.intermidateCaStrings.map { Data(base64Encoded: $0)! }
     }
     
     // Get the certificates from the SecTrust object as raw data so that we can compare against our trusted certificates.
