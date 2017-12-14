@@ -20,7 +20,7 @@ public enum GatewayRegion: String {
     case asiaPacific = "ap"
     case europe = "eu"
     case northAmerica = "na"
-    case test = "test"
+    case mtf = "test"
     
     var urlPrefix: String {
         return rawValue

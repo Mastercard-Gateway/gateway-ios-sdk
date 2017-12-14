@@ -38,7 +38,7 @@ class GatewayTests: XCTestCase {
     """.utf8)
     
     var testSubject: Gateway = {
-        return Gateway(region: .test, merchantId: "123456789")
+        return Gateway(region: .mtf, merchantId: "123456789")
     }()
     
     override func setUp() {
@@ -50,9 +50,9 @@ class GatewayTests: XCTestCase {
     }
     
     func testInitWithDefaultAPIVersion() {
-        testSubject =  Gateway(region: .test, merchantId: "123456789")
+        testSubject =  Gateway(region: .mtf, merchantId: "123456789")
         
-        XCTAssertEqual(testSubject.region, .test)
+        XCTAssertEqual(testSubject.region, .mtf)
         XCTAssertEqual(testSubject.merchantId, "123456789")
         XCTAssertEqual(testSubject.apiVersion, BuildConfig.defaultAPIVersion)
     }
