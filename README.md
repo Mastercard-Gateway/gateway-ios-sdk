@@ -101,7 +101,6 @@ let gatewayRegion = GatewayRegion."<#YOUR GATEWAY REGION#>"
 let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
 ```
 
-For more information, visit [https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html](https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html)
 
 [Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
 [certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning
