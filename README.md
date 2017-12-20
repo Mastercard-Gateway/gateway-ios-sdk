@@ -74,6 +74,21 @@ gateway.updateSession("<#session id#>",  card: card) { (result) in
 }
 ```
 
+You may also include additional information such as shipping/billing addresses, customer info, and device data by manually building the `UpdateSessionRequest` object and providing that to the SDK.
+
+```swift
+var request = UpdateSessionRequest(sessionId: "<#session id#>")
+let card = Card(...)
+request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
+request.customer = Customer(...)
+request.shipping = Shipping(...)
+request.billing = Billing(...)
+request.device = Device(...)
+gateway.execute(request: request) { (result) in
+    ...
+}
+```
+
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
 
