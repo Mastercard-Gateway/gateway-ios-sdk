@@ -28,28 +28,16 @@ public class Gateway: NSObject {
     /// - Parameters:
     ///   - region: the region in which the merchant is registered with the gateway
     ///   - merchantId: a valid merchant ID
-    public convenience init(region: GatewayRegion, merchantId: String) {
-        self.init(region: region, merchantId: merchantId, apiVersion: BuildConfig.defaultAPIVersion)
-    }
-    
-    
-    /// Construct a new instance of the gateway.
-    ///
-    /// - Parameters:
-    ///   - region: the region in which the merchant is registered with the gateway
-    ///   - merchantId: a valid merchant ID
-    ///   - apiVersion: the current api version.  See [Gateway API Versions](https://test-gateway.mastercard.com/api/documentation/apiDocumentation/rest-json/index.html) for a list of available version numbers
-    private init(region: GatewayRegion, merchantId: String, apiVersion: Int) {
+    public init(region: GatewayRegion, merchantId: String) {
         self.region = region
         self.merchantId = merchantId
-        self.apiVersion = apiVersion
     }
-    
     
     /// Update a gateway session with a payment card.
     ///
     /// - Parameters:
     ///   - session: A session ID from the gateway
+    ///   - apiVersion: the api version which was used to create the session
     ///   - nameOnCard: The cardholder's name
     ///   - cardNumber: The card number
     ///   - securityCode: The security code
@@ -58,22 +46,28 @@ public class Gateway: NSObject {
     ///   - completion: A callback to handle the success or error of the network operation
     /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     @discardableResult
-    public func updateSession(_ session: String, nameOnCard: String, cardNumber: String, securityCode: String, expiryMM: String, expiryYY: String, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask {
+    public func updateSession(_ session: String, apiVersion: Int, nameOnCard: String, cardNumber: String, securityCode: String, expiryMM: String, expiryYY: String, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask? {
         let card = Card(nameOnCard: nameOnCard, number: cardNumber, securityCode: securityCode, expiry: Expiry(month: expiryMM, year: expiryYY))
-        return updateSession(session, card: card, completion: completion)
+        return updateSession(session, apiVersion: apiVersion, card: card, completion: completion)
     }
     
     /// Update a gateway session with a payment card.
     ///
     /// - Parameters:
     ///   - session: A session ID from the gateway
+    ///   - apiVersion: the api version which was used to create the session
     ///   - card: The card to use as the payment method
     /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     @discardableResult
-    public func updateSession(_ session: String, card: Card, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask {
-        var request = UpdateSessionRequest(sessionId: session)
-        request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
-        return execute(request: request, completion: completion)
+    public func updateSession(_ session: String, apiVersion: Int, card: Card, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask? {
+        do {
+            var request = try UpdateSessionRequest(sessionId: session, apiVersion: apiVersion)
+            request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
+            return execute(request: request, completion: completion)
+        } catch {
+            completion(GatewayResult(error))
+            return nil
+        }
     }
     
     /// Execute a request against the gateway.
@@ -124,17 +118,14 @@ public class Gateway: NSObject {
     /// The merchant's id on the Gateway
     public let merchantId: String
     
-    /// The Gateway API version the sdk is using
-    public let apiVersion: Int
-    
-    private var apiURL: URL {
+    private func apiURL(for apiVersion: Int) -> URL {
         return URL(string: "https://\(region.urlPrefix)-gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
     }
     
     // Build a url request from the GatewayRequest.  This method also adds the User-Agent and Content-Type
     private func build<T: GatewayRequest>(request: T) -> URLRequest {
         let httpRequest = request.httpRequest
-        let requestURL = apiURL.appendingPathComponent(httpRequest.path)
+        let requestURL = apiURL(for: request.apiVersion).appendingPathComponent(httpRequest.path)
         var request = URLRequest(url: requestURL)
         request.httpMethod = httpRequest.method.rawValue
         request.allHTTPHeaderFields = httpRequest.headers

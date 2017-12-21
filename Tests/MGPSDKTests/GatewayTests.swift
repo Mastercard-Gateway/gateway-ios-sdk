@@ -19,6 +19,7 @@ import XCTest
 
 struct MockRequest: GatewayRequest {
     public typealias responseType = MockResponse
+    public var apiVersion: Int = 0
     public var httpRequest: HTTPRequest = HTTPRequest()
 }
 
@@ -54,7 +55,6 @@ class GatewayTests: XCTestCase {
         
         XCTAssertEqual(testSubject.region, .mtf)
         XCTAssertEqual(testSubject.merchantId, "123456789")
-        XCTAssertEqual(testSubject.apiVersion, BuildConfig.defaultAPIVersion)
     }
 
     
@@ -150,7 +150,7 @@ class GatewayTests: XCTestCase {
         let mockURLSession = MockURLSession()
         testSubject.urlSession = mockURLSession
         
-        _ = testSubject.updateSession("123456", nameOnCard: "Teddy Tester", cardNumber: "5555555555554444", securityCode: "123", expiryMM: "12", expiryYY: "19", completion: { (result) in
+        _ = testSubject.updateSession("123456", apiVersion: 99, nameOnCard: "Teddy Tester", cardNumber: "5555555555554444", securityCode: "123", expiryMM: "12", expiryYY: "19", completion: { (result) in
             
         })
         
@@ -159,7 +159,7 @@ class GatewayTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(request.url!.absoluteString, "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/123456")
+        XCTAssertEqual(request.url!.absoluteString, "https://test-gateway.mastercard.com/api/rest/version/99/merchant/123456789/session/123456")
         XCTAssertEqual(request.httpMethod, "PUT")
         XCTAssertEqual(request.allHTTPHeaderFields!, ["Content-Type": "application/json", "User-Agent": testSubject.userAgent])
     }

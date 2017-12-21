@@ -19,6 +19,7 @@ import Foundation
 public enum GatewayError: Error, CustomStringConvertible {
     case invalidApiUrl(String)
     case failedRequest(Int, ErrorResponse?)
+    case invalidAPIVersion(Int)
     case generic(Error)
     case unknown
     
@@ -31,6 +32,8 @@ public enum GatewayError: Error, CustomStringConvertible {
                     Gateway Request Error - \(status) - \(HTTPURLResponse.localizedString(forStatusCode: status))
                     \(String(describing: error))response
                     """
+        case .invalidAPIVersion(let version):
+            return "API version \(version) is not compatable"
         case .generic(let error):
             return (error as CustomStringConvertible).description
         case .unknown:
