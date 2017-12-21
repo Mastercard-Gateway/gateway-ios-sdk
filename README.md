@@ -32,7 +32,7 @@ import MPGSDK
 Initialize the SDK with your Gateway region and merchant ID.
 
 ```
-let gateway = try Gateway(region: "<#YOUR REGION#>", merchantId: "<#YOUR MERCHANT ID#>")
+let gateway = Gateway(region: "<#YOUR REGION#>", merchantId: "<#YOUR MERCHANT ID#>")
 ```
 
 ### Step 3 - Updating a Session with Card Information
@@ -43,7 +43,7 @@ Call the gateway to update the session with a payment card.
 If the session was successfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 
 ```swift
-gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
+gateway.updateSession("<#session id#>", apiVersion: <#api version#>,  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
             securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
     switch result {
     case .success(let response):
@@ -64,7 +64,7 @@ let card = Card(nameOnCard: "<#name on card#>",
                 expiry: Expiry(month: "<#expiration month#>", year: "<#expiration year#>")
                 )
 
-gateway.updateSession("<#session id#>",  card: card) { (result) in
+gateway.updateSession("<#session id#>", apiVersion: <#api version#>,  card: card) { (result) in
     switch result {
     case .success(let response):
         print(response.sessionId)
@@ -77,7 +77,7 @@ gateway.updateSession("<#session id#>",  card: card) { (result) in
 You may also include additional information such as shipping/billing addresses, customer info, and device data by manually building the `UpdateSessionRequest` object and providing that to the SDK.
 
 ```swift
-var request = UpdateSessionRequest(sessionId: "<#session id#>")
+var request = UpdateSessionRequest(sessionId: "<#session id#>", apiVersion: <#api version#>)
 let card = Card(...)
 request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
 request.customer = Customer(...)
