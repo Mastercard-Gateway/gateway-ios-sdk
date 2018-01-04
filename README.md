@@ -38,55 +38,73 @@ let gateway = Gateway(region: "<#YOUR REGION#>", merchantId: "<#YOUR MERCHANT ID
 ### Step 3 - Updating a Session with Card Information
 Call the gateway to update the session with a payment card.
 
-> The session should be a session id that was obtained by using your merchant services to contact the gateway.
+> The session should be a session id that was obtained by using your merchant services to contact the gateway and the apiVersion must match the version used to create the session.
 
 If the session was successfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 
 ```swift
-gateway.updateSession("<#session id#>", apiVersion: <#api version#>,  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
-            securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
+var request = GatewayMap()
+request[path: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
+request[path: "sourceOfFunds.provided.card.number"] = "<#card number#>"
+request[path: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
+request[path: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
+request[path: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
+
+gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
     switch result {
     case .success(let response):
-        print(response.sessionId)
+        print(response.description)
     case .error(let error):
         print(error)
     }
 }
 ```
 
-You can also construct a Card object and pass that as argument to the SDK.
-
-
-```swift
-let card = Card(nameOnCard: "<#name on card#>",
-                cardNumber: "<#card number#>",
-                securityCode: "<#security code#>",
-                expiry: Expiry(month: "<#expiration month#>", year: "<#expiration year#>")
-                )
-
-gateway.updateSession("<#session id#>", apiVersion: <#api version#>,  card: card) { (result) in
-    switch result {
-    case .success(let response):
-        print(response.sessionId)
-    case .error(let error):
-        print(error)
-    }
-}
-```
-
-You may also include additional information such as shipping/billing addresses, customer info, and device data by manually building the `UpdateSessionRequest` object and providing that to the SDK.
+You may also include additional information such as shipping/billing addresses, customer info, device data, and more by adding them to your request map before providing it to the SDK. Consult your integration guide for a full list of available options.
 
 ```swift
-var request = UpdateSessionRequest(sessionId: "<#session id#>", apiVersion: <#api version#>)
-let card = Card(...)
-request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
-request.customer = Customer(...)
-request.shipping = Shipping(...)
-request.billing = Billing(...)
-request.device = Device(...)
-gateway.execute(request: request) { (result) in
-    ...
-}
+// billing address
+request[path: "billing.address.city"] = <#billingCity#>
+request[path: "billing.address.company"] = <#billingCompany#>
+request[path: "billing.address.country"] = <#billingCountry#>
+request[path: "billing.address.postcodeZip"] = <#billingZip#>
+request[path: "billing.address.stateProvince"] = <#billingState#>
+request[path: "billing.address.street"] = <#billingStreet#>
+request[path: "billing.address.street2"] = <#billingStreet2#>
+
+// shipping address
+request[path: "shipping.address.city"] = <#shippingCity#>
+request[path: "shipping.address.company"] = <#shippingCompany#>
+request[path: "shipping.address.country"] = <#shippingCountry#>
+request[path: "shipping.address.postcodeZip"] = <#shippingZip#>
+request[path: "shipping.address.stateProvince"] = <#shippingState#>
+request[path: "shipping.address.street"] = <#shippingStreet#>
+request[path: "shipping.address.street2"] = <#shippingStreet2#>
+
+// shipping contact
+request[path: "shipping.contact.email"] = <#shippingEmail#>
+request[path: "shipping.contact.firstName"] = <#shippingFirstName#>
+request[path: "shipping.contact.lastName"] = <#shippingLastName#>
+request[path: "shipping.contact.mobilePhone"] = <#shippingMobile#>
+request[path: "shipping.contact.phone"] = <#shippingPhone#>
+
+// shipping method
+request[path: "shipping.method"] = <#shippingMethod#>
+
+// customer
+request[path: "customer.email"] = <#customerEmail#>
+request[path: "customer.firstName"] = <#customerFirstName#>
+request[path: "customer.lastName"] = <#customerLastName#>
+request[path: "customer.mobilePhone"] = <#customerMobile#>
+request[path: "customer.phone"] = <#customerPhone#>
+request[path: "customer.taxRegistrationId"] = <#customerTaxId#>
+
+// device
+request[path: "device.browser"] = <#deviceUserAgent#>
+request[path: "device.fingerprint"] = <#deviceFingerprint#>
+request[path: "device.hostname"] = <#deviceHostname#>
+request[path: "device.ipAddress"] = <#deviceIpAddress#>
+request[path: "device.mobilePhoneModel"] = <#deviceModel#>
 ```
 
 ## Sample App

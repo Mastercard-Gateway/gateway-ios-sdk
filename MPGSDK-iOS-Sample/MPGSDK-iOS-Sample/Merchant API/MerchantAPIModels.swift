@@ -25,7 +25,7 @@ enum UpdateStatus: String, Codable {
 struct Session: Codable {
     let id: String
     let updateStatus: UpdateStatus
-    let version: Int
+    let version: String
 }
 
 struct CreateSessionResponse: Codable {

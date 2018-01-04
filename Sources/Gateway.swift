@@ -22,6 +22,18 @@ import Foundation
  ```
  */
 public class Gateway: NSObject {
+    /// The region the merchant is located in
+    public let region: GatewayRegion
+    
+    /// The merchant's id on the Gateway
+    public let merchantId: String
+    
+    /// The User-Agent string that is sent when connecting to the gateway.  This string will include appear as Gateway-iOS-SDK/1.0
+    var userAgent: String {
+        let bundle = Bundle.init(for: Gateway.self)
+        let version = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "0.0"
+        return "Gateway-iOS-SDK/\(version)"
+    }
     
     /// Construct a new instance of the gateway.
     ///
@@ -33,76 +45,71 @@ public class Gateway: NSObject {
         self.merchantId = merchantId
     }
     
-    /// Update a gateway session with a payment card.
-    ///
-    /// - Parameters:
-    ///   - session: A session ID from the gateway
-    ///   - apiVersion: the api version which was used to create the session
-    ///   - nameOnCard: The cardholder's name
-    ///   - cardNumber: The card number
-    ///   - securityCode: The security code
-    ///   - expiryMM: The card expiration month (format: MM)
-    ///   - expiryYY: The card expiration year (format: YY)
-    ///   - completion: A callback to handle the success or error of the network operation
-    /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
-    @discardableResult
-    public func updateSession(_ session: String, apiVersion: Int, nameOnCard: String, cardNumber: String, securityCode: String, expiryMM: String, expiryYY: String, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask? {
-        let card = Card(nameOnCard: nameOnCard, number: cardNumber, securityCode: securityCode, expiry: Expiry(month: expiryMM, year: expiryYY))
-        return updateSession(session, apiVersion: apiVersion, card: card, completion: completion)
-    }
     
-    /// Update a gateway session with a payment card.
+    /// Update a gateway session with payment payer data.
     ///
     /// - Parameters:
     ///   - session: A session ID from the gateway
     ///   - apiVersion: the api version which was used to create the session
-    ///   - card: The card to use as the payment method
-    /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    ///   - payload: A GatewayMap containting the payload to send
+    ///   - completion: A completion handler for when the request completes or fails
+    /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     @discardableResult
-    public func updateSession(_ session: String, apiVersion: Int, card: Card, completion: @escaping (GatewayResult<UpdateSessionRequest.responseType>) -> Void) -> URLSessionDataTask? {
+    public func updateSession(_ session: String, apiVersion: Int, payload: GatewayMap, completion: @escaping (GatewayResult<GatewayMap>) -> Void) -> URLSessionTask? {
         do {
-            var request = try UpdateSessionRequest(sessionId: session, apiVersion: apiVersion)
-            request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
-            return execute(request: request, completion: completion)
+            var fullPayload = payload
+            fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
+            return try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
         } catch {
             completion(GatewayResult(error))
             return nil
         }
     }
     
-    /// Execute a request against the gateway.
+    // MARK: - INTERNAL & PRIVATE
+    
+    /// Execute a network request against the gateway
     ///
     /// - Parameters:
-    ///   - request: The request to be executed
-    ///   - completion: The result of the operation.  This will be either .success containing the response or .error containing either a network error or gateway error response.
-    /// - Returns: The URLSessionDataTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    ///   - method: The HTTPMethod for the request
+    ///   - path: The path to be appended to the merchant's base api url
+    ///   - payload: A GatewayMap of the payload to be serialized and sent to the API
+    ///   - apiVersion: The API version used for the request
+    ///   - completion: A completion handler for when the request completes or fails
+    /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
+    /// - Throws: If the APIVersion is not supported or the payload could not be encoded
     @discardableResult
-    public func execute<T: GatewayRequest>(request: T, completion: @escaping (GatewayResult<T.responseType>) -> Void) -> URLSessionDataTask {
-        let task = urlSession.dataTask(with: build(request: request)) { (data, response, error) in
-            if let error = error {
-                completion(GatewayResult.error(error))
-            } else if let httpResponse = response as? HTTPURLResponse, !(200..<300).contains(httpResponse.statusCode) {
-                var errorResponse: ErrorResponse? = nil
-                if let data = data {
-                    errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data)
+    func execute(_ method: HTTPMethod, path: String, payload: GatewayMap, apiVersion: Int, completion: @escaping (GatewayResult<GatewayMap>) -> Void) throws -> URLSessionTask? {
+        
+        let requestURL = try apiURL(for: apiVersion).appendingPathComponent(path)
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = method.rawValue
+        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try encoder.encode(payload)
+        
+        let task = urlSession.dataTask(with: request) { (data, response, error) in
+            do {
+                guard error == nil else { throw error! }
+                guard let data = data else { throw GatewayError.missingResponse }
+                
+                let responseMap = try self.decoder.decode(GatewayMap.self, from: data)
+                
+                if let httpResponse = response as? HTTPURLResponse, !(200..<300).contains(httpResponse.statusCode) {
+                    let explination = (responseMap[path: "error.explanation"] as? String) ?? "An error occurred"
+                    throw GatewayError.failedRequest(httpResponse.statusCode, explination)
+                } else {
+                    completion(GatewayResult(responseMap))
                 }
-                completion(GatewayResult(GatewayError.failedRequest(httpResponse.statusCode, errorResponse)))
-            } else if let data = data {
-                do {
-                    let response = try self.decoder.decode(T.responseType.self, from: data)
-                    completion(GatewayResult(response))
-                } catch {
-                    completion(GatewayResult(error))
-                }
-            } else {
-                completion(GatewayResult(GatewayError.unknown))
+            } catch {
+                completion(GatewayResult(error))
             }
         }
+        
         task.resume()
         return task
     }
-    
-    // MARK: - INTERNAL & PRIVATE
     
     /// The url session used to send any requests made by the api
     lazy var urlSession: URLSession = {
@@ -111,34 +118,12 @@ public class Gateway: NSObject {
     
     /// The json deocder that will be used to parse all responses into model objects
     lazy var decoder: JSONDecoder = JSONDecoder()
-    
-    /// The region the merchant is located in
-    public let region: GatewayRegion
-    
-    /// The merchant's id on the Gateway
-    public let merchantId: String
-    
-    private func apiURL(for apiVersion: Int) -> URL {
+    /// The json deocder that will be used to parse all serialize request parameters
+    lazy var encoder: JSONEncoder = JSONEncoder()
+
+    private func apiURL(for apiVersion: Int) throws -> URL {
+        guard apiVersion >= BuildConfig.minimumAPIVersion else { throw GatewayError.invalidAPIVersion(apiVersion) }
         return URL(string: "https://\(region.urlPrefix)-gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
     }
     
-    // Build a url request from the GatewayRequest.  This method also adds the User-Agent and Content-Type
-    private func build<T: GatewayRequest>(request: T) -> URLRequest {
-        let httpRequest = request.httpRequest
-        let requestURL = apiURL(for: request.apiVersion).appendingPathComponent(httpRequest.path)
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = httpRequest.method.rawValue
-        request.allHTTPHeaderFields = httpRequest.headers
-        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-        request.setValue(httpRequest.contentType, forHTTPHeaderField: "Content-Type")
-        request.httpBody = httpRequest.payload
-        return request
-    }
-
-    /// The User-Agent string that is sent when connecting to the gateway.  This string will include appear as Gateway-iOS-SDK/1.0
-    var userAgent: String {
-        let bundle = Bundle.init(for: Gateway.self)
-        let version = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "0.0"
-        return "Gateway-iOS-SDK/\(version)"
-    }
 }

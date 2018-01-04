@@ -49,7 +49,7 @@ class ProductViewController: UIViewController {
                 case .success(let response):
                     if case .success = response.result {
                         self.sessionId = response.session.id
-                        self.apiVersion = response.session.version
+                        self.apiVersion = 44
                         self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
                     } else {
                         self.showError()
