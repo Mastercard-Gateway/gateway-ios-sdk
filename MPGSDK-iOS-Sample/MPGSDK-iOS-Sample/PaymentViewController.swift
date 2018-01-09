@@ -29,7 +29,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     
     /// The session id provided from the previous view that we desire to update with a payment source.
     var sessionId: String?
-    var apiVersion: Int?
+    var apiVersion: String?
     
     // MARK: - Gateway Setup
     var gateway: Gateway = Gateway(region: gatewayRegion, merchantId: gatewayMerchantId)

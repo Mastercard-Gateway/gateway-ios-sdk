@@ -38,7 +38,7 @@ class MerchantAPI {
         self.urlSession = urlSession
     }
     
-    func createSession(completion: @escaping (Result<CreateSessionResponse>) -> Void) {
+    func createSession(completion: @escaping (Result<MerchantAPIResponse<CreateSessionResponse>>) -> Void) {
         let createPath = merchantServerURL.appendingPathComponent("session.php")
         var request = URLRequest(url: createPath)
         request.httpMethod = "POST"
@@ -46,7 +46,7 @@ class MerchantAPI {
         task.resume()
     }
     
-    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<CompleteSessionResponse>) -> Void) {
+    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<MerchantAPIResponse<CompleteSessionResponse>>) -> Void) {
         var completeURLComp = URLComponents(url: merchantServerURL.appendingPathComponent("transaction.php"), resolvingAgainstBaseURL: false)!
         completeURLComp.queryItems = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]
         var request = URLRequest(url: completeURLComp.url!)
@@ -62,7 +62,6 @@ class MerchantAPI {
     
     fileprivate func responseHandler<T: Decodable>(_ completion: @escaping (Result<T>) -> Void) -> (Data?, URLResponse?, Error?) -> Void {
         return { (data, response, error) in
-            print(String(data: data!, encoding: .utf8))
             if let error = error {
                 completion(Result.error(error))
                 return

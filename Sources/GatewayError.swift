@@ -19,7 +19,7 @@ import Foundation
 public enum GatewayError: Error, CustomStringConvertible {
     case invalidApiUrl(String)
     case failedRequest(Int, String)
-    case invalidAPIVersion(Int)
+    case invalidAPIVersion(String)
     case missingResponse
     case generic(Error)
     case unknown

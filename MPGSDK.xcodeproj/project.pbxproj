@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		52D6D9871BEFF229002C0205 /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* MPGSDK.framework */; };
-		6F24484B1F75688C0032030D /* URLSessionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24484A1F75688C0032030D /* URLSessionMocks.swift */; };
 		6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F244D021F701895009A1E9E /* GatewayResult.swift */; };
 		6F2C1A011FE15F1800D06A3B /* GatewayRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2C1A001FE15F1800D06A3B /* GatewayRegion.swift */; };
 		6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */; };
 		6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4BEC851F698751002C64A3 /* GatewayError.swift */; };
-		6F6F24EB1FEC513A0027895C /* UpdateSessionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6F24E91FEC50E30027895C /* UpdateSessionRequestTests.swift */; };
 		6F9D18FB1FFE862700224916 /* GatewayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D18FA1FFE862700224916 /* GatewayMap.swift */; };
 		6F9D18FD1FFE8EB100224916 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */; };
+		6FAFCCE92004054C006F6DBA /* URLSessionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24484A1F75688C0032030D /* URLSessionMocks.swift */; };
+		6FE598761FFED17D001FD483 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE598751FFED17D001FD483 /* Coding.swift */; };
+		6FE598791FFFE444001FD483 /* JSONCodingMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE598771FFED234001FD483 /* JSONCodingMocks.swift */; };
+		6FE5987C1FFFFD5B001FD483 /* ExpectationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */; };
 		6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7841F69632300B7B56A /* Gateway.swift */; };
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
@@ -40,9 +42,11 @@
 		6F2C1A001FE15F1800D06A3B /* GatewayRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayRegion.swift; sourceTree = "<group>"; };
 		6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gateway+URLSessionDelegate.swift"; sourceTree = "<group>"; };
 		6F4BEC851F698751002C64A3 /* GatewayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayError.swift; sourceTree = "<group>"; };
-		6F6F24E91FEC50E30027895C /* UpdateSessionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSessionRequestTests.swift; sourceTree = "<group>"; };
 		6F9D18FA1FFE862700224916 /* GatewayMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMap.swift; sourceTree = "<group>"; };
 		6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		6FE598751FFED17D001FD483 /* Coding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
+		6FE598771FFED234001FD483 /* JSONCodingMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodingMocks.swift; sourceTree = "<group>"; };
+		6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpectationManager.swift; sourceTree = "<group>"; };
 		6FE9A7841F69632300B7B56A /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 				6F244D021F701895009A1E9E /* GatewayResult.swift */,
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
 				6F9D18FA1FFE862700224916 /* GatewayMap.swift */,
+				6FE598751FFED17D001FD483 /* Coding.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -126,8 +131,9 @@
 			children = (
 				6F961E561FD739B000181E17 /* Resources */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
-				6F6F24E91FEC50E30027895C /* UpdateSessionRequestTests.swift */,
 				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
+				6FE598771FFED234001FD483 /* JSONCodingMocks.swift */,
+				6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */,
 			);
 			name = Tests;
 			path = Tests/MGPSDKTests;
@@ -259,8 +265,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */,
+				6FE598761FFED17D001FD483 /* Coding.swift in Sources */,
 				6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */,
-				6F24484B1F75688C0032030D /* URLSessionMocks.swift in Sources */,
 				6F9D18FB1FFE862700224916 /* GatewayMap.swift in Sources */,
 				6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */,
 				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
@@ -275,8 +281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FAFCCE92004054C006F6DBA /* URLSessionMocks.swift in Sources */,
 				6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */,
-				6F6F24EB1FEC513A0027895C /* UpdateSessionRequestTests.swift in Sources */,
+				6FE5987C1FFFFD5B001FD483 /* ExpectationManager.swift in Sources */,
+				6FE598791FFFE444001FD483 /* JSONCodingMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

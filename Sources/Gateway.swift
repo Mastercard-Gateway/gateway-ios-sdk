@@ -28,13 +28,6 @@ public class Gateway: NSObject {
     /// The merchant's id on the Gateway
     public let merchantId: String
     
-    /// The User-Agent string that is sent when connecting to the gateway.  This string will include appear as Gateway-iOS-SDK/1.0
-    var userAgent: String {
-        let bundle = Bundle.init(for: Gateway.self)
-        let version = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "0.0"
-        return "Gateway-iOS-SDK/\(version)"
-    }
-    
     /// Construct a new instance of the gateway.
     ///
     /// - Parameters:
@@ -55,7 +48,7 @@ public class Gateway: NSObject {
     ///   - completion: A completion handler for when the request completes or fails
     /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     @discardableResult
-    public func updateSession(_ session: String, apiVersion: Int, payload: GatewayMap, completion: @escaping (GatewayResult<GatewayMap>) -> Void) -> URLSessionTask? {
+    public func updateSession(_ session: String, apiVersion: String, payload: GatewayMap, completion: @escaping (GatewayResult<GatewayMap>) -> Void) -> URLSessionTask? {
         do {
             var fullPayload = payload
             fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
@@ -79,7 +72,7 @@ public class Gateway: NSObject {
     /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     /// - Throws: If the APIVersion is not supported or the payload could not be encoded
     @discardableResult
-    func execute(_ method: HTTPMethod, path: String, payload: GatewayMap, apiVersion: Int, completion: @escaping (GatewayResult<GatewayMap>) -> Void) throws -> URLSessionTask? {
+    func execute(_ method: HTTPMethod, path: String, payload: GatewayMap, apiVersion: String, completion: @escaping (GatewayResult<GatewayMap>) -> Void) throws -> URLSessionTask? {
         
         let requestURL = try apiURL(for: apiVersion).appendingPathComponent(path)
         
@@ -92,14 +85,13 @@ public class Gateway: NSObject {
         let task = urlSession.dataTask(with: request) { (data, response, error) in
             do {
                 guard error == nil else { throw error! }
-                guard let data = data else { throw GatewayError.missingResponse }
-                
-                let responseMap = try self.decoder.decode(GatewayMap.self, from: data)
                 
                 if let httpResponse = response as? HTTPURLResponse, !(200..<300).contains(httpResponse.statusCode) {
-                    let explination = (responseMap[path: "error.explanation"] as? String) ?? "An error occurred"
+                    let explination = self.getErrorExplination(data)
                     throw GatewayError.failedRequest(httpResponse.statusCode, explination)
                 } else {
+                    guard let data = data else { throw GatewayError.missingResponse }
+                    let responseMap = try self.decoder.decode(GatewayMap.self, from: data)
                     completion(GatewayResult(responseMap))
                 }
             } catch {
@@ -116,14 +108,29 @@ public class Gateway: NSObject {
         URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
     }()
     
+    lazy var sdkVersion: String = {
+        let bundle = Bundle.init(for: Gateway.self)
+        return bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "0.0"
+    }()
+    
+    /// The User-Agent string that is sent when connecting to the gateway.  This string will include appear as Gateway-iOS-SDK/1.0
+    lazy var userAgent: String  = {
+        return "Gateway-iOS-SDK/\(sdkVersion)"
+    }()
+    
     /// The json deocder that will be used to parse all responses into model objects
-    lazy var decoder: JSONDecoder = JSONDecoder()
+    lazy var decoder: JSONDecoderProtocol = JSONDecoder()
     /// The json deocder that will be used to parse all serialize request parameters
-    lazy var encoder: JSONEncoder = JSONEncoder()
+    lazy var encoder: JSONEncoderProtocol = JSONEncoder()
 
-    private func apiURL(for apiVersion: Int) throws -> URL {
-        guard apiVersion >= BuildConfig.minimumAPIVersion else { throw GatewayError.invalidAPIVersion(apiVersion) }
+    private func apiURL(for apiVersion: String) throws -> URL {
+        guard BuildConfig.minimumAPIVersion.compare(apiVersion, options: .numeric) != .orderedDescending else { throw GatewayError.invalidAPIVersion(apiVersion) }
         return URL(string: "https://\(region.urlPrefix)-gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
     }
     
+    private func getErrorExplination(_ data: Data?) -> String {
+        let defaultExplination = "An error occurred"
+        guard let data = data, let map = try? self.decoder.decode(GatewayMap.self, from: data) else { return defaultExplination }
+        return (map[path: "error.explination"] as? String) ?? defaultExplination
+    }
 }

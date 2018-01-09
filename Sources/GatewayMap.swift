@@ -29,16 +29,16 @@ public struct GatewayMap {
     
     
     
-    private var storage: [String: Box] = [:]
+    private var storage: [String: GatewayValue] = [:]
     
-    fileprivate init(boxed: [String: Box]) {
+    fileprivate init(boxed: [String: GatewayValue]) {
         self.storage = boxed
     }
     
     // MARK: - INTERNAL
     
-    var unbox: [String: Any] {
-        return storage.mapValues{ $0.unbox }
+    var value: [String: Any] {
+        return storage.mapValues{ $0.value }
     }
     
     // MARK: - PUBLIC
@@ -54,29 +54,29 @@ public struct GatewayMap {
     ///
     /// - Parameter dictionary: A dictionary to create the GatewayMap from.  Supported value types include, String, Int, Double, Bool, GatewayMap and arrays of any of those types.  Any un-supported value will simply be dropped from the map.
     public init(_ dictionary: [String: Any]) {
-        let boxedOpt = dictionary.mapValues{ Box($0) }
+        let boxedOpt = dictionary.mapValues{ GatewayValue($0) }
         let boxed = boxedOpt.filter{ return $1 != nil }.mapValues{ $0! }
         self.init(boxed: boxed)
     }
     
     /// A dictionary representation of the map
     public var dictionary: [String: Any] {
-        return unbox
+        return value
     }
     
     /// A description of the map's contents
     public var description: String {
-        return unbox.description
+        return value.description
     }
     
     
     /// Subscripting support for getting and setting values on the top-level map
     public subscript(key: String) -> Any? {
         get {
-            return storage[key]?.unbox
+            return storage[key]?.value
         }
         set(newValue) {
-            storage[key] = Box(newValue)
+            storage[key] = GatewayValue(newValue)
         }
     }
     
@@ -107,7 +107,7 @@ public struct GatewayMap {
             switch (remainingPath.isEmpty, current) {
             case (true, let element):
                 // this is the last path element, so return the unboxed value of the current element
-                return element.unbox
+                return element.value
             case (false, .map(let map)):
                 // there are more path components and element at the current path is a map, continue with the remaining elements
                 return map[remainingPath]
@@ -125,17 +125,17 @@ public struct GatewayMap {
             switch (remainingPath.isEmpty, current) {
             case (true, _):
                 // this is the last path element, set the boxed value
-                storage[currentComponent] = Box(newValue)
+                storage[currentComponent] = GatewayValue(newValue)
             case (false, .some(.map(let map))):
                 // there are more path components and element at the current path is already a map, continue with the remaining elements
                 var newMap = map
                 newMap[remainingPath] = newValue
-                storage[currentComponent] = Box(newMap)
+                storage[currentComponent] = GatewayValue(newMap)
             case (false, _):
                 // there are more path components and element at the current path is already a map, continue with the remaining elements
                 var newMap = GatewayMap()
                 newMap[remainingPath] = newValue
-                storage[currentComponent] = Box(newMap)
+                storage[currentComponent] = GatewayValue(newMap)
             }
         }
     }
@@ -161,35 +161,35 @@ extension GatewayMap: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        storage = try container.decode([String: Box].self)
+        storage = try container.decode([String: GatewayValue].self)
     }
 }
 
 // MARK: - PRIVATE
 
-fileprivate enum Box {
+fileprivate enum GatewayValue {
     case string(String)
     case int(Int)
     case double(Double)
     case bool(Bool)
-    case array([Box])
+    case array([GatewayValue])
     case map(GatewayMap)
     
-    init?(_ unboxed: Any?) {
-        guard let unboxed = unboxed else { return nil }
+    init?(_ value: Any?) {
+        guard let unboxed = value else { return nil }
         switch unboxed {
-        case let b as Box:
+        case let b as GatewayValue:
             self = b
         case let m as GatewayMap:
             self = .map(m)
-        case let d as [String: Box]:
+        case let d as [String: GatewayValue]:
             self = .map(GatewayMap(boxed: d))
         case let d as [String: Any]:
             self = .map(GatewayMap(d))
-        case let boxes as [Box]:
+        case let boxes as [GatewayValue]:
             self = .array(boxes)
         case let array as [Any]:
-            let boxes = array.flatMap{ Box($0) }
+            let boxes = array.flatMap{ GatewayValue($0) }
             self = .array(boxes)
         case let b as Bool:
             self = .bool(b)
@@ -204,7 +204,7 @@ fileprivate enum Box {
         }
     }
     
-    var unbox: Any {
+    var value: Any {
         switch self {
         case .string(let s):
             return s
@@ -215,14 +215,14 @@ fileprivate enum Box {
         case .bool(let b):
             return b
         case .array(let boxes):
-            return boxes.map{ $0.unbox }
+            return boxes.map{ $0.value }
         case .map(let m):
-            return m.unbox
+            return m.value
         }
     }
 }
 
-extension Box: Codable {
+extension GatewayValue: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -246,7 +246,7 @@ extension Box: Codable {
         
         if let obj = try? container.decode(GatewayMap.self) {
             self = .map(obj)
-        } else if let obj = try? container.decode([Box].self) {
+        } else if let obj = try? container.decode([GatewayValue].self) {
             self = .array(obj)
         } else if let obj = try? container.decode(Bool.self) {
             self = .bool(obj)
@@ -262,4 +262,30 @@ extension Box: Codable {
     }
 }
 
+extension GatewayValue: Equatable {
+    static func ==(lhs: GatewayValue, rhs: GatewayValue) -> Bool {
+        switch (lhs, rhs) {
+        case (.string(let l), .string(let r)):
+            return l == r
+        case (.int(let l), .int(let r)):
+            return l == r
+        case (.double(let l), .double(let r)):
+            return l == r
+        case (.bool(let l), .bool(let r)):
+            return l == r
+        case (.array(let l), .array(let r)):
+            return l == r
+        case (.map(let l), .map(let r)):
+            return l == r
+        default:
+            return false
+        }
+    }
+}
+
+extension GatewayMap: Equatable {
+    public static func ==(lhs: GatewayMap, rhs: GatewayMap) -> Bool {
+        return lhs.storage == rhs.storage
+    }
+}
 

@@ -17,9 +17,9 @@
 import Foundation
 
 class MockURLSessionDataTask: URLSessionDataTask {
-    public var resumeWasCalled = false
+    var resumeWasCalled = false
     
-    public override init() {
+    override init() {
         
     }
     
