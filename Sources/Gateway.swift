@@ -54,9 +54,11 @@ public class Gateway: NSObject {
             fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
             return try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
         } catch {
-            completion(GatewayResult(error))
-            return nil
+            defer {
+                completion(GatewayResult(error))
+            }
         }
+        return nil
     }
     
     // MARK: - INTERNAL & PRIVATE

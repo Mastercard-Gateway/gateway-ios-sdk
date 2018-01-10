@@ -27,9 +27,7 @@ public struct GatewayMap {
         case invalidData([CodingKey])
     }
     
-    
-    
-    private var storage: [String: GatewayValue] = [:]
+    var storage: [String: GatewayValue] = [:]
     
     fileprivate init(boxed: [String: GatewayValue]) {
         self.storage = boxed
@@ -97,7 +95,7 @@ public struct GatewayMap {
     /// Subscripting support for getting and setting values nested under several layers of GatewayMaps using a dot seperated key such as "sourceOfFunds.provided.card.number"
     ///
     /// - Parameter path: A dot seperated string of keys describing the path to a value in the map.
-    public subscript(path: [String]) -> Any? {
+    subscript(path: [String]) -> Any? {
         get {
             guard !path.isEmpty else { return nil }
             var remainingPath = path
@@ -167,7 +165,7 @@ extension GatewayMap: Codable {
 
 // MARK: - PRIVATE
 
-fileprivate enum GatewayValue {
+enum GatewayValue {
     case string(String)
     case int(Int)
     case double(Double)

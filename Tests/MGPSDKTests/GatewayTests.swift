@@ -55,13 +55,13 @@ class GatewayTests: XCTestCase {
     }
     
     func testUpdateSessionWithInvalidAPIVersionThrows() {
-        testSubject.updateSession("abc", apiVersion: "38.9", payload: GatewayMap()) { (result) in
+        XCTAssertNil(testSubject.updateSession("abc", apiVersion: "38.9", payload: GatewayMap()) { (result) in
             if case let .error(GatewayError.invalidAPIVersion(version)) = result {
                 XCTAssertEqual(version, "38.9")
             } else {
                 XCTFail("result should have ben an error")
             }
-        }
+        })
     }
     
     func testUpdateSessionUrlRequest() {
@@ -167,6 +167,30 @@ class GatewayTests: XCTestCase {
             print("Test Passed")
         default:
             XCTFail("Expected GatewayError.failedRequest(301, \"An error occurred\")")
+        }
+    }
+    
+    func testUpdateSessionWithBadResponseCodeNonStringExplination() {
+        let encoded = "updatePayload".data(using: .utf8)!
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        let mockResponseData = "ResponseData".data(using: .utf8)!
+        let mockResponseMap: GatewayMap = ["error" : ["explination" : 5]]
+        mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 404, httpVersion: nil, headerFields: nil)
+        
+        var requestResult: GatewayResult<GatewayMap>? = nil
+        
+        testSubject.updateSession("123456", apiVersion: "44", payload: GatewayMap()) { (result) in
+            requestResult = result
+        }
+        
+        mockURLSession.lastCompletion?(mockResponseData, mockResponse, nil)
+        
+        switch requestResult {
+        case .some(.error(GatewayError.failedRequest(404, "An error occurred"))):
+            print("Test Passed")
+        default:
+            XCTFail("Expected GatewayError.failedRequest(404, \"An error occurred\")")
         }
     }
     
