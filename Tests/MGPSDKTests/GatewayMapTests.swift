@@ -137,8 +137,19 @@ class GatewayMapTests: XCTestCase {
         XCTAssertEqual(expectedDescription, testSubject.description)
     }
     
-    func testEncoding() {
+    func testCodableSupport() {
+        testSubject = GatewayMap(complexValues)
+        // mocking Encoder and Decoder is very time consuming so we are simply going to encode and then decode a payload and test the result for equality with the initial map
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
         
+        do {
+            let encoded = try encoder.encode(testSubject)
+            let decoded = try decoder.decode(GatewayMap.self, from: encoded)
+            XCTAssertEqual(decoded, testSubject)
+        } catch {
+            XCTFail("Unexpected exception thrown - \(error.localizedDescription)")
+        }
     }
     
     private func testSetGet<T>(_ value: T, key: String = "object", file: StaticString = #file, line: UInt = #line) where T: Equatable {

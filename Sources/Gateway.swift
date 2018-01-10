@@ -49,16 +49,17 @@ public class Gateway: NSObject {
     /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     @discardableResult
     public func updateSession(_ session: String, apiVersion: String, payload: GatewayMap, completion: @escaping (GatewayResult<GatewayMap>) -> Void) -> URLSessionTask? {
+        var task: URLSessionTask? = nil
         do {
             var fullPayload = payload
             fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
-            return try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
+            task = try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
         } catch {
             defer {
                 completion(GatewayResult(error))
             }
         }
-        return nil
+        return task
     }
     
     // MARK: - INTERNAL & PRIVATE

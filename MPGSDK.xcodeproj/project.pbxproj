@@ -16,6 +16,7 @@
 		6F9D18FD1FFE8EB100224916 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */; };
 		6FAFCCE92004054C006F6DBA /* URLSessionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24484A1F75688C0032030D /* URLSessionMocks.swift */; };
 		6FAFCCEB200535CB006F6DBA /* GatewayMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFCCEA200535CB006F6DBA /* GatewayMapTests.swift */; };
+		6FAFCCED20065C45006F6DBA /* GatewayErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFCCEC20065C45006F6DBA /* GatewayErrorTests.swift */; };
 		6FE598761FFED17D001FD483 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE598751FFED17D001FD483 /* Coding.swift */; };
 		6FE598791FFFE444001FD483 /* JSONCodingMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE598771FFED234001FD483 /* JSONCodingMocks.swift */; };
 		6FE5987C1FFFFD5B001FD483 /* ExpectationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */; };
@@ -46,6 +47,7 @@
 		6F9D18FA1FFE862700224916 /* GatewayMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMap.swift; sourceTree = "<group>"; };
 		6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		6FAFCCEA200535CB006F6DBA /* GatewayMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMapTests.swift; sourceTree = "<group>"; };
+		6FAFCCEC20065C45006F6DBA /* GatewayErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayErrorTests.swift; sourceTree = "<group>"; };
 		6FE598751FFED17D001FD483 /* Coding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		6FE598771FFED234001FD483 /* JSONCodingMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodingMocks.swift; sourceTree = "<group>"; };
 		6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpectationManager.swift; sourceTree = "<group>"; };
@@ -104,13 +106,6 @@
 			path = Configs;
 			sourceTree = "<group>";
 		};
-		6F961E561FD739B000181E17 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,11 +126,11 @@
 		8933C7831EB5B7EB000D00A4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6F961E561FD739B000181E17 /* Resources */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
 				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
 				6FE598771FFED234001FD483 /* JSONCodingMocks.swift */,
 				6FAFCCEA200535CB006F6DBA /* GatewayMapTests.swift */,
+				6FAFCCEC20065C45006F6DBA /* GatewayErrorTests.swift */,
 				6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */,
 			);
 			name = Tests;
@@ -285,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FAFCCE92004054C006F6DBA /* URLSessionMocks.swift in Sources */,
+				6FAFCCED20065C45006F6DBA /* GatewayErrorTests.swift in Sources */,
 				6FAFCCEB200535CB006F6DBA /* GatewayMapTests.swift in Sources */,
 				6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */,
 				6FE5987C1FFFFD5B001FD483 /* ExpectationManager.swift in Sources */,
