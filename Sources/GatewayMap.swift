@@ -83,12 +83,10 @@ public struct GatewayMap {
     /// - Parameter path: An array of keys describing the path to a value in the map.
     public subscript(path path: String) -> Any? {
         get {
-            let components = path.components(separatedBy: ".")
-            return self[components]
+            return get(at: path)
         }
         set(newValue) {
-            let components = path.components(separatedBy: ".")
-            self[components] = newValue
+            set(newValue, at: path)
         }
     }
     
@@ -97,44 +95,86 @@ public struct GatewayMap {
     /// - Parameter path: A dot seperated string of keys describing the path to a value in the map.
     subscript(path: [String]) -> Any? {
         get {
-            guard !path.isEmpty else { return nil }
-            var remainingPath = path
-            let currentComponent = remainingPath.removeFirst()
-            guard let current = storage[currentComponent] else { return nil }
-            
-            switch (remainingPath.isEmpty, current) {
-            case (true, let element):
-                // this is the last path element, so return the unboxed value of the current element
-                return element.value
-            case (false, .map(let map)):
-                // there are more path components and element at the current path is a map, continue with the remaining elements
-                return map[remainingPath]
-            default:
-                // there are remaining path components but the current element is not a map, return nil
-                return nil
-            }
+            return get(at: path)
         }
         set(newValue) {
-            guard !path.isEmpty else { return }
-            var remainingPath = path
-            let currentComponent = remainingPath.removeFirst()
-            let current = storage[currentComponent]
+            set(newValue, at: path)
+        }
+    }
+    
+    func get(at path: String) -> Any? {
+        let components = path.components(separatedBy: ".")
+        return get(at: components)
+    }
+    
+    mutating func set(_ value: Any?, at path: String) {
+        let components = path.components(separatedBy: ".")
+        set(value, at: components)
+    }
+    
+    func get(at path: [String]) -> Any? {
+        guard !path.isEmpty else { return nil }
+        var remainingPath = path
+        let currentComponent = remainingPath.removeFirst()
+        guard let current = storage[currentComponent] else { return nil }
+        
+        switch (remainingPath.isEmpty, current) {
+        case (true, let element):
+            // this is the last path element, so return the unboxed value of the current element
+            return element.value
+        case (false, .map(let map)):
+            // there are more path components and element at the current path is a map, continue with the remaining elements
+            return map[remainingPath]
+        default:
+            // there are remaining path components but the current element is not a map, return nil
+            return nil
+        }
+    }
+    
+    mutating func set(_ newValue: Any?, at path: [String]) {
+        guard !path.isEmpty else { return }
+        var remainingPath = path
+        let currentComponent = remainingPath.removeFirst()
+        let current = storage[currentComponent]
+        
+        switch (remainingPath.isEmpty, current) {
+        case (true, _):
+            // this is the last path element, set the boxed value
+            storage[currentComponent] = GatewayValue(newValue)
+        case (false, .some(.map(let map))):
+            // there are more path components and element at the current path is already a map, continue with the remaining elements
+            var newMap = map
+            newMap[remainingPath] = newValue
+            storage[currentComponent] = GatewayValue(newMap)
+        case (false, _):
+            // there are more path components and element at the current path is already a map, continue with the remaining elements
+            var newMap = GatewayMap()
+            newMap[remainingPath] = newValue
+            storage[currentComponent] = GatewayValue(newMap)
+        }
+    }
+    
+    func splitArrayIndexPath(_ keyIndexPath: String) -> (key: String?, index: String?) {
+        do {
+            let arrayIndexPattern = "^(.*)\\[(.*)\\]$"
+            let regex = try NSRegularExpression(pattern: arrayIndexPattern)
             
-            switch (remainingPath.isEmpty, current) {
-            case (true, _):
-                // this is the last path element, set the boxed value
-                storage[currentComponent] = GatewayValue(newValue)
-            case (false, .some(.map(let map))):
-                // there are more path components and element at the current path is already a map, continue with the remaining elements
-                var newMap = map
-                newMap[remainingPath] = newValue
-                storage[currentComponent] = GatewayValue(newMap)
-            case (false, _):
-                // there are more path components and element at the current path is already a map, continue with the remaining elements
-                var newMap = GatewayMap()
-                newMap[remainingPath] = newValue
-                storage[currentComponent] = GatewayValue(newMap)
-            }
+            guard let ranges = regex.matches(in: keyIndexPath, range: NSRange(keyIndexPath.startIndex..., in: keyIndexPath)).first,
+                ranges.numberOfRanges > 1,
+                let keyRange = Range(ranges.range(at: 1), in: keyIndexPath)
+                else { return (nil, nil) }
+            
+            let key = String(keyIndexPath[keyRange])
+            
+            guard ranges.numberOfRanges > 2,
+                let indexRange = Range(ranges.range(at: 2), in: keyIndexPath)
+                else { return (key, nil) }
+            
+            let index = String(keyIndexPath[indexRange])
+            
+            return (key, index)
+        } catch {
+            return (nil, nil)
         }
     }
 }
