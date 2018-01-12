@@ -115,67 +115,91 @@ public struct GatewayMap {
     func get(at path: [String]) -> Any? {
         guard !path.isEmpty else { return nil }
         var remainingPath = path
-        let currentComponent = remainingPath.removeFirst()
-        guard let current = storage[currentComponent] else { return nil }
         
-        switch (remainingPath.isEmpty, current) {
-        case (true, let element):
-            // this is the last path element, so return the unboxed value of the current element
-            return element.value
-        case (false, .map(let map)):
-            // there are more path components and element at the current path is a map, continue with the remaining elements
-            return map[remainingPath]
+        var key = remainingPath.removeFirst()
+        var index: Int? = nil
+        let isIndexPath = keyIsIndexPath(key)
+        
+        if isIndexPath {
+            (key, index) = splitIndexPath(key)
+        }
+        
+        guard let current = storage[key] else { return nil }
+        
+        switch (remainingPath.isEmpty, current, isIndexPath, index) {
+        case (_, let element, false, _):
+            return element.get(at: remainingPath)
+        case (true, .array(let array), true, .some(let index)):
+            return array[if: index]?.value
+        case (true, .array(let array), true, .none):
+            return array.last?.value
+        case (false, .array(let array), true, .some(let index)):
+            return array[if: index]?.get(at: remainingPath)
+        case (false, .array(let array), true, .none):
+            return array.last?.get(at: remainingPath)
         default:
-            // there are remaining path components but the current element is not a map, return nil
             return nil
         }
     }
     
-    mutating func set(_ newValue: Any?, at path: [String]) {
-        guard !path.isEmpty else { return }
-        var remainingPath = path
-        let currentComponent = remainingPath.removeFirst()
-        let current = storage[currentComponent]
+    @discardableResult mutating func set(_ newValue: Any?, at path: [String]) -> GatewayMap? {
         
-        switch (remainingPath.isEmpty, current) {
-        case (true, _):
+        guard !path.isEmpty else { return nil }
+        var remainingPath = path
+        
+        var key = remainingPath.removeFirst()
+        var index: Int? = nil
+        let isIndexPath = keyIsIndexPath(key)
+        
+        if isIndexPath {
+            (key, index) = splitIndexPath(key)
+        }
+        
+        let current = storage[key]
+        
+        switch (remainingPath.isEmpty, current, isIndexPath, index) {
+        case (true , .none, false, _):
             // this is the last path element, set the boxed value
-            storage[currentComponent] = GatewayValue(newValue)
-        case (false, .some(.map(let map))):
-            // there are more path components and element at the current path is already a map, continue with the remaining elements
-            var newMap = map
-            newMap[remainingPath] = newValue
-            storage[currentComponent] = GatewayValue(newMap)
-        case (false, _):
-            // there are more path components and element at the current path is already a map, continue with the remaining elements
-            var newMap = GatewayMap()
-            newMap[remainingPath] = newValue
-            storage[currentComponent] = GatewayValue(newMap)
+            storage[key] = GatewayValue(newValue)
+        case (_, .some(let leaf), false, _):
+            storage[key] = leaf.set(newValue, at: remainingPath)
+        case (false, _, false, _):
+            storage[key] = GatewayValue(GatewayMap())
+            set(newValue, at: path)
+        case (let end, let element, true, let index):
+            var array: [GatewayValue] = []
+            // if the element is already an array, use that array
+            if case .some(.array(let existing)) = element {
+                array = existing
+            }
+            
+            // if this is the end of the path, create the value if not create a map
+            var value: GatewayValue? = end ? GatewayValue(newValue) : GatewayValue.map([:])
+            
+            // if this is not the end of the path, and an index was provided, look for a value at that index on which we can append
+            if !end, let index = index {
+                // look for a value at that index
+                value = array[if: index] ?? value
+            }
+            
+            if !end {
+                value = value?.set(newValue, at: remainingPath)
+            }
+            
+            var newArray = array
+            
+            switch (value, index) {
+            case(let value, .some(let index)):
+                newArray[if: index] = value
+            case (.some(let value), .none):
+                newArray.append(value)
+            case (.none, .none):
+                if !newArray.isEmpty { newArray.removeLast() }
+            }
+            
+            storage[key] = GatewayValue(newArray)
         }
-    }
-    
-    func splitArrayIndexPath(_ keyIndexPath: String) -> (key: String?, index: String?) {
-        do {
-            let arrayIndexPattern = "^(.*)\\[(.*)\\]$"
-            let regex = try NSRegularExpression(pattern: arrayIndexPattern)
-            
-            guard let ranges = regex.matches(in: keyIndexPath, range: NSRange(keyIndexPath.startIndex..., in: keyIndexPath)).first,
-                ranges.numberOfRanges > 1,
-                let keyRange = Range(ranges.range(at: 1), in: keyIndexPath)
-                else { return (nil, nil) }
-            
-            let key = String(keyIndexPath[keyRange])
-            
-            guard ranges.numberOfRanges > 2,
-                let indexRange = Range(ranges.range(at: 2), in: keyIndexPath)
-                else { return (key, nil) }
-            
-            let index = String(keyIndexPath[indexRange])
-            
-            return (key, index)
-        } catch {
-            return (nil, nil)
-        }
+        return self
     }
 }
 
@@ -327,3 +351,82 @@ extension GatewayMap: Equatable {
     }
 }
 
+protocol PathGettable {
+    func get(at path: [String]) -> Any?
+}
+
+protocol PathSettable {
+    @discardableResult mutating func set(_ newValue: Any?, at path: [String]) -> Self?
+}
+
+extension GatewayValue {
+    @discardableResult func set(_ newValue: Any?, at path: [String]) -> GatewayValue? {
+        switch (path.isEmpty, self) {
+        case (true, _):
+            return GatewayValue(newValue)
+        case (false, .map(let map)):
+            var newMap = map
+            newMap.set(newValue, at: path)
+            return .map(newMap)
+        default:
+            return nil
+        }
+    }
+}
+
+extension GatewayValue {
+    func get(at path: [String]) -> Any? {
+        switch (path.isEmpty, self) {
+        case (true, _):
+            return value
+        case (false, .map(let map)):
+            return map.get(at: path)
+        default:
+            return nil
+        }
+    }
+}
+
+fileprivate let regex = try! NSRegularExpression(pattern: "^(.+)\\[(.*)\\]$")
+
+fileprivate func keyIsIndexPath(_ key: String) -> Bool {
+    guard key.contains("["), key.contains("]") else { return false }
+    return regex.numberOfMatches(in: key, range: NSRange(key.startIndex..., in: key)) > 0
+}
+
+fileprivate func splitIndexPath(_ keyIndexPath: String) -> (String, Int?) {
+    guard let ranges = regex.matches(in: keyIndexPath, range: NSRange(keyIndexPath.startIndex..., in: keyIndexPath)).first,
+        ranges.numberOfRanges > 1,
+        let keyRange = Range(ranges.range(at: 1), in: keyIndexPath)
+        else { return (keyIndexPath, nil) }
+    
+    let key = String(keyIndexPath[keyRange])
+    
+    guard ranges.numberOfRanges > 2,
+        let indexRange = Range(ranges.range(at: 2), in: keyIndexPath)
+        else { return (key, nil) }
+    
+    let index = Int(keyIndexPath[indexRange])
+    
+    return (key, index)
+}
+
+fileprivate extension Array {
+    /// extension to subscripting for arrays that allows the return of nil if the index is invalid, appending if the index is beyond the existing array or removing at an index if you set nil
+    subscript (if index: Index) -> Element? {
+        get {
+            return indices.contains(index) ? self[index] : nil
+        }
+        set {
+            if indices.contains(index) {
+                if let newValue = newValue {
+                    self[index] = newValue
+                } else {
+                    self.remove(at: index)
+                }
+            } else if let newValue = newValue {
+                self.append(newValue)
+            }
+        }
+    }
+}

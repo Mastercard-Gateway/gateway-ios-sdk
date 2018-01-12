@@ -92,6 +92,99 @@ class GatewayMapTests: XCTestCase {
         XCTAssertEqual(testSubject, GatewayMap(["map" : allSimpleValues]))
     }
     
+    func testGetValuesArrayPath() {
+        testSubject = ["A" : ["a", "b", "c"]]
+        XCTAssertEqual(testSubject[path: "A[1]"] as? String, "b")
+        XCTAssertEqual(testSubject[path: "A[]"] as? String, "c")
+        
+        testSubject = ["Map" : [["value" : "A"], ["value" : "B"], ["value" : "C"]]]
+        XCTAssertEqual(testSubject[path: "Map[1].value"] as? String, "B")
+        XCTAssertEqual(testSubject[path: "Map[].value"] as? String, "C")
+    }
+    
+    func testSetValuesArrayPathLastKey() {
+        testSubject = [:]
+        
+        testSubject[path: "A[0]"] = "z" // make sure that the incorrect value is overridden
+        testSubject[path: "A[0]"] = "a"
+        testSubject[path: "A[1]"] = "b"
+        testSubject[path: "A[2]"] = "c"
+        
+        XCTAssertEqual(testSubject, GatewayMap(["A" : ["a", "b", "c"]]))
+    }
+    
+    func testSetValuesArrayPathInMiddle() {
+        testSubject = [:]
+        
+        testSubject[path: "letters[0].lower"] = "a"
+        testSubject[path: "letters[0].upper"] = "A"
+        testSubject[path: "letters[1].lower"] = "b"
+        testSubject[path: "letters[1].upper"] = "B"
+        testSubject[path: "letters[].upper"] = "C"
+        testSubject[path: "letters[].lower"] = "c"
+        
+        XCTAssertEqual(testSubject, GatewayMap(["letters" : [["lower" : "a", "upper" : "A"], ["lower" : "b", "upper" : "B"], ["upper" : "C"], ["lower" : "c"]]]))
+    }
+    
+    func testNillingValuesInAnArray() {
+        testSubject = ["numbers" : [0,1,2,3,4,5,6,7,8,9]]
+        
+        testSubject[path: "numbers[0]"] = nil
+        XCTAssertEqual(testSubject, ["numbers" : [1,2,3,4,5,6,7,8,9]])
+        
+        testSubject[path: "numbers[]"] = nil
+        XCTAssertEqual(testSubject, ["numbers" : [1,2,3,4,5,6,7,8]])
+    }
+    
+    func testOverridingArrayValues() {
+        testSubject = ["numbers" : [0,1,2,3,4,5,6,7,8,9]]
+        
+        testSubject[path: "numbers[0]"] = 1
+        XCTAssertEqual(testSubject, ["numbers" : [1,1,2,3,4,5,6,7,8,9]])
+    }
+    
+    func testOverridingArrayValuesInMiddleOfPath() {
+        testSubject = ["letters" : [["lower" : "a", "upper" : "A"], ["lower" : "d", "upper" : "D"], ["lower" : "c", "upper" : "C"]]]
+        
+        testSubject[path: "letters[1].lower"] = "b"
+        testSubject[path: "letters[1].upper"] = "B"
+        
+        XCTAssertEqual(testSubject, GatewayMap(["letters" : [["lower" : "a", "upper" : "A"], ["lower" : "b", "upper" : "B"], ["lower" : "c", "upper" : "C"]]]))
+    }
+    
+    func testGetValuesUsingArrayPathWhereNoArrayIsPresent() {
+        testSubject = ["letters" : "abcdefg"]
+        XCTAssertNil(testSubject[path: "letters[0]"])
+    }
+    
+    func testRemoveValuesInArray() {
+        testSubject = ["letters" : [["lower" : "a", "upper" : "A"], ["lower" : "b", "upper" : "B"], ["lower" : "c", "upper" : "C"]]]
+        
+        testSubject[path: "letters[1]"] = nil
+        
+        XCTAssertEqual(testSubject, GatewayMap(["letters" : [["lower" : "a", "upper" : "A"], ["lower" : "c", "upper" : "C"]]]))
+    }
+    
+    func testBadKeyPaths() {
+        testSubject = [:]
+        testSubject[path: "a[james]"] = 1 // if the index is a non-integer, we expect it to append
+        XCTAssertEqual(testSubject, GatewayMap(["a" : [1]]))
+        
+        testSubject = [:]
+        testSubject[path: "[a]"] = 1
+        XCTAssertEqual(testSubject, GatewayMap(["[a]" : 1]))
+        
+        testSubject = [:]
+        testSubject[path: "]["] = 1
+        XCTAssertEqual(testSubject, GatewayMap(["][" : 1]))
+    }
+    
+    func testIncompleteArrayNotationJustAddsKey() {
+        testSubject = [:]
+        testSubject[path: "a[1"] = 1
+        XCTAssertEqual(testSubject, GatewayMap(["a[1" : 1]))
+    }
+    
     func testValuesAtEmptyPath() {
         testSubject = GatewayMap(allSimpleValues)
         testSubject[[]] = "Should not be set"
