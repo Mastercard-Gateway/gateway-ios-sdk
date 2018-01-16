@@ -44,11 +44,11 @@ If the session was successfully updated with a payment, send this session id to 
 
 ```swift
 var request = GatewayMap()
-request[path: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
-request[path: "sourceOfFunds.provided.card.number"] = "<#card number#>"
-request[path: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
-request[path: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
-request[path: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
+request[at: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
+request[at: "sourceOfFunds.provided.card.number"] = "<#card number#>"
+request[at: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
+request[at: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
+request[at: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
 
 gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
     switch result {
@@ -64,47 +64,47 @@ You may also include additional information such as shipping/billing addresses, 
 
 ```swift
 // billing address
-request[path: "billing.address.city"] = billingCity
-request[path: "billing.address.company"] = billingCompany
-request[path: "billing.address.country"] = billingCountry
-request[path: "billing.address.postcodeZip"] = billingZip
-request[path: "billing.address.stateProvince"] = billingState
-request[path: "billing.address.street"] = billingStreet
-request[path: "billing.address.street2"] = billingStreet2
+request[at: "billing.address.city"] = billingCity
+request[at: "billing.address.company"] = billingCompany
+request[at: "billing.address.country"] = billingCountry
+request[at: "billing.address.postcodeZip"] = billingZip
+request[at: "billing.address.stateProvince"] = billingState
+request[at: "billing.address.street"] = billingStreet
+request[at: "billing.address.street2"] = billingStreet2
 
 // shipping address
-request[path: "shipping.address.city"] = shippingCity
-request[path: "shipping.address.company"] = shippingCompany
-request[path: "shipping.address.country"] = shippingCountry
-request[path: "shipping.address.postcodeZip"] = shippingZip
-request[path: "shipping.address.stateProvince"] = shippingState
-request[path: "shipping.address.street"] = shippingStreet
-request[path: "shipping.address.street2"] = shippingStreet2
+request[at: "shipping.address.city"] = shippingCity
+request[at: "shipping.address.company"] = shippingCompany
+request[at: "shipping.address.country"] = shippingCountry
+request[at: "shipping.address.postcodeZip"] = shippingZip
+request[at: "shipping.address.stateProvince"] = shippingState
+request[at: "shipping.address.street"] = shippingStreet
+request[at: "shipping.address.street2"] = shippingStreet2
 
 // shipping contact
-request[path: "shipping.contact.email"] = shippingEmail
-request[path: "shipping.contact.firstName"] = shippingFirstName
-request[path: "shipping.contact.lastName"] = shippingLastName
-request[path: "shipping.contact.mobilePhone"] = shippingMobile
-request[path: "shipping.contact.phone"] = shippingPhone
+request[at: "shipping.contact.email"] = shippingEmail
+request[at: "shipping.contact.firstName"] = shippingFirstName
+request[at: "shipping.contact.lastName"] = shippingLastName
+request[at: "shipping.contact.mobilePhone"] = shippingMobile
+request[at: "shipping.contact.phone"] = shippingPhone
 
 // shipping method
-request[path: "shipping.method"] = shippingMethod
+request[at: "shipping.method"] = shippingMethod
 
 // customer
-request[path: "customer.email"] = customerEmail
-request[path: "customer.firstName"] = customerFirstName
-request[path: "customer.lastName"] = customerLastName
-request[path: "customer.mobilePhone"] = customerMobile
-request[path: "customer.phone"] = customerPhone
-request[path: "customer.taxRegistrationId"] = customerTaxId
+request[at: "customer.email"] = customerEmail
+request[at: "customer.firstName"] = customerFirstName
+request[at: "customer.lastName"] = customerLastName
+request[at: "customer.mobilePhone"] = customerMobile
+request[at: "customer.phone"] = customerPhone
+request[at: "customer.taxRegistrationId"] = customerTaxId
 
 // device
-request[path: "device.browser"] = deviceUserAgent
-request[path: "device.fingerprint"] = deviceFingerprint
-request[path: "device.hostname"] = deviceHostname
-request[path: "device.ipAddress"] = deviceIpAddress
-request[path: "device.mobilePhoneModel"] = deviceModel
+request[at: "device.browser"] = deviceUserAgent
+request[at: "device.fingerprint"] = deviceFingerprint
+request[at: "device.hostname"] = deviceHostname
+request[at: "device.ipAddress"] = deviceIpAddress
+request[at: "device.mobilePhoneModel"] = deviceModel
 ```
 
 ## Sample App

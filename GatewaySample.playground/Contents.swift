@@ -36,11 +36,11 @@ let gateway = Gateway(region: <#YOUR REGION#>, merchantId: "<#YOUR MERCHANT ID#>
 //:
 //: If the session was succesfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 var request = GatewayMap()
-request[path: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
-request[path: "sourceOfFunds.provided.card.number"] = "<#card number#>"
-request[path: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
-request[path: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
-request[path: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
+request[at: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
+request[at: "sourceOfFunds.provided.card.number"] = "<#card number#>"
+request[at: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
+request[at: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
+request[at: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
 
 gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
     switch result {

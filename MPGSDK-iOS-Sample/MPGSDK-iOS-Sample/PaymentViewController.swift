@@ -38,11 +38,11 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     // Call the gateway to update the session.
     func updateSession() {
         var request = GatewayMap()
-        request[path: "sourceOfFunds.provided.card.nameOnCard"] = nameField.text
-        request[path: "sourceOfFunds.provided.card.number"] = numberField.text
-        request[path: "sourceOfFunds.provided.card.securityCode"] = cvvField.text
-        request[path: "sourceOfFunds.provided.card.expiry.month"] = expiryMMField.text
-        request[path: "sourceOfFunds.provided.card.expiry.year"] = expiryYYField.text
+        request[at: "sourceOfFunds.provided.card.nameOnCard"] = nameField.text
+        request[at: "sourceOfFunds.provided.card.number"] = numberField.text
+        request[at: "sourceOfFunds.provided.card.securityCode"] = cvvField.text
+        request[at: "sourceOfFunds.provided.card.expiry.month"] = expiryMMField.text
+        request[at: "sourceOfFunds.provided.card.expiry.year"] = expiryYYField.text
         
         gateway.updateSession(sessionId!, apiVersion: apiVersion!, payload: request, completion: updateSessionHandler(_:))
     }

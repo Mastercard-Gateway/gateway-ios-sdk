@@ -86,7 +86,7 @@ public struct GatewayMap {
     /// Values inside an array can be accessed using subscripting within the path.  For instance, "people[3].firstName" would access the element at index 3 of the 'people' array and then get the 'firstName' value from that object.  When setting values on an array, empty brackets '[]' may be used to append an object to the array.
     ///
     /// - Parameter path: A dot seperated string of keys describing the path to a value in the map.
-    public subscript(path path: String) -> Any? {
+    public subscript(at path: String) -> Any? {
         get {
             return get(at: path)
         }
