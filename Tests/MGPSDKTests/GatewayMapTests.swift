@@ -92,6 +92,13 @@ class GatewayMapTests: XCTestCase {
         XCTAssertEqual(testSubject, GatewayMap(["map" : allSimpleValues]))
     }
     
+    func testOverrideNonMapWithMap() {
+        testSubject = ["k1" : 5]
+        XCTAssertEqual(testSubject, GatewayMap(["k1" : 5 ]))
+        testSubject[path: "k1.k2.k3"] = 5
+        XCTAssertEqual(testSubject, GatewayMap(["k1" : [ "k2" : [ "k3" : 5 ] ] ]))
+    }
+    
     func testGetValuesArrayPath() {
         testSubject = ["A" : ["a", "b", "c"]]
         XCTAssertEqual(testSubject[path: "A[1]"] as? String, "b")
@@ -228,6 +235,7 @@ class GatewayMapTests: XCTestCase {
         let expectedDescription = "[\"map\": [\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"], \"array\": [[\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"], [\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"]]]"
         testSubject = GatewayMap(complexValues)
         XCTAssertEqual(expectedDescription, testSubject.description)
+        XCTAssertEqual(expectedDescription, testSubject.debugDescription)
     }
     
     func testCodableSupport() {

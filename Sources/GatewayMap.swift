@@ -78,9 +78,14 @@ public struct GatewayMap {
         }
     }
     
-    /// Subscripting support for getting and setting values nested under several layers of GatewayMaps using an array of keys
+    /// Subscripting support for getting and setting values nested under several layers of GatewayMaps and/or arrays using a dot seperated path string
+    /// If you map contains a value at key "key1" which is itself a map containing a value at key "key2", the value is accessed using a path of "key1.key2"
+    /// When getting a value, if any of the keys in the path do not exist, the returned value will be nil.
+    /// When setting a value, if any of the keys in the path do not exist, GatewayMaps will be created and inserted automatically.  If a non-map value exists in the middle of the path, that value will be overridden with a map.
     ///
-    /// - Parameter path: An array of keys describing the path to a value in the map.
+    /// Values inside an array can be accessed using subscripting within the path.  For instance, "people[3].firstName" would access the element at index 3 of the 'people' array and then get the 'firstName' value from that object.  When setting values on an array, empty brackets '[]' may be used to append an object to the array.
+    ///
+    /// - Parameter path: A dot seperated string of keys describing the path to a value in the map.
     public subscript(path path: String) -> Any? {
         get {
             return get(at: path)
@@ -368,8 +373,10 @@ extension GatewayValue {
             var newMap = map
             newMap.set(newValue, at: path)
             return .map(newMap)
-        default:
-            return nil
+        case (false, _):
+            var newMap = GatewayMap()
+            newMap.set(newValue, at: path)
+            return .map(newMap)
         }
     }
 }
@@ -387,6 +394,12 @@ extension GatewayValue {
     }
 }
 
+extension GatewayMap: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return value.debugDescription
+    }
+}
+
 fileprivate let regex = try! NSRegularExpression(pattern: "^(.+)\\[(.*)\\]$")
 
 fileprivate func keyIsIndexPath(_ key: String) -> Bool {
@@ -395,17 +408,12 @@ fileprivate func keyIsIndexPath(_ key: String) -> Bool {
 }
 
 fileprivate func splitIndexPath(_ keyIndexPath: String) -> (String, Int?) {
-    guard let ranges = regex.matches(in: keyIndexPath, range: NSRange(keyIndexPath.startIndex..., in: keyIndexPath)).first,
-        ranges.numberOfRanges > 1,
-        let keyRange = Range(ranges.range(at: 1), in: keyIndexPath)
-        else { return (keyIndexPath, nil) }
+    guard let ranges = regex.matches(in: keyIndexPath, range: NSRange(keyIndexPath.startIndex..., in: keyIndexPath)).first else { return (keyIndexPath, nil) }
     
+    let keyRange = Range(ranges.range(at: 1), in: keyIndexPath)!
     let key = String(keyIndexPath[keyRange])
     
-    guard ranges.numberOfRanges > 2,
-        let indexRange = Range(ranges.range(at: 2), in: keyIndexPath)
-        else { return (key, nil) }
-    
+    let indexRange = Range(ranges.range(at: 2), in: keyIndexPath)!
     let index = Int(keyIndexPath[indexRange])
     
     return (key, index)
