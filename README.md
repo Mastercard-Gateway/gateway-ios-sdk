@@ -1,6 +1,8 @@
 # Gateway SDK [![Build Status](https://travis-ci.org/Mastercard/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard/gateway-ios-sdk)
 Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
+**\*\*DISCLAIMER: This SDK is currently in pilot phase. Pending a `1.X.X` release, the interface is subject to change. Please direct all support inquiries to `gateway_support@mastercard.com`**
+
 ## Basic Payment Flow Diagram
 
 ![Payment Flow](./payment-flow.png "Payment Flow")
@@ -29,8 +31,9 @@ import MPGSDK
 ### Step 2 - Configure the SDK
 Initialize the SDK with your Gateway region and merchant ID.
 
+> Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific` and `GatewayRegion.europe`
 ```
-let gateway = try Gateway(region: "<#YOUR REGION#>", merchantId: "<#YOUR MERCHANT ID#>")
+let gateway = try Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```
 
 ### Step 3 - Updating a Session with Card Information
@@ -72,6 +75,21 @@ gateway.updateSession("<#session id#>",  card: card) { (result) in
 }
 ```
 
+You may also include additional information such as shipping/billing addresses, customer info, and device data by manually building the `UpdateSessionRequest` object and providing that to the SDK.
+
+```swift
+var request = UpdateSessionRequest(sessionId: "<#session id#>")
+let card = Card(...)
+request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
+request.customer = Customer(...)
+request.shipping = Shipping(...)
+request.billing = Billing(...)
+request.device = Device(...)
+gateway.execute(request: request) { (result) in
+    ...
+}
+```
+
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
 
@@ -99,7 +117,6 @@ let gatewayRegion = GatewayRegion."<#YOUR GATEWAY REGION#>"
 let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
 ```
 
-For more information, visit [https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html](https://test-gateway.mastercard.com/api/documentation/integrationGuidelines/index.html)
 
 [Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
 [certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning

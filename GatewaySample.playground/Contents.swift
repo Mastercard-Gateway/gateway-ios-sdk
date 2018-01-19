@@ -28,7 +28,7 @@ import MPGSDK
 //: ----
 //: ## Step 2
 //: Initialize the SDK with your Gateway region and merchant ID.
-let gateway = Gateway(region: <#YOUR REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
+let gateway = Gateway(region: GatewayRegion.<#YOUR REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 //: ----
 //: ## Step 3
 //: Call the gateway to update the session with a payment card.
