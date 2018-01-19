@@ -29,6 +29,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     
     /// The session id provided from the previous view that we desire to update with a payment source.
     var sessionId: String?
+    var apiVersion: Int?
     
     // MARK: - Gateway Setup
     var gateway: Gateway = Gateway(region: gatewayRegion, merchantId: gatewayMerchantId)
@@ -36,7 +37,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Update the session
     // Call the gateway to update the session.
     func updateSession() {
-        gateway.updateSession(sessionId!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
+        gateway.updateSession(sessionId!, apiVersion: apiVersion!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
     }
     
     // MARK: - Handle the Update Response

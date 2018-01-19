@@ -29,6 +29,7 @@ public struct UpdateSessionRequest: GatewayRequest, Encodable {
     public var sourceOfFunds: SourceOfFunds?
     
     public let sessionId: String
+    public let apiVersion: Int
     
     // providing the coding keys to keep the sessionId from being serialized into the json payload.
     private enum CodingKeys : String, CodingKey {
@@ -42,8 +43,10 @@ public struct UpdateSessionRequest: GatewayRequest, Encodable {
         case sourceOfFunds
     }
     
-    public init (sessionId: String) {
+    public init (sessionId: String, apiVersion: Int) throws {
+        guard apiVersion >= BuildConfig.minimumAPIVersion else { throw GatewayError.invalidAPIVersion(apiVersion) }
         self.sessionId = sessionId
+        self.apiVersion = apiVersion
     }
     
     /// The json deocder that will be used to parse all responses into model objects

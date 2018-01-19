@@ -22,6 +22,8 @@ public protocol GatewayRequest {
     var httpRequest: HTTPRequest { get }
     /// The type of the expected gateway response
     associatedtype responseType: GatewayResponse
+    /// the version of the api for the request
+    var apiVersion: Int { get }
 }
 
 
