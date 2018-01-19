@@ -50,12 +50,12 @@ class ConfirmationViewController: UIViewController {
         }
     }
     
-    fileprivate func sessionCompleted(_ result: Result<CompleteSessionResponse>) {
+    fileprivate func sessionCompleted(_ result: Result<MerchantAPIResponse<CompleteSessionResponse>>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
                 case .success(let response):
-                    if case .success = response.result {
+                    if case .success = response.gatewayResponse.result {
                         self.performSegue(withIdentifier: "showSuccess", sender: nil)
                     } else {
                         self.performSegue(withIdentifier: "showFailure", sender: nil)

@@ -21,6 +21,7 @@ class ProductViewController: UIViewController {
     var loadingViewController: LoadingViewController!
     
     var sessionId: String?
+    var apiVersion: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +42,14 @@ class ProductViewController: UIViewController {
         }
     }
     
-    fileprivate func sessionReceived(_ result: Result<CreateSessionResponse>) {
+    fileprivate func sessionReceived(_ result: Result<MerchantAPIResponse<CreateSessionResponse>>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
                 case .success(let response):
-                    if case .success = response.result {
-                        self.sessionId = response.session.id
+                    if case .success = response.gatewayResponse.result {
+                        self.sessionId = response.gatewayResponse.session.id
+                        self.apiVersion = response.apiVersion
                         self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
                     } else {
                         self.showError()
@@ -68,6 +70,7 @@ class ProductViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? PaymentViewController {
             destination.sessionId = sessionId
+            destination.apiVersion = apiVersion
         }
     }
     

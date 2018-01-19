@@ -33,60 +33,31 @@ Initialize the SDK with your Gateway region and merchant ID.
 
 > Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific` and `GatewayRegion.europe`
 ```
-let gateway = try Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
+let gateway = Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```
 
 ### Step 3 - Updating a Session with Card Information
 Call the gateway to update the session with a payment card.
 
-> The session should be a session id that was obtained by using your merchant services to contact the gateway.
+> The session should be a session id that was obtained by using your merchant services to contact the gateway and the apiVersion must match the version used to create the session.
 
 If the session was successfully updated with a payment, send this session id to your merchant services for processing with the gateway.
 
 ```swift
-gateway.updateSession("<#session id#>",  nameOnCard: "<#name on card#>", cardNumber: "<#card number#>",
-            securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
+var request = GatewayMap()
+request[at: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
+request[at: "sourceOfFunds.provided.card.number"] = "<#card number#>"
+request[at: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
+request[at: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
+request[at: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
+
+gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
     switch result {
     case .success(let response):
-        print(response.sessionId)
+        print(response.description)
     case .error(let error):
         print(error)
     }
-}
-```
-
-You can also construct a Card object and pass that as argument to the SDK.
-
-
-```swift
-let card = Card(nameOnCard: "<#name on card#>",
-                cardNumber: "<#card number#>",
-                securityCode: "<#security code#>",
-                expiry: Expiry(month: "<#expiration month#>", year: "<#expiration year#>")
-                )
-
-gateway.updateSession("<#session id#>",  card: card) { (result) in
-    switch result {
-    case .success(let response):
-        print(response.sessionId)
-    case .error(let error):
-        print(error)
-    }
-}
-```
-
-You may also include additional information such as shipping/billing addresses, customer info, and device data by manually building the `UpdateSessionRequest` object and providing that to the SDK.
-
-```swift
-var request = UpdateSessionRequest(sessionId: "<#session id#>")
-let card = Card(...)
-request.sourceOfFunds = SourceOfFunds(provided: Provided(card: card))
-request.customer = Customer(...)
-request.shipping = Shipping(...)
-request.billing = Billing(...)
-request.device = Device(...)
-gateway.execute(request: request) { (result) in
-    ...
 }
 ```
 

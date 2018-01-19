@@ -15,11 +15,19 @@
  */
 
 import Foundation
+@testable import MPGSDK
+import XCTest
 
-public struct Session: Codable {
-    public let version: String?
-    
-    public init(version: String? = nil) {
-        self.version = version
+public class MockJSONEncoder: JSONEncoderProtocol {
+    public var encodeExpectations = ExpectationManager()
+    public func encode<T: Encodable>(_ value: T) throws -> Data {
+        return try encodeExpectations.fulfill(value)
+    }
+}
+
+public class MockJSONDecoder: JSONDecoderProtocol {
+    public var decodeExpectations = ExpectationManager()
+    public func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable {
+        return try decodeExpectations.fulfill(data)
     }
 }

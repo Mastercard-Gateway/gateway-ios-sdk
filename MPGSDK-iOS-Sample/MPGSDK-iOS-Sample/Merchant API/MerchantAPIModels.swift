@@ -22,6 +22,11 @@ enum UpdateStatus: String, Codable {
     case success = "SUCCESS"
 }
 
+struct MerchantAPIResponse<T: Codable>: Codable {
+    let apiVersion: String
+    let gatewayResponse: T
+}
+
 struct Session: Codable {
     let id: String
     let updateStatus: UpdateStatus

@@ -31,14 +31,21 @@ import MPGSDK
 let gateway = Gateway(region: GatewayRegion.<#YOUR REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 //: ----
 //: ## Step 3
-//: Call the gateway to update the session with a payment card.
-//: > The session should be a session id that was obtained by using your merchant services to contact the gateway.
+//: Call the gateway to update the session with payer data.
+//: > The session should be a session id that was obtained by using your merchant services to contact the gateway and the apiVersion must match the version used to create the session.
 //:
 //: If the session was succesfully updated with a payment, send this session id to your merchant services for processing with the gateway.
-gateway.updateSession("<#session id#>", nameOnCard: "<#name on card#>", cardNumber: "<#card number#>", securityCode: "<#security code#>", expiryMM: "<#expiration month#>", expiryYY: "<#expiration year#>") { (result) in
+var request = GatewayMap()
+request[at: "sourceOfFunds.provided.card.nameOnCard"] = "<#name on card#>"
+request[at: "sourceOfFunds.provided.card.number"] = "<#card number#>"
+request[at: "sourceOfFunds.provided.card.securityCode"] = "<#security code#>"
+request[at: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
+request[at: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
+
+gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
     switch result {
     case .success(let response):
-        print(response.sessionId)
+        print(response.description)
     case .error(let error):
         print(error)
     }

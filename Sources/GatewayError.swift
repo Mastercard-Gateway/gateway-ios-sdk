@@ -17,24 +17,21 @@
 import Foundation
 
 public enum GatewayError: Error, CustomStringConvertible {
-    case invalidApiUrl(String)
-    case failedRequest(Int, ErrorResponse?)
-    case generic(Error)
-    case unknown
+    case failedRequest(Int, String)
+    case invalidAPIVersion(String)
+    case missingResponse
     
     public var description: String {
         switch self {
-        case .invalidApiUrl(let url):
-            return "Invalid API URL - \(url)"
-        case .failedRequest(let status, let error):
+        case .failedRequest(let status, let message):
             return """
-                    Gateway Request Error - \(status) - \(HTTPURLResponse.localizedString(forStatusCode: status))
-                    \(String(describing: error))response
+                    Gateway Request Error - \(status) \(HTTPURLResponse.localizedString(forStatusCode: status))
+                    \(message)
                     """
-        case .generic(let error):
-            return (error as CustomStringConvertible).description
-        case .unknown:
-            return "Unknown Error"
+        case .invalidAPIVersion(let version):
+            return "API version \(version) is not compatible"
+        case .missingResponse:
+            return "Unexpected empty response"
         }
     }
 }

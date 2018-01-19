@@ -16,10 +16,14 @@
 
 import Foundation
 
-public struct SourceOfFunds: Codable {
-    public let provided: Provided?
-    
-    public init(provided: Provided? = nil) {
-        self.provided = provided
-    }
+public protocol JSONEncoderProtocol {
+    func encode<T>(_ value: T) throws -> Data where T : Encodable
 }
+
+extension JSONEncoder: JSONEncoderProtocol { }
+
+public protocol JSONDecoderProtocol {
+    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
+}
+
+extension JSONDecoder: JSONDecoderProtocol { }
