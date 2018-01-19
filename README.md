@@ -60,53 +60,6 @@ gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, pay
 }
 ```
 
-You may also include additional information such as shipping/billing addresses, customer info, device data, and more by adding them to your request map before providing it to the SDK. Consult your integration guide for a full list of available options.
-
-```swift
-// billing address
-request[at: "billing.address.city"] = billingCity
-request[at: "billing.address.company"] = billingCompany
-request[at: "billing.address.country"] = billingCountry
-request[at: "billing.address.postcodeZip"] = billingZip
-request[at: "billing.address.stateProvince"] = billingState
-request[at: "billing.address.street"] = billingStreet
-request[at: "billing.address.street2"] = billingStreet2
-
-// shipping address
-request[at: "shipping.address.city"] = shippingCity
-request[at: "shipping.address.company"] = shippingCompany
-request[at: "shipping.address.country"] = shippingCountry
-request[at: "shipping.address.postcodeZip"] = shippingZip
-request[at: "shipping.address.stateProvince"] = shippingState
-request[at: "shipping.address.street"] = shippingStreet
-request[at: "shipping.address.street2"] = shippingStreet2
-
-// shipping contact
-request[at: "shipping.contact.email"] = shippingEmail
-request[at: "shipping.contact.firstName"] = shippingFirstName
-request[at: "shipping.contact.lastName"] = shippingLastName
-request[at: "shipping.contact.mobilePhone"] = shippingMobile
-request[at: "shipping.contact.phone"] = shippingPhone
-
-// shipping method
-request[at: "shipping.method"] = shippingMethod
-
-// customer
-request[at: "customer.email"] = customerEmail
-request[at: "customer.firstName"] = customerFirstName
-request[at: "customer.lastName"] = customerLastName
-request[at: "customer.mobilePhone"] = customerMobile
-request[at: "customer.phone"] = customerPhone
-request[at: "customer.taxRegistrationId"] = customerTaxId
-
-// device
-request[at: "device.browser"] = deviceUserAgent
-request[at: "device.fingerprint"] = deviceFingerprint
-request[at: "device.hostname"] = deviceHostname
-request[at: "device.ipAddress"] = deviceIpAddress
-request[at: "device.mobilePhoneModel"] = deviceModel
-```
-
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
 
