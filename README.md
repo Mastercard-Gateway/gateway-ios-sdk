@@ -31,8 +31,9 @@ import MPGSDK
 ### Step 2 - Configure the SDK
 Initialize the SDK with your Gateway region and merchant ID.
 
+> Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific` and `GatewayRegion.europe`
 ```
-let gateway = try Gateway(region: "<#YOUR REGION#>", merchantId: "<#YOUR MERCHANT ID#>")
+let gateway = try Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```
 
 ### Step 3 - Updating a Session with Card Information

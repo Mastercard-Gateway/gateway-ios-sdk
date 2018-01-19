@@ -26,7 +26,7 @@ public class Gateway: NSObject {
     /// Construct a new instance of the gateway.
     ///
     /// - Parameters:
-    ///   - region: the region in which the merchant is registered with the gateway
+    ///   - region: the region in which the merchant is registered with the gateway.  This must be one of the values provided by the GatewayRegion enum (.northAmerica, .europe, .asiaPacific).
     ///   - merchantId: a valid merchant ID
     public convenience init(region: GatewayRegion, merchantId: String) {
         self.init(region: region, merchantId: merchantId, apiVersion: BuildConfig.defaultAPIVersion)
