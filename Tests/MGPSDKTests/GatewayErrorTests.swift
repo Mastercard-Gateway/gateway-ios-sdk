@@ -14,20 +14,26 @@
  limitations under the License.
  */
 
-import Foundation
 
-public struct Customer: Codable {
-    public let email: String?
-    public let firstName: String?
-    public let lastName: String?
-    public let mobilePhone: String?
-    public let phone: String?
+import Foundation
+@testable import MPGSDK
+import XCTest
+
+class GatewayErrorTests: XCTestCase {
     
-    public init(email: String? = nil, firstName: String? = nil, lastName: String? = nil, mobilePhone: String? = nil, phone: String? = nil) {
-        self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
-        self.mobilePhone = mobilePhone
-        self.phone = phone
+    override func setUp() {
+        super.setUp()
     }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testDescriptions() {
+        XCTAssertEqual(GatewayError.failedRequest(404, "Failed To Load").description, "Gateway Request Error - 404 not found\nFailed To Load")
+        XCTAssertEqual(GatewayError.invalidAPIVersion("5").description, "API version 5 is not compatible")
+        XCTAssertEqual(GatewayError.missingResponse.description, "Unexpected empty response")
+        
+    }
+    
 }

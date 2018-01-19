@@ -16,18 +16,11 @@
 
 import Foundation
 
-/// A request to be issued against the gateway
-public protocol GatewayRequest {
-    /// The underlying HTTP Request Data
-    var httpRequest: HTTPRequest { get }
-    /// The type of the expected gateway response
-    associatedtype responseType: GatewayResponse
-    /// the version of the api for the request
-    var apiVersion: Int { get }
-}
-
-
-/// Any response object that can be decoded
-public protocol GatewayResponse: Decodable {
-    
+public enum HTTPMethod: String {
+    case get = "GET"
+    case put = "PUT"
+    case post = "POST"
+    case delete = "DELETE"
+    case head = "HEAD"
+    case trace = "TRACE"
 }

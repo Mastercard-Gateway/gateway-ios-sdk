@@ -29,7 +29,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     
     /// The session id provided from the previous view that we desire to update with a payment source.
     var sessionId: String?
-    var apiVersion: Int?
+    var apiVersion: String?
     
     // MARK: - Gateway Setup
     var gateway: Gateway = Gateway(region: gatewayRegion, merchantId: gatewayMerchantId)
@@ -37,12 +37,19 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Update the session
     // Call the gateway to update the session.
     func updateSession() {
-        gateway.updateSession(sessionId!, apiVersion: apiVersion!, nameOnCard: nameField.text!, cardNumber: numberField.text!, securityCode: cvvField.text!, expiryMM: expiryMMField.text!, expiryYY: expiryYYField.text!, completion: updateSessionHandler(_:))
+        var request = GatewayMap()
+        request[at: "sourceOfFunds.provided.card.nameOnCard"] = nameField.text
+        request[at: "sourceOfFunds.provided.card.number"] = numberField.text
+        request[at: "sourceOfFunds.provided.card.securityCode"] = cvvField.text
+        request[at: "sourceOfFunds.provided.card.expiry.month"] = expiryMMField.text
+        request[at: "sourceOfFunds.provided.card.expiry.year"] = expiryYYField.text
+        
+        gateway.updateSession(sessionId!, apiVersion: apiVersion!, payload: request, completion: updateSessionHandler(_:))
     }
     
     // MARK: - Handle the Update Response
     // Call the gateway to update the session.
-    fileprivate func updateSessionHandler(_ result: GatewayResult<UpdateSessionRequest.responseType>) {
+    fileprivate func updateSessionHandler(_ result: GatewayResult<GatewayMap>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {

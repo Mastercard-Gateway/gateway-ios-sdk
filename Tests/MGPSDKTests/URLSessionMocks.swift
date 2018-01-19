@@ -17,9 +17,9 @@
 import Foundation
 
 class MockURLSessionDataTask: URLSessionDataTask {
-    public var resumeWasCalled = false
+    var resumeWasCalled = false
     
-    public override init() {
+    override init() {
         
     }
     
@@ -36,7 +36,7 @@ class MockURLSession: URLSession {
     override init() {
         
     }
-
+    
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
             lastRequest = request
             lastCompletion = completionHandler

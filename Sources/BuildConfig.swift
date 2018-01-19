@@ -17,7 +17,7 @@
 import Foundation
 
 struct BuildConfig {
-    static let minimumAPIVersion: Int = 39
+    static let minimumAPIVersion: String = "39"
     static let intermidateCaStrings: [String] = [
         """
         MIIFAzCCA+ugAwIBAgIEUdNg7jANBgkqhkiG9w0BAQsFADCBvjELMAkGA1UEBhMC\
