@@ -134,6 +134,6 @@ public class Gateway: NSObject {
     private func getErrorExplination(_ data: Data?) -> String {
         let defaultExplination = "An error occurred"
         guard let data = data, let map = try? self.decoder.decode(GatewayMap.self, from: data) else { return defaultExplination }
-        return (map[at: "error.explination"] as? String) ?? defaultExplination
+        return (map[at: "error.explanation"] as? String) ?? defaultExplination
     }
 }
