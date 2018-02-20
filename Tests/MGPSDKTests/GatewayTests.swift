@@ -198,7 +198,7 @@ class GatewayTests: XCTestCase {
         let encoded = "updatePayload".data(using: .utf8)!
         mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
         let mockResponseData = "ResponseData".data(using: .utf8)!
-        let mockResponseMap: GatewayMap = ["error" : ["explination" : "Something went wrong"]]
+        let mockResponseMap: GatewayMap = ["error" : ["explanation" : "Something went wrong"]]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
         let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 99, httpVersion: nil, headerFields: nil)
         
