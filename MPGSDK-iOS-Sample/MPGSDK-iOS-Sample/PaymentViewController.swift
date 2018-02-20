@@ -55,8 +55,8 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
                 switch result {
                 case .success(_):
                     self.performSegue(withIdentifier: "showConfirmation", sender: nil)
-                case .error(_):
-                    self.showError()
+                case .error(let error):
+                    self.showError(error)
                 }
             }
         }
@@ -107,8 +107,16 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    fileprivate func showError() {
-        let alert = UIAlertController(title: "Error", message: "Unable to update session.", preferredStyle: .alert)
+    fileprivate func showError(_ error: Error) {
+        var title = "Error"
+        var message = "Unable to update session."
+        
+        if case GatewayError.failedRequest(let code, let explination) = error {
+            title = "Error (\(code))"
+            message = explination
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
