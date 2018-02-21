@@ -70,7 +70,7 @@ struct CompleteSessionRequest: Codable {
 }
 
 struct CompleteSessionResponse: Codable {
-    let merchant: String
+    let merchant: String?
     let result: APIResult
 }
 
