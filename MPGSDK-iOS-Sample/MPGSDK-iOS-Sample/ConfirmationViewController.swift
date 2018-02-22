@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MPGSDK
 
 class ConfirmationViewController: UIViewController {
 
@@ -50,12 +51,13 @@ class ConfirmationViewController: UIViewController {
         }
     }
     
-    fileprivate func sessionCompleted(_ result: Result<MerchantAPIResponse<CompleteSessionResponse>>) {
+    fileprivate func sessionCompleted(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
                 case .success(let response):
-                    if case .success = response.gatewayResponse.result {
+                    print(response)
+                    if "SUCCESS" == response[at: "gatewayResponse.result"] as? String {
                         self.performSegue(withIdentifier: "showSuccess", sender: nil)
                     } else {
                         self.performSegue(withIdentifier: "showFailure", sender: nil)

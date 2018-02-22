@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import MPGSDK
 
 enum Result<T> {
     case success(T)
@@ -38,7 +39,7 @@ class MerchantAPI {
         self.urlSession = urlSession
     }
     
-    func createSession(completion: @escaping (Result<MerchantAPIResponse<CreateSessionResponse>>) -> Void) {
+    func createSession(completion: @escaping (Result<GatewayMap>) -> Void) {
         let createPath = merchantServerURL.appendingPathComponent("session.php")
         var request = URLRequest(url: createPath)
         request.httpMethod = "POST"
@@ -46,13 +47,19 @@ class MerchantAPI {
         task.resume()
     }
     
-    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<MerchantAPIResponse<CompleteSessionResponse>>) -> Void) {
+    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var completeURLComp = URLComponents(url: merchantServerURL.appendingPathComponent("transaction.php"), resolvingAgainstBaseURL: false)!
         completeURLComp.queryItems = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]
         var request = URLRequest(url: completeURLComp.url!)
         request.httpMethod = "PUT"
         
-        let payload = CompleteSessionRequest(amount: amount, currency: currency, sessionId: sessionId)
+        var payload = GatewayMap(["apiOperation": "PAY"])
+        payload[at: "sourceOfFunds.type"] =  "CARD"
+        payload[at: "transaction.frequency"] = "SINGLE"
+        payload[at: "order.amount"] = amount
+        payload[at: "order.currency"] = currency
+        payload[at: "session.id"] = sessionId
+        
         let encoder = JSONEncoder()
         request.httpBody = try? encoder.encode(payload)
         
