@@ -18,8 +18,6 @@
 		6F5F70411F7C006E0048F591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70401F7C006E0048F591 /* Assets.xcassets */; };
 		6F5F70441F7C006E0048F591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70421F7C006E0048F591 /* LaunchScreen.storyboard */; };
 		6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */; };
-		6FCE10841F83C7A8007E9A7C /* MerchantAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE10831F83C7A8007E9A7C /* MerchantAPIModels.swift */; };
-		6FCE10861F83CB17007E9A7C /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE10851F83CB17007E9A7C /* APIResult.swift */; };
 		6FCE10881F84099B007E9A7C /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCE10891F84099B007E9A7C /* MPGSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +35,6 @@
 		6F5F70431F7C006E0048F591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6F5F70451F7C006E0048F591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantAPI.swift; sourceTree = "<group>"; };
-		6FCE10831F83C7A8007E9A7C /* MerchantAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantAPIModels.swift; sourceTree = "<group>"; };
-		6FCE10851F83CB17007E9A7C /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		6FCE10891F84099B007E9A7C /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -94,8 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */,
-				6FCE10831F83C7A8007E9A7C /* MerchantAPIModels.swift */,
-				6FCE10851F83CB17007E9A7C /* APIResult.swift */,
 			);
 			path = "Merchant API";
 			sourceTree = "<group>";
@@ -181,7 +175,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */,
-				6FCE10861F83CB17007E9A7C /* APIResult.swift in Sources */,
 				6F15AD501F7ECC470084D3AD /* ConfirmationViewController.swift in Sources */,
 				6F15AD4C1F7E9E550084D3AD /* UIViewController+KeyboardAvoiding.swift in Sources */,
 				6F15AD521F7ECC570084D3AD /* ResultViewController.swift in Sources */,
@@ -189,7 +182,6 @@
 				6F15AD4E1F7EC8550084D3AD /* LoadingViewController.swift in Sources */,
 				6F56DC2D1F7E7BC300F75506 /* PaymentViewController.swift in Sources */,
 				6F5F703A1F7C006E0048F591 /* AppDelegate.swift in Sources */,
-				6FCE10841F83C7A8007E9A7C /* MerchantAPIModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

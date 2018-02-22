@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MPGSDK
 
 class ProductViewController: UIViewController {
 
@@ -42,14 +43,15 @@ class ProductViewController: UIViewController {
         }
     }
     
-    fileprivate func sessionReceived(_ result: Result<MerchantAPIResponse<CreateSessionResponse>>) {
+    fileprivate func sessionReceived(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
                 switch result {
                 case .success(let response):
-                    if case .success = response.gatewayResponse.result {
-                        self.sessionId = response.gatewayResponse.session.id
-                        self.apiVersion = response.apiVersion
+                    print(response)
+                    if "SUCCESS" == response[at: "gatewayResponse.result"] as? String {
+                        self.sessionId = response[at: "gatewayResponse.session.id"] as? String
+                        self.apiVersion = response[at: "apiVersion"] as? String
                         self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
                     } else {
                         self.showError()
