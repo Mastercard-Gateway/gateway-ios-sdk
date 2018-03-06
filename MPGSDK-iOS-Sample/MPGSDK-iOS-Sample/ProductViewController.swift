@@ -17,12 +17,11 @@
 import UIKit
 import MPGSDK
 
-class ProductViewController: UIViewController {
+class ProductViewController: UIViewController, TransactionConsumer {
 
     var loadingViewController: LoadingViewController!
     
-    var sessionId: String?
-    var apiVersion: String?
+    var transaction: Transaction? = Transaction(amount: "250.00", currency: "USD")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +49,8 @@ class ProductViewController: UIViewController {
                 case .success(let response):
                     print(response)
                     if "SUCCESS" == response[at: "gatewayResponse.result"] as? String {
-                        self.sessionId = response[at: "gatewayResponse.session.id"] as? String
-                        self.apiVersion = response[at: "apiVersion"] as? String
+                        self.transaction?.sessionId = response[at: "gatewayResponse.session.id"] as? String
+                        self.transaction?.apiVersion = response[at: "apiVersion"] as? String
                         self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
                     } else {
                         self.showError()
@@ -70,9 +69,8 @@ class ProductViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? PaymentViewController {
-            destination.sessionId = sessionId
-            destination.apiVersion = apiVersion
+        if var destination = segue.destination as? TransactionConsumer {
+            destination.transaction = transaction
         }
     }
     

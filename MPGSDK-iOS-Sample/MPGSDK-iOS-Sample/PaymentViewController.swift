@@ -17,7 +17,7 @@
 import UIKit
 import MPGSDK
 
-class PaymentViewController: UIViewController, UITextFieldDelegate {
+class PaymentViewController: UIViewController, UITextFieldDelegate, TransactionConsumer {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var numberField: UITextField!
     @IBOutlet weak var expiryMMField: UITextField!
@@ -28,15 +28,16 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     
     
     /// The session id provided from the previous view that we desire to update with a payment source.
-    var sessionId: String?
-    var apiVersion: String?
+    var transaction: Transaction?
     
     // MARK: - Gateway Setup
     var gateway: Gateway = Gateway(region: gatewayRegion, merchantId: gatewayMerchantId)
-
+    
     // MARK: - Update the session
     // Call the gateway to update the session.
     func updateSession() {
+        guard let sessionId = transaction?.sessionId, let apiVersion = transaction?.apiVersion else { return }
+        
         var request = GatewayMap()
         request[at: "sourceOfFunds.provided.card.nameOnCard"] = nameField.text
         request[at: "sourceOfFunds.provided.card.number"] = numberField.text
@@ -44,7 +45,7 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
         request[at: "sourceOfFunds.provided.card.expiry.month"] = expiryMMField.text
         request[at: "sourceOfFunds.provided.card.expiry.year"] = expiryYYField.text
         
-        gateway.updateSession(sessionId!, apiVersion: apiVersion!, payload: request, completion: updateSessionHandler(_:))
+        gateway.updateSession(sessionId, apiVersion: apiVersion, payload: request, completion: updateSessionHandler(_:))
     }
     
     // MARK: - Handle the Update Response
@@ -122,9 +123,9 @@ class PaymentViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ConfirmationViewController {
-            destination.sessionId = sessionId
-            destination.maskedPan = maskPan()
+        if var destination = segue.destination as? TransactionConsumer {
+            transaction?.maskedCardNumber = maskPan()
+            destination.transaction = transaction
         }
     }
     
