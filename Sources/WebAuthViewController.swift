@@ -31,6 +31,7 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
     
     /// The cancel button allowing the user to abandon 3DS Authentication
     public var cancelButton: UIBarButtonItem!
+    public var activityIndicator: UIActivityIndicatorView!
     
     var gatewayScheme: String = "gatewaysdk"
     var gatewayHost: String = "3dsecure"
@@ -62,8 +63,12 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
     func setupView() {
         view.backgroundColor = .white
         
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicator.hidesWhenStopped = true
+        
         cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         navigationItem.leftBarButtonItems = [cancelButton]
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: activityIndicator)]
         
         navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
@@ -99,6 +104,14 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
     
     @objc func cancelAction() {
         completion?(self, .cancelled)
+    }
+    
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

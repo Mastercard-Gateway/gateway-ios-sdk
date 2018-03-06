@@ -95,7 +95,7 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
                 self.transaction?._3DSecureId = id
                 self.confirmPayment()
             default:
-                self.showAuthenticationError()
+                self.showAuthenticationCancelled()
             }
         })
     }
@@ -117,6 +117,12 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
     
     fileprivate func showAuthenticationError() {
         let alert = UIAlertController(title: "Error", message: "Unable to complete 3DS authentication.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    fileprivate func showAuthenticationCancelled() {
+        let alert = UIAlertController(title: "Error", message: "3DSecure authentication cancelled.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
