@@ -22,8 +22,19 @@ import WebKit
 /// - completed: The authentication was completed.  The status parameter will be a gateway's "summaryStatus" field and the ID will be the 3DSecureID that was provided durring the Check3DSecureEnrollment operation.
 /// - cancelled: The result if 3DSecure authentication was cancelled by the user.
 public enum Gateway3DSecureResult {
-    case completed(status: String, id: String)
+    case completed(summaryStatus: String, threeDSecureId: String)
+    case error(Gateway3DSecureError)
     case cancelled
+}
+
+
+/// Errors encountered when processing the 3DS redirect
+///
+/// - missingSummaryStatus: The summaryStatus query parameter was missing
+/// - missing3DSecureId: The 3DSecureId query parameter was missing
+public enum Gateway3DSecureError: Error {
+    case missingSummaryStatus
+    case missing3DSecureId
 }
 
 
@@ -58,7 +69,7 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
     /// - Parameters:
     ///   - htmlBodyContent: The HTML body provided by the Check3DSecureEnrollment operation
     ///   - handler: A closure to handle the 3DSecure 'WebAuthResult'
-    public func AuthenticatePayer(htmlBodyContent: String, handler: @escaping (Gateway3DSecureViewController, Gateway3DSecureResult) -> Void) {
+    public func authenticatePayer(htmlBodyContent: String, handler: @escaping (Gateway3DSecureViewController, Gateway3DSecureResult) -> Void) {
         self.completion = handler
         self.bodyContent = htmlBodyContent
     }
@@ -142,11 +153,17 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
                 return item.name == threeDSecureIdParam
             }
             
-            if let status = statusItem?.value, let threeDSecureId = idItem?.value {
-                completion?(self, .completed(status: status, id: threeDSecureId))
-            } else {
-                completion?(self, .cancelled)
+            guard let status  = statusItem?.value else {
+                completion?(self, .error(Gateway3DSecureError.missingSummaryStatus))
+                return
             }
+            
+            guard let threeDSecureId  = idItem?.value else {
+                completion?(self, .error(Gateway3DSecureError.missing3DSecureId))
+                return
+            }
+            
+            completion?(self, .completed(summaryStatus: status, threeDSecureId: threeDSecureId))
         } else {
             decisionHandler(.allow)
         }

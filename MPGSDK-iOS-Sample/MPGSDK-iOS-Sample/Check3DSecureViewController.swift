@@ -69,8 +69,12 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
                         self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                         self.begin3DSAuth(simple: html)
                     }
-                case "CARD_NOT_ENROLLED", "CARD_DOES_NOT_SUPPORT_3DS", "AUTHENTICATION_NOT_AVAILABLE":
-                    // for cards that are not enrolled, do not support 3DS or if authentication is not available, go straight tp payment confirmation
+                case "CARD_DOES_NOT_SUPPORT_3DS"
+                    // for cards that do not support 3DSecure, , go straight t0 payment confirmation
+                    self.confirmPayment()
+                case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
+                    // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
+                    self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                     self.confirmPayment()
                         
                 default:
@@ -98,8 +102,12 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
         // instatniate the Gateway 3DSecureViewController and present it
         let threeDSecureView = Gateway3DSecureViewController(nibName: nil, bundle: nil)
         present(threeDSecureView, animated: true)
-        // provide the html content and a handler
-        threeDSecureView.AuthenticatePayer(htmlBodyContent: simple, handler: handle3DS(authView:result:))
+        
+        // Optionally customize the presentation
+        threeDSecureView.title = "3-D Secure Auth"
+        threeDSecureView.navBar.tintColor = UIColor(red: 1, green: 0.357, blue: 0.365, alpha: 1)
+        
+        threeDSecureView.authenticatePayer(htmlBodyContent: simple, handler: handle3DS(authView:result:))
     }
     
     func handle3DS(authView: Gateway3DSecureViewController, result: Gateway3DSecureResult) {
@@ -107,9 +115,9 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
         authView.dismiss(animated: true, completion: {
             
             switch result {
-            case .completed(status: "AUTHENTICATION_FAILED", id: _):
+            case .error(_), .completed(summaryStatus: "AUTHENTICATION_FAILED", threeDSecureId: _):
                 self.showAuthenticationError() // failed authentication
-            case .completed(status: _, id: let id):
+            case .completed(summaryStatus: _, threeDSecureId: let id):
                 self.transaction?.threeDSecureId = id
                 self.confirmPayment() // continue with the payment for all other statuses
             default:
