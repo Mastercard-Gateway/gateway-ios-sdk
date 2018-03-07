@@ -17,6 +17,7 @@
 import UIKit
 import MPGSDK
 
+/// This view asks the user to confirm thier payment information before checking the session to see if the card is enrolled in 3DSecure.  If enrolled, it presents the Gateway3DSecureViewController from the gateway sdk.
 class Check3DSecureViewController: UIViewController, TransactionConsumer {
 
     lazy var loadingViewController: LoadingViewController = {
@@ -44,62 +45,80 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
         syncMaskedCard()
     }
     
+    
+    // MARK: - Check 3DS Enrollment
     @IBAction func checkEnrollment() {
         guard let transaction = transaction else { return }
         present(loadingViewController, animated: true) {
-            let dddsid = self.randomID()
-            MerchantAPI.shared?.check3DSEnrollment(transaction, _3DSecureId: dddsid, redirectURL: merchantServerUrl.appending("/3DSecureResult.php?3DSecureId=\(dddsid)"), completion: self.enrollmentStatusReceived)
+            let dddsid = self.randomID() // a generated 3DSecure Identifier
+            // The redirect url should redirect to a URL provided by your merchant server.  If you are using the provided sample merchant server, it
+            MerchantAPI.shared?.check3DSEnrollment(transaction, threeDSecureId: dddsid, redirectURL: merchantServerUrl.appending("/3DSecureResult.php?3DSecureId=\(dddsid)"), completion: self.enrollmentStatusReceived)
+        }
+    }
+    
+    fileprivate func handleEnrollmentStatus(_ result: Result<GatewayMap>) {
+        switch result {
+        case .success(let response):
+            print(response)
+            if let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String {
+                switch code {
+                    
+                case "CARD_ENROLLED":
+                    // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
+                    if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
+                        self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                        self.begin3DSAuth(simple: html)
+                    }
+                case "CARD_NOT_ENROLLED", "CARD_DOES_NOT_SUPPORT_3DS", "AUTHENTICATION_NOT_AVAILABLE":
+                    // for cards that are not enrolled, do not support 3DS or if authentication is not available, go straight tp payment confirmation
+                    self.confirmPayment()
+                        
+                default:
+                    self.showError()
+                        
+                }
+            } else {
+                self.showError()
+            }
+        case .error(_):
+            self.showError()
         }
     }
     
     fileprivate func enrollmentStatusReceived(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
-                switch result {
-                case .success(let response):
-                    print(response)
-                    if let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String {
-                        switch code {
-                        case "CARD_ENROLLED":
-                            if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
-                                self.transaction?._3DSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
-                                self.begin3DSAuth(simple: html)
-                            }
-                        case "CARD_NOT_ENROLLED", "CARD_DOES_NOT_SUPPORT_3DS", "AUTHENTICATION_SUCCESSFUL":
-                            self.confirmPayment()
-                        default:
-                            self.showError()
-                        }
-                    } else {
-                        self.showError()
-                    }
-                case .error(_):
-                    self.showError()
-                }
+                self.handleEnrollmentStatus(result)
             }
         }
     }
-    
+     
+    // MARK: - 3DSecure Authentiation
     fileprivate func begin3DSAuth(simple: String) {
-        let webAuthView = WebAuthViewController(nibName: nil, bundle: nil)
-        present(webAuthView, animated: true)
-        webAuthView.AuthenticatePayer(htmlBodyContent: simple, handler: handle3DS(authView:result:))
+        // instatniate the Gateway 3DSecureViewController and present it
+        let threeDSecureView = Gateway3DSecureViewController(nibName: nil, bundle: nil)
+        present(threeDSecureView, animated: true)
+        // provide the html content and a handler
+        threeDSecureView.AuthenticatePayer(htmlBodyContent: simple, handler: handle3DS(authView:result:))
     }
     
-    func handle3DS(authView: WebAuthViewController, result: WebAuthResult) {
+    func handle3DS(authView: Gateway3DSecureViewController, result: Gateway3DSecureResult) {
+        // dismiss the 3DSecureViewController
         authView.dismiss(animated: true, completion: {
+            
             switch result {
             case .completed(status: "AUTHENTICATION_FAILED", id: _):
-                self.showAuthenticationError()
+                self.showAuthenticationError() // failed authentication
             case .completed(status: _, id: let id):
-                self.transaction?._3DSecureId = id
-                self.confirmPayment()
+                self.transaction?.threeDSecureId = id
+                self.confirmPayment() // continue with the payment for all other statuses
             default:
                 self.showAuthenticationCancelled()
             }
         })
     }
     
+    // MARK: -
     fileprivate func confirmPayment() {
         performSegue(withIdentifier: "payOperation", sender: nil)
     }

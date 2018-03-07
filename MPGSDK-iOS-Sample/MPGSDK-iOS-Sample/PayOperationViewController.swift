@@ -17,6 +17,8 @@
 import UIKit
 import MPGSDK
 
+
+/// Process a payment
 class PayOperationViewController: UIViewController, TransactionConsumer {
 
     var transaction: Transaction?
@@ -41,6 +43,8 @@ class PayOperationViewController: UIViewController, TransactionConsumer {
         payOperation()
     }
     
+    // MARK: - Perform Payment Operation
+    /// ask the merchant service to capture the payment
     func payOperation() {
         guard let transaction = transaction, let sessionId = transaction.sessionId else { return }
         present(loadingViewController, animated: true) {
@@ -67,6 +71,7 @@ class PayOperationViewController: UIViewController, TransactionConsumer {
         }
     }
     
+    // MARK: -
     fileprivate func showError() {
         let alert = UIAlertController(title: "Error", message: "Unable to process payment.  Please try again.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

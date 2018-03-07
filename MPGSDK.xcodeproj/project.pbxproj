@@ -32,7 +32,7 @@
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
 		8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
-		B7EFCD83204DE15100C9A99E /* WebAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFCD82204DE15000C9A99E /* WebAuthViewController.swift */; };
+		B7EFCD83204DE15100C9A99E /* Gateway3DSecureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +74,7 @@
 		8933C7841EB5B820000D00A4 /* MPGSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDK.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* MPGSDK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDK.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* MPGSDKTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDKTests.plist; sourceTree = "<group>"; };
-		B7EFCD82204DE15000C9A99E /* WebAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAuthViewController.swift; sourceTree = "<group>"; };
+		B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway3DSecureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +151,7 @@
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
 				6F9D18FA1FFE862700224916 /* GatewayMap.swift */,
 				6FE598751FFED17D001FD483 /* Coding.swift */,
-				B7EFCD82204DE15000C9A99E /* WebAuthViewController.swift */,
+				B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -309,7 +309,7 @@
 				6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */,
 				6F9D18FB1FFE862700224916 /* GatewayMap.swift in Sources */,
 				6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */,
-				B7EFCD83204DE15100C9A99E /* WebAuthViewController.swift in Sources */,
+				B7EFCD83204DE15100C9A99E /* Gateway3DSecureViewController.swift in Sources */,
 				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */,
 				6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */,

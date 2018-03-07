@@ -17,6 +17,7 @@
 import UIKit
 import MPGSDK
 
+/// The initial view controller that creates a hosted session with the gateway when the user begins a checkout.
 class ProductViewController: UIViewController, TransactionConsumer {
 
     var loadingViewController: LoadingViewController!
@@ -36,28 +37,37 @@ class ProductViewController: UIViewController, TransactionConsumer {
         
     }
     
+    // performed when the user clicks the "Check out" button
     @IBAction func checkoutAction(_ sender: Any) {
         present(loadingViewController, animated: true) {
+            // MARK: CREATE A SESSION
             MerchantAPI.shared?.createSession(completion: self.sessionReceived(_:))
+        }
+    }
+    
+    // handle the response to create a session.
+    fileprivate func handleSessionResponse(_ result: Result<GatewayMap>) {
+        switch result {
+        case .success(let response):
+            print(response)
+            if "SUCCESS" == response[at: "gatewayResponse.result"] as? String {
+                // populate the transaction with the session id and the api version from the server
+                self.transaction?.sessionId = response[at: "gatewayResponse.session.id"] as? String
+                self.transaction?.apiVersion = response[at: "apiVersion"] as? String
+                // go to the payment view controller
+                self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
+            } else {
+                self.showError()
+            }
+        case .error(_):
+            self.showError()
         }
     }
     
     fileprivate func sessionReceived(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.loadingViewController.dismiss(animated: true) {
-                switch result {
-                case .success(let response):
-                    print(response)
-                    if "SUCCESS" == response[at: "gatewayResponse.result"] as? String {
-                        self.transaction?.sessionId = response[at: "gatewayResponse.session.id"] as? String
-                        self.transaction?.apiVersion = response[at: "apiVersion"] as? String
-                        self.performSegue(withIdentifier: "collectCardDetails", sender: nil)
-                    } else {
-                        self.showError()
-                    }
-                case .error(_):
-                    self.showError()
-                }
+                self.handleSessionResponse(result)
             }
         }
     }

@@ -17,13 +17,20 @@
 import UIKit
 import WebKit
 
-public enum WebAuthResult {
+/// An enum representing the status of the 3DSecure authentication
+///
+/// - completed: The authentication was completed.  The status parameter will be a gateway's "summaryStatus" field and the ID will be the 3DSecureID that was provided durring the Check3DSecureEnrollment operation.
+/// - cancelled: The result if 3DSecure authentication was cancelled by the user.
+public enum Gateway3DSecureResult {
     case completed(status: String, id: String)
     case cancelled
 }
 
-public class WebAuthViewController: UIViewController, WKNavigationDelegate {
 
+/// A view controller to perform 3DSecure 1.0 authentication using an embeded web view.
+public class Gateway3DSecureViewController: UIViewController, WKNavigationDelegate {
+
+    /// The internal webview used to perform authentication.
     var webView: WKWebView!
     
     /// The navigation Bar shown at the top of the view
@@ -31,19 +38,9 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
     
     /// The cancel button allowing the user to abandon 3DS Authentication
     public var cancelButton: UIBarButtonItem!
+    
+    /// An activity indicatior that is displayed any time there is activity on the web view
     public var activityIndicator: UIActivityIndicatorView!
-    
-    var gatewayScheme: String = "gatewaysdk"
-    var gatewayHost: String = "3dsecure"
-    var redirectStatusParam: String = "summaryStatus"
-    var _3DSecureIdParam: String = "3DSecureId"
-    
-    fileprivate var completion: ((WebAuthViewController, WebAuthResult) -> Void)?
-    fileprivate var bodyContent: String? = nil {
-        didSet {
-            loadContent()
-        }
-    }
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -55,12 +52,31 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
         setupView()
     }
     
-    public func AuthenticatePayer(htmlBodyContent: String, handler: @escaping (WebAuthViewController, WebAuthResult) -> Void) {
+    
+    /// Used to authenticate the payer using 3DSecure 1.0
+    ///
+    /// - Parameters:
+    ///   - htmlBodyContent: The HTML body provided by the Check3DSecureEnrollment operation
+    ///   - handler: A closure to handle the 3DSecure 'WebAuthResult'
+    public func AuthenticatePayer(htmlBodyContent: String, handler: @escaping (Gateway3DSecureViewController, Gateway3DSecureResult) -> Void) {
         self.completion = handler
         self.bodyContent = htmlBodyContent
     }
     
-    func setupView() {
+    // MARK: - PRIVATE
+    fileprivate var gatewayScheme: String = "gatewaysdk"
+    fileprivate var gatewayHost: String = "3dsecure"
+    fileprivate var redirectStatusParam: String = "summaryStatus"
+    fileprivate var threeDSecureIdParam: String = "3DSecureId"
+    
+    fileprivate var completion: ((Gateway3DSecureViewController, Gateway3DSecureResult) -> Void)?
+    fileprivate var bodyContent: String? = nil {
+        didSet {
+            loadContent()
+        }
+    }
+    
+    fileprivate func setupView() {
         view.backgroundColor = .white
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -106,6 +122,7 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
         completion?(self, .cancelled)
     }
     
+    // MARK: - WKNavigationDelegate methods
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         activityIndicator.startAnimating()
     }
@@ -122,11 +139,11 @@ public class WebAuthViewController: UIViewController, WKNavigationDelegate {
                 return item.name == redirectStatusParam
             }
             let idItem = comp.queryItems?.first { (item) -> Bool in
-                return item.name == _3DSecureIdParam
+                return item.name == threeDSecureIdParam
             }
             
-            if let status = statusItem?.value, let _3DSecureId = idItem?.value {
-                completion?(self, .completed(status: status, id: _3DSecureId))
+            if let status = statusItem?.value, let threeDSecureId = idItem?.value {
+                completion?(self, .completed(status: status, id: threeDSecureId))
             } else {
                 completion?(self, .cancelled)
             }

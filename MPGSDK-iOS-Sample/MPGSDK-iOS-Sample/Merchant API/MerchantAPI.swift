@@ -43,27 +43,27 @@ class MerchantAPI {
         issueRequest(path: "session.php", method: "POST", completion: completion)
     }
     
-    func check3DSEnrollment(_ transaction: Transaction, _3DSecureId: String, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
+    func check3DSEnrollment(_ transaction: Transaction, threeDSecureId: String, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "CHECK_3DS_ENROLLMENT"])
         payload[at: "order.amount"] = transaction.amount
         payload[at: "order.currency"] = transaction.currency
         payload[at: "session.id"] = transaction.sessionId!
         payload[at: "3DSecure.authenticationRedirect.responseUrl"] = redirectURL
         
-        let query = [URLQueryItem(name: "3DSecureId", value: _3DSecureId)]
+        let query = [URLQueryItem(name: "3DSecureId", value: threeDSecureId)]
         
         issueRequest(path: "3DSecure.php", method: "PUT", query: query, body: payload, completion: completion)
     }
     
-    func completeSession(_ sessionId: String, orderId: String, transactionId: String, _3DSecureId: String? = nil, amount: String, currency: String, completion: @escaping (Result<GatewayMap>) -> Void) {
+    func completeSession(_ sessionId: String, orderId: String, transactionId: String, threeDSecureId: String? = nil, amount: String, currency: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "PAY"])
         payload[at: "sourceOfFunds.type"] =  "CARD"
         payload[at: "transaction.frequency"] = "SINGLE"
         payload[at: "order.amount"] = amount
         payload[at: "order.currency"] = currency
         payload[at: "session.id"] = sessionId
-        if let _3DSecureId = _3DSecureId {
-            payload[at: "3DSecureId"] = _3DSecureId
+        if let threeDSecureId = threeDSecureId {
+            payload[at: "3DSecureId"] = threeDSecureId
         }
         
         let query = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]

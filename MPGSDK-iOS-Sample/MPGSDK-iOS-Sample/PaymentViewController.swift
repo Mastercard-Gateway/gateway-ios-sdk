@@ -17,6 +17,7 @@
 import UIKit
 import MPGSDK
 
+/// A view to collect card details and call the gateway sdk to update with payment information.
 class PaymentViewController: UIViewController, UITextFieldDelegate, TransactionConsumer {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var numberField: UITextField!
