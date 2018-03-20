@@ -69,7 +69,7 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
                         self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                         self.begin3DSAuth(simple: html)
                     }
-                case "CARD_DOES_NOT_SUPPORT_3DS"
+                case "CARD_DOES_NOT_SUPPORT_3DS":
                     // for cards that do not support 3DSecure, , go straight t0 payment confirmation
                     self.confirmPayment()
                 case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":

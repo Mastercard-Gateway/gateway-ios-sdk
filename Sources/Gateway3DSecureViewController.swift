@@ -39,6 +39,7 @@ public enum Gateway3DSecureError: Error {
 
 
 /// A view controller to perform 3DSecure 1.0 authentication using an embeded web view.
+/// This view listens for a redirect in the form of "gatewaysdk://3dsecure?summaryStatus=<STATUS>&3DSecureId=<ID>".  When that redirect occours, it will parse the parameters and return that to the handler provided to the "authenticatePayer" function.
 public class Gateway3DSecureViewController: UIViewController, WKNavigationDelegate {
 
     /// The internal webview used to perform authentication.
