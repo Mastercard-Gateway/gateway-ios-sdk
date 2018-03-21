@@ -1,11 +1,10 @@
 # Gateway SDK [![Build Status](https://travis-ci.org/Mastercard/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard/gateway-ios-sdk)
-Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
 **\*\*DISCLAIMER: This SDK is currently in pilot phase. Pending a `1.X.X` release, the interface is subject to change. Please direct all support inquiries to your acquirer**
 
-## Basic Payment Flow Diagram
+Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
-![Payment Flow](./payment-flow.png "Payment Flow")
+For more information, visit the [**Gateway iOS SDK Wiki**](https://github.com/Mastercard/gateway-ios-sdk/wiki) to find details about the basic transaction lifecycle and 3-D Secure support.
 
 ## Compatibility
 
@@ -22,13 +21,13 @@ github "Mastercard/gateway-ios-sdk"
 If you do not want to use carthage, you can download the sdk manually and add the MPGSDK as a sub project manually.
 
 ## Usage
-### Step 1 - Import the SDK
+### Import the SDK
 Import the Gateway SDK into your project
 
 ```swift
 import MPGSDK
 ```
-### Step 2 - Configure the SDK
+### Configuration
 Initialize the SDK with your Gateway region and merchant ID.
 
 > Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific` and `GatewayRegion.europe`
@@ -36,12 +35,8 @@ Initialize the SDK with your Gateway region and merchant ID.
 let gateway = Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```
 
-### Step 3 - Updating a Session with Card Information
-Call the gateway to update the session with a payment card.
-
-> The session should be a session id that was obtained by using your merchant services to contact the gateway and the apiVersion must match the version used to create the session.
-
-If the session was successfully updated with a payment, send this session id to your merchant services for processing with the gateway.
+### Basic Implementation
+Using an existing Session Id, you may pass card information directly to the `Gateway` object:
 
 ```swift
 var request = GatewayMap()
@@ -52,28 +47,16 @@ request[at: "sourceOfFunds.provided.card.expiry.month"] = "<#expiration month#>"
 request[at: "sourceOfFunds.provided.card.expiry.year"] = "<#expiration year#>"
 
 gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, payload: request) { (result) in
-    switch result {
-    case .success(let response):
-        print(response.description)
-    case .error(let error):
-        print(error)
-    }
+    // handle the result
 }
 ```
 
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
 
-Making a payment with the Gateway SDK is a three step process.
-1. The mobile app uses a merchant server to securely create a session on the gateway.
-2. The app prompts the user to enter their payment details and the gateway SDK is used to update the session with the payment card.
-3. The merchant server securely completes the payment.
+### Configuration
 
-In the sample app, these three steps can are performed using the Gateway Test Merchant Server and gateway sdk in the ProductViewController, PaymentViewController and ConfirmationViewController.
-
-### Initialize the Sample App
-
-To configure the sample app, open the AppDelegate.swift file. There are three fields which must be completed in order for the sample app to run a test payment.
+To configure the sample app, open the `AppDelegate.swift` file. There are three fields which must be completed in order for the sample app to run a test payment.
 
 ```swift
 // TEST Gateway Merchant ID
@@ -87,7 +70,6 @@ let gatewayRegion = GatewayRegion."<#YOUR GATEWAY REGION#>"
 // ex: https://{your-app-name}.herokuapp.com
 let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
 ```
-
 
 [Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
 [certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning

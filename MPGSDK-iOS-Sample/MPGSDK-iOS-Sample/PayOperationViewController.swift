@@ -17,37 +17,39 @@
 import UIKit
 import MPGSDK
 
-class ConfirmationViewController: UIViewController {
 
-    var sessionId: String?
-    var maskedPan: String? {
-        didSet {
-            syncPan()
-        }
-    }
+/// Process a payment
+class PayOperationViewController: UIViewController, TransactionConsumer {
+
+    var transaction: Transaction?
     
-    var loadingViewController: LoadingViewController!
-    @IBOutlet weak var cardNumberField: UILabel?
+    lazy var loadingViewController: LoadingViewController = {
+        var loadingViewController = storyboard!.instantiateViewController(withIdentifier: "loading") as! LoadingViewController
+        loadingViewController.localizedTitle = "Please Wait"
+        loadingViewController.localizedDescription = "processing payment for session"
+        return loadingViewController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingViewController = storyboard!.instantiateViewController(withIdentifier: "loading") as! LoadingViewController
-        loadingViewController.localizedTitle = "Please Wait"
-        loadingViewController.localizedDescription = "completing checkout session"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        syncPan()
     }
     
-    fileprivate func syncPan() {
-        cardNumberField?.text = maskedPan
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        payOperation()
     }
     
-    @IBAction func confirmAction(_ sender: Any) {
+    // MARK: - Perform Payment Operation
+    /// ask the merchant service to capture the payment
+    func payOperation() {
+        guard let transaction = transaction, let sessionId = transaction.sessionId else { return }
         present(loadingViewController, animated: true) {
-            MerchantAPI.shared?.completeSession(self.sessionId!, orderId: self.randomID(), transactionId: self.randomID(), amount: "250.00", currency: "USD", completion: self.sessionCompleted(_:))
+            
+            MerchantAPI.shared?.completeSession(sessionId, orderId: self.randomID(), transactionId: self.randomID(), amount: transaction.amount, currency: transaction.currency, completion: self.sessionCompleted(_:))
         }
     }
     
@@ -69,15 +71,16 @@ class ConfirmationViewController: UIViewController {
         }
     }
     
+    // MARK: -
     fileprivate func showError() {
-        let alert = UIAlertController(title: "Error", message: "Unable to complete session.  Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error", message: "Unable to process payment.  Please try again.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? PaymentViewController {
-            destination.sessionId = sessionId
+        if var destination = segue.destination as? TransactionConsumer {
+            destination.transaction = transaction
         }
     }
     

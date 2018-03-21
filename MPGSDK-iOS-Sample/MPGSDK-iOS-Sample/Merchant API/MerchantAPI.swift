@@ -40,28 +40,46 @@ class MerchantAPI {
     }
     
     func createSession(completion: @escaping (Result<GatewayMap>) -> Void) {
-        let createPath = merchantServerURL.appendingPathComponent("session.php")
-        var request = URLRequest(url: createPath)
-        request.httpMethod = "POST"
-        let task = urlSession.dataTask(with: request, completionHandler: responseHandler(completion))
-        task.resume()
+        issueRequest(path: "session.php", method: "POST", completion: completion)
     }
     
-    func completeSession(_ sessionId: String, orderId: String, transactionId: String, amount: String, currency: String, completion: @escaping (Result<GatewayMap>) -> Void) {
-        var completeURLComp = URLComponents(url: merchantServerURL.appendingPathComponent("transaction.php"), resolvingAgainstBaseURL: false)!
-        completeURLComp.queryItems = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]
-        var request = URLRequest(url: completeURLComp.url!)
-        request.httpMethod = "PUT"
+    func check3DSEnrollment(_ transaction: Transaction, threeDSecureId: String, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
+        var payload = GatewayMap(["apiOperation": "CHECK_3DS_ENROLLMENT"])
+        payload[at: "order.amount"] = transaction.amount
+        payload[at: "order.currency"] = transaction.currency
+        payload[at: "session.id"] = transaction.sessionId!
+        payload[at: "3DSecure.authenticationRedirect.responseUrl"] = redirectURL
         
+        let query = [URLQueryItem(name: "3DSecureId", value: threeDSecureId)]
+        
+        issueRequest(path: "3DSecure.php", method: "PUT", query: query, body: payload, completion: completion)
+    }
+    
+    func completeSession(_ sessionId: String, orderId: String, transactionId: String, threeDSecureId: String? = nil, amount: String, currency: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "PAY"])
         payload[at: "sourceOfFunds.type"] =  "CARD"
         payload[at: "transaction.frequency"] = "SINGLE"
         payload[at: "order.amount"] = amount
         payload[at: "order.currency"] = currency
         payload[at: "session.id"] = sessionId
+        if let threeDSecureId = threeDSecureId {
+            payload[at: "3DSecureId"] = threeDSecureId
+        }
+        
+        let query = [URLQueryItem(name: "order", value: orderId), URLQueryItem(name: "transaction", value: transactionId)]
+        issueRequest(path: "transaction.php", method: "PUT", query: query, body: payload, completion: completion)
+        
+    }
+    
+    fileprivate func issueRequest(path: String, method: String, query: [URLQueryItem]? = nil, body: GatewayMap? = nil, completion: @escaping (Result<GatewayMap>) -> Void) {
+        var completeURLComp = URLComponents(url: merchantServerURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+        completeURLComp.queryItems = query
+        var request = URLRequest(url: completeURLComp.url!)
+        
+        request.httpMethod = method
         
         let encoder = JSONEncoder()
-        request.httpBody = try? encoder.encode(payload)
+        request.httpBody = try? encoder.encode(body)
         
         let task = urlSession.dataTask(with: request, completionHandler: responseHandler(completion))
         task.resume()
@@ -69,6 +87,7 @@ class MerchantAPI {
     
     fileprivate func responseHandler<T: Decodable>(_ completion: @escaping (Result<T>) -> Void) -> (Data?, URLResponse?, Error?) -> Void {
         return { (data, response, error) in
+            print(String(data: data!, encoding: .utf8)!)
             if let error = error {
                 completion(Result.error(error))
                 return
