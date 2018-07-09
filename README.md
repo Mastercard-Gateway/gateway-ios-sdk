@@ -1,10 +1,13 @@
-# Gateway SDK [![Build Status](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk)
+#### \*\*DISCLAIMER: This SDK is currently in pilot phase. Pending a `1.X.X` release, the interface is subject to change. Currently, this SDK supports Gateway API versions 46 and below. Please direct all support inquiries to your acquirer.
 
-**\*\*DISCLAIMER: This SDK is currently in pilot phase. Pending a `1.X.X` release, the interface is subject to change. Please direct all support inquiries to your acquirer**
+# Gateway iOS SDK
+
+[![Build Status](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk)
 
 Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
 For more information, visit the [**Gateway iOS SDK Wiki**](https://github.com/Mastercard/gateway-ios-sdk/wiki) to find details about the basic transaction lifecycle and 3-D Secure support.
+
 
 ## Scope
 
@@ -12,9 +15,11 @@ The primary responsibility of this SDK is to eliminate the need for card details
 
 Once you have updated a session with card information from the app, you may then perform a variety of operations using this session from your secure server. Some of these operations include creating an authorization or payment, creating a card token to save card information for a customer, etc. Refer to your gateway integration guide for more details on how a Session can be used in your application.
 
+
 ## Compatibility
 
 The gateway SDK requires **iOS 8+** and is compatible with **Swift 4** projects. Therefore you must use **Xcode 9** when using the Gateway SDK.
+
 
 ## Installation [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
@@ -26,13 +31,17 @@ github "Mastercard/gateway-ios-sdk"
 
 If you do not want to use carthage, you can download the sdk manually and add the MPGSDK as a sub project manually.
 
+
 ## Usage
+
 ### Import the SDK
 Import the Gateway SDK into your project
 
 ```swift
 import MPGSDK
 ```
+
+
 ### Configuration
 Initialize the SDK with your Gateway region and merchant ID.
 
@@ -40,6 +49,7 @@ Initialize the SDK with your Gateway region and merchant ID.
 ```
 let gateway = Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```
+
 
 ### Basic Implementation
 Using an existing Session Id, you may pass card information directly to the `Gateway` object:
@@ -57,8 +67,12 @@ gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, pay
 }
 ```
 
+
+---
+
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
+
 
 ### Configuration
 
