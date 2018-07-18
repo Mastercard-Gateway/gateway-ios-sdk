@@ -44,7 +44,7 @@ import MPGSDK
 
 
 ### Configuration
-Initialize the SDK with your Gateway region and merchant ID.
+In order to use the SDK, you must initialize the Gateway object with your merchant ID and your gateway's region. If you are unsure about which region to select, please direct your inquiry to your gateway support team.
 
 > Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific` and `GatewayRegion.europe`
 ```
