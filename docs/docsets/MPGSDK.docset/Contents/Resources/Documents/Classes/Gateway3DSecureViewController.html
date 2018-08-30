@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gateway3DSecureViewController Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Gateway3DSecureViewController" class="dashAnchor"></a>
+    <a title="Gateway3DSecureViewController Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MPGSDK Docs</a> (47% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MPGSDK Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Gateway3DSecureViewController Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Gateway.html">Gateway</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Gateway3DSecureViewController.html">Gateway3DSecureViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Gateway3DSecureError.html">Gateway3DSecureError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Gateway3DSecureResult.html">Gateway3DSecureResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GatewayError.html">GatewayError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GatewayRegion.html">GatewayRegion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GatewayResult.html">GatewayResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/HTTPMethod.html">HTTPMethod</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONDecoderProtocol.html">JSONDecoderProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONEncoderProtocol.html">JSONEncoderProtocol</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/GatewayMap.html">GatewayMap</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GatewayMap/DecodingError.html">– DecodingError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Gateway3DSecureViewController</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Gateway3DSecureViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">WKNavigationDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>A view controller to perform 3DSecure 1.0 authentication using an embeded web view.
+This view listens for a redirect in the form of <q>gatewaysdk://3dsecure?summaryStatus=<STATUS>&3DSecureId=<ID></q>.  When that redirect occours, it will parse the parameters and return that to the handler provided to the <q>authenticatePayer</q> function.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6MPGSDK29Gateway3DSecureViewControllerC6navBarSQySo012UINavigationG0CGvp"></a>
+                    <a name="//apple_ref/swift/Property/navBar" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6MPGSDK29Gateway3DSecureViewControllerC6navBarSQySo012UINavigationG0CGvp">navBar</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The navigation Bar shown at the top of the view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">navBar</span><span class="p">:</span> <span class="kt">UINavigationBar</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6MPGSDK29Gateway3DSecureViewControllerC12cancelButtonSQySo05UIBarG4ItemCGvp"></a>
+                    <a name="//apple_ref/swift/Property/cancelButton" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6MPGSDK29Gateway3DSecureViewControllerC12cancelButtonSQySo05UIBarG4ItemCGvp">cancelButton</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The cancel button allowing the user to abandon 3DS Authentication</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">cancelButton</span><span class="p">:</span> <span class="kt">UIBarButtonItem</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6MPGSDK29Gateway3DSecureViewControllerC17activityIndicatorSQySo010UIActivitygD0CGvp"></a>
+                    <a name="//apple_ref/swift/Property/activityIndicator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6MPGSDK29Gateway3DSecureViewControllerC17activityIndicatorSQySo010UIActivitygD0CGvp">activityIndicator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An activity indicatior that is displayed any time there is activity on the web view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">activityIndicator</span><span class="p">:</span> <span class="kt">UIActivityIndicatorView</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)initWithNibName:bundle:"></a>
+                    <a name="//apple_ref/swift/Method/init(nibName:bundle:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)initWithNibName:bundle:">init(nibName:bundle:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="n">nibName</span> <span class="nv">nibNameOrNil</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">bundle</span> <span class="nv">nibBundleOrNil</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6MPGSDK29Gateway3DSecureViewControllerC17authenticatePayerySS15htmlBodyContent_yAC_AA0bC6ResultOtc7handlertF"></a>
+                    <a name="//apple_ref/swift/Method/authenticatePayer(htmlBodyContent:handler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6MPGSDK29Gateway3DSecureViewControllerC17authenticatePayerySS15htmlBodyContent_yAC_AA0bC6ResultOtc7handlertF">authenticatePayer(htmlBodyContent:handler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used to authenticate the payer using 3DSecure 1.0</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">authenticatePayer</span><span class="p">(</span><span class="nv">htmlBodyContent</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Gateway3DSecureViewController</span><span class="p">,</span> <span class="kt"><a href="../Enums/Gateway3DSecureResult.html">Gateway3DSecureResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>htmlBodyContent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The HTML body provided by the Check3DSecureEnrollment operation</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to handle the 3DSecure &lsquo;WebAuthResult&rsquo;</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/WKNavigationDelegate%20methods"></a>
+                <a name="//apple_ref/swift/Section/WKNavigationDelegate methods" class="dashAnchor"></a>
+                <a href="#/WKNavigationDelegate%20methods">
+                  <h3 class="section-name">WKNavigationDelegate methods</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:didStartProvisionalNavigation:"></a>
+                    <a name="//apple_ref/swift/Method/webView(_:didStartProvisionalNavigation:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:didStartProvisionalNavigation:">webView(_:didStartProvisionalNavigation:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">didStartProvisionalNavigation</span> <span class="nv">navigation</span><span class="p">:</span> <span class="kt">WKNavigation</span><span class="o">!</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:didFinishNavigation:"></a>
+                    <a name="//apple_ref/swift/Method/webView(_:didFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:didFinishNavigation:">webView(_:didFinish:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">didFinish</span> <span class="nv">navigation</span><span class="p">:</span> <span class="kt">WKNavigation</span><span class="o">!</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:decidePolicyForNavigationAction:decisionHandler:"></a>
+                    <a name="//apple_ref/swift/Method/webView(_:decidePolicyFor:decisionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MPGSDK@objc(cs)Gateway3DSecureViewController(im)webView:decidePolicyForNavigationAction:decisionHandler:">webView(_:decidePolicyFor:decisionHandler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">decidePolicyFor</span> <span class="nv">navigationAction</span><span class="p">:</span> <span class="kt">WKNavigationAction</span><span class="p">,</span> <span class="nv">decisionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">WKNavigationActionPolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/Mastercard/gateway-merchant-swift" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2018-08-30)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
