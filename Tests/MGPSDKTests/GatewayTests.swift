@@ -66,7 +66,7 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionUrlRequest() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
         testSubject.userAgent = "TestAgent/1.0"
         let mockTask = MockURLSessionDataTask()
         mockURLSession.nextDataTask = mockTask
@@ -83,7 +83,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionSuccessfulResponse() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["response" : "All is good"]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
@@ -106,7 +107,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionErrorSendingRequest() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["response" : "All is good"]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
@@ -130,7 +132,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionWithNilResponse() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
@@ -151,7 +154,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionWithBadResponseCodeNoExplination() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 301, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
@@ -172,7 +176,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionWithBadResponseCodeNonStringExplination() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["error" : ["explination" : 5]]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
@@ -196,7 +201,8 @@ class GatewayTests: XCTestCase {
     
     func testUpdateSessionWithBadResponseCodeWithExplination() {
         let encoded = "updatePayload".data(using: .utf8)!
-        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA"]), return: encoded)
+        mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["error" : ["explanation" : "Something went wrong"]]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
