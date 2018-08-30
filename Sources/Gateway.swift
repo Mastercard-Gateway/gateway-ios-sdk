@@ -53,6 +53,7 @@ public class Gateway: NSObject {
         do {
             var fullPayload = payload
             fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
+            fullPayload[at: "device.browser"] = userAgent
             task = try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
         } catch {
             defer {

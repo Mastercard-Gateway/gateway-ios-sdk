@@ -1,0 +1,8 @@
+xcodebuild_arguments:
+    - "-workspace"
+    - "MPGSDK.xcworkspace"
+    - "-scheme"
+    - "MPGSDK-iOS"
+    - "-configuration"
+    - "Release"
+module: MPGSDK
