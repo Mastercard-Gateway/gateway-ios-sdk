@@ -60,26 +60,50 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
         switch result {
         case .success(let response):
             print(response)
-            if let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String {
-                switch code {
-                    
-                case "CARD_ENROLLED":
-                    // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
-                    if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
-                        self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
-                        self.begin3DSAuth(simple: html)
+            if let apiVersionString = response[at: "apiVersion"] as? String, let apiVersion = Int(apiVersionString) {
+                // for API versions <= 46, you must use the summary status field to determine next steps for 3DS
+                if apiVersion <= 46 {
+                    if let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String {
+                        switch code {
+                            case "CARD_ENROLLED":
+                                // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
+                                if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
+                                    self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                                    self.begin3DSAuth(simple: html)
+                                }
+                            case "CARD_DOES_NOT_SUPPORT_3DS":
+                                // for cards that do not support 3DSecure, , go straight t0 payment confirmation
+                                self.confirmPayment()
+                            case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
+                                // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
+                                self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                                self.confirmPayment()
+                            
+                            default:
+                                self.showError()
+                        }
+                    } else {
+                        self.showError()
                     }
-                case "CARD_DOES_NOT_SUPPORT_3DS":
-                    // for cards that do not support 3DSecure, , go straight t0 payment confirmation
-                    self.confirmPayment()
-                case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
-                    // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
-                    self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
-                    self.confirmPayment()
+                    
+                // for API versions >= 47, you must look to the gateway recommendation and the presence of 3DS info in the payload
+                } else {
+                    if let recommendaition = response[at: "gatewayResponse.response.gatewayRecommendation"] as? String {
+                        // if DO_NOT_PROCEED returned in recommendation, should stop transaction
+                        if recommendaition == "DO_NOT_PROCEED" {
+                            self.showError()
+                        }
                         
-                default:
-                    self.showError()
-                        
+                        // if PROCEED in recommendation, and we have HTML for 3ds, perform 3DS
+                        if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
+                            self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                            self.begin3DSAuth(simple: html)
+                        } else {
+                            // if PROCEED in recommendation, but no HTML, finish the transaction without 3DS
+                            self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                            self.confirmPayment()
+                        }
+                    }
                 }
             } else {
                 self.showError()
