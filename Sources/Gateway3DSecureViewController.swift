@@ -22,7 +22,7 @@ import WebKit
 /// - completed: The authentication was completed.  The status parameter will be a gateway's "summaryStatus" field and the ID will be the 3DSecureID that was provided durring the Check3DSecureEnrollment operation.
 /// - cancelled: The result if 3DSecure authentication was cancelled by the user.
 public enum Gateway3DSecureResult {
-    case completed(summaryStatus: String, threeDSecureId: String)
+    case completed(gatewayResult: GatewayMap)
     case error(Gateway3DSecureError)
     case cancelled
 }
@@ -33,8 +33,8 @@ public enum Gateway3DSecureResult {
 /// - missingSummaryStatus: The summaryStatus query parameter was missing
 /// - missing3DSecureId: The 3DSecureId query parameter was missing
 public enum Gateway3DSecureError: Error {
-    case missingSummaryStatus
-    case missing3DSecureId
+    case missingGatewayResponse
+    case mappingError
 }
 
 
@@ -78,7 +78,7 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
     // MARK: - PRIVATE
     fileprivate var gatewayScheme: String = "gatewaysdk"
     fileprivate var gatewayHost: String = "3dsecure"
-    fileprivate var redirectStatusParam: String = "summaryStatus"
+    fileprivate var gatewayResultParam: String = "acsResult"
     fileprivate var threeDSecureIdParam: String = "3DSecureId"
     
     fileprivate var completion: ((Gateway3DSecureViewController, Gateway3DSecureResult) -> Void)?
@@ -147,24 +147,21 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
         if let url = navigationAction.request.url, let comp = URLComponents(url: url, resolvingAgainstBaseURL: false), comp.scheme == gatewayScheme, comp.host == gatewayHost {
             decisionHandler(.cancel)
             
-            let statusItem = comp.queryItems?.first { (item) -> Bool in
-                return item.name == redirectStatusParam
-            }
-            let idItem = comp.queryItems?.first { (item) -> Bool in
-                return item.name == threeDSecureIdParam
+            let gatewayResultItem = comp.queryItems?.first { (item) -> Bool in
+                return item.name == gatewayResultParam
             }
             
-            guard let status  = statusItem?.value else {
-                completion?(self, .error(Gateway3DSecureError.missingSummaryStatus))
+            guard let gatewayString = gatewayResultItem?.value, let gatewayData = gatewayString.data(using: .utf8) else {
+                completion?(self, .error(Gateway3DSecureError.missingGatewayResponse))
                 return
             }
             
-            guard let threeDSecureId  = idItem?.value else {
-                completion?(self, .error(Gateway3DSecureError.missing3DSecureId))
-                return
+            do {
+                let gatewayResult = try JSONDecoder().decode(GatewayMap.self, from: gatewayData)
+                completion?(self, .completed(gatewayResult: gatewayResult))
+            } catch {
+                completion?(self, .error(Gateway3DSecureError.mappingError))
             }
-            
-            completion?(self, .completed(summaryStatus: status, threeDSecureId: threeDSecureId))
         } else {
             decisionHandler(.allow)
         }
