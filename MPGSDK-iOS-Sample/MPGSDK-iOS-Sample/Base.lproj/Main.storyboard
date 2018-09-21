@@ -11,48 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Result View Controller-->
-        <scene sceneID="eM6-xq-nuH">
-            <objects>
-                <viewController id="Daw-4u-ske" customClass="ResultViewController" customModule="MPGSDK_iOS_Sample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="S72-cl-Uaw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SHT-O1-l4A">
-                                <rect key="frame" x="30" y="724" width="315" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="HsL-z5-8IB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="Start again">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="pWO-Cn-a1I" kind="unwind" unwindAction="restartCheckoutWithSegue:" id="tbd-7i-Umc"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="5WQ-UL-P8p" firstAttribute="bottom" secondItem="SHT-O1-l4A" secondAttribute="bottom" constant="10" id="0H2-7z-fRH"/>
-                            <constraint firstItem="SHT-O1-l4A" firstAttribute="leading" secondItem="5WQ-UL-P8p" secondAttribute="leading" constant="30" id="6uo-Va-9Gg"/>
-                            <constraint firstItem="5WQ-UL-P8p" firstAttribute="trailing" secondItem="SHT-O1-l4A" secondAttribute="trailing" constant="30" id="GuV-gd-UOA"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="5WQ-UL-P8p"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oKi-TW-DnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="pWO-Cn-a1I" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="3820" y="-310"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="gx4-Bf-mQt">
             <objects>

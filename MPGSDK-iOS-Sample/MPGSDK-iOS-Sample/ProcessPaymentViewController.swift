@@ -24,9 +24,7 @@ struct GatewaySession {
 }
 
 class ProcessPaymentViewController: UIViewController {
-
     // MARK: - Properties
-    
     // The Payment Session from the gateway
     var session: GatewaySession?
     
@@ -125,7 +123,7 @@ class ProcessPaymentViewController: UIViewController {
     }
     
     func finish() {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     /// Called to configure the view controller with the gateway and merchant service information.
@@ -347,13 +345,20 @@ extension ProcessPaymentViewController {
         // dismiss the 3DSecureViewController
         authView.dismiss(animated: true, completion: {
             switch result {
-            case .error(_), .completed(summaryStatus: "AUTHENTICATION_FAILED", threeDSecureId: _):
+            case .error(_):
                 self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
-            case .completed(summaryStatus: _, threeDSecureId: let id):
-                // if authentication succeeded, continue to proceess the payment
-                self.threeDSecureId = id
-                self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
-                self.prepareForProcessPayment()
+            case .completed(gatewayResult: let response):
+                // check for version 46 and earlier api authentication failures and then version 47+ failures
+                if Int(self.session!.apiVersion)! <= 46, let status = response[at: "3DSecure.summaryStatus"] as? String , status == "AUTHENTICATION_FAILED" {
+                    self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
+                } else if let status = response[at: "response.gatewayRecommendation"] as? String, status == "DO_NOT_PROCEED"  {
+                    self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
+                } else {
+                    // if authentication succeeded, continue to proceess the payment
+                    self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+                    self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
+                    self.prepareForProcessPayment()
+                }
             default:
                 self.stepErrored(message: "3DS Authentication Cancelled", stepStatusImageView: self.check3dsStatusImageView)
             }
