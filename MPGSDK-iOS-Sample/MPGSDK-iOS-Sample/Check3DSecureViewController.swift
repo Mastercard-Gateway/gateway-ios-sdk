@@ -102,7 +102,7 @@ class Check3DSecureViewController: UIViewController, TransactionConsumer {
                         self.showError()
                     }
                     
-                    // if PROCEED in recommendation, and we have HTML for 3ds, perform 3DS
+                    // if PROCEED in recommendation, and we have HTML for 3DS, perform 3DS
                     if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
                         self.transaction?.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                         self.begin3DSAuth(simple: html)

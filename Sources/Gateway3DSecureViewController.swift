@@ -19,7 +19,7 @@ import WebKit
 
 /// An enum representing the status of the 3DSecure authentication
 ///
-/// - completed: The authentication was completed.  The status parameter will be a gateway's "summaryStatus" field and the ID will be the 3DSecureID that was provided durring the Check3DSecureEnrollment operation.
+/// - completed: The authentication was completed.  The status parameter will be a gateway's "acsResult" field.
 /// - cancelled: The result if 3DSecure authentication was cancelled by the user.
 public enum Gateway3DSecureResult {
     case completed(gatewayResult: GatewayMap)
@@ -30,8 +30,8 @@ public enum Gateway3DSecureResult {
 
 /// Errors encountered when processing the 3DS redirect
 ///
-/// - missingSummaryStatus: The summaryStatus query parameter was missing
-/// - missing3DSecureId: The 3DSecureId query parameter was missing
+/// - missingGatewayResponse: The response from the gateway was missing
+/// - mappingError: Error that occured while attmpting to map the json string
 public enum Gateway3DSecureError: Error {
     case missingGatewayResponse
     case mappingError
