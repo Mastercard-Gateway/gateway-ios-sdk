@@ -124,6 +124,10 @@ class ProcessPaymentViewController: UIViewController {
         setAction(action: createSession, title: "Pay \(amoundFormatted)")
     }
     
+    func finish() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /// Called to configure the view controller with the gateway and merchant service information.
     func configure(merchantId: String, region: GatewayRegion, merchantServiceURL: URL) {
         gateway = Gateway(region: region, merchantId: merchantId)
@@ -268,31 +272,61 @@ extension ProcessPaymentViewController {
     func check3DSEnrollmentHandler(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.check3dsActivityIndicator.stopAnimating()
-            guard case .success(let response) = result, let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String else {
-                self.stepErrored(message: "Error checking 3DS Enrollment", stepStatusImageView: self.check3dsStatusImageView)
-                return
+            if Int(self.session!.apiVersion)! <= 46 {
+                self.check3DSEnrollmentV46Handler(result)
+            } else {
+                self.check3DSEnrollmentv47Handler(result)
             }
-            
-            // check to see if the card was enrolled, not enrolled or does not support 3D Secure
-            switch code {
-            case "CARD_ENROLLED":
-                // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
-                if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
-                    self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
-                    self.begin3DSAuth(simple: html)
-                }
-            case "CARD_DOES_NOT_SUPPORT_3DS":
-                // for cards that do not support 3DSecure, go straight to payment confirmation
-                self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
-                self.prepareForProcessPayment()
-            case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
-                // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
+        }
+    }
+    
+    func check3DSEnrollmentV46Handler(_ result: Result<GatewayMap>) {
+        guard case .success(let response) = result, let code = response[at: "gatewayResponse.3DSecure.summaryStatus"] as? String else {
+            self.stepErrored(message: "Error checking 3DS Enrollment", stepStatusImageView: self.check3dsStatusImageView)
+            return
+        }
+        
+        // check to see if the card was enrolled, not enrolled or does not support 3D Secure
+        switch code {
+        case "CARD_ENROLLED":
+            // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
+            if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
                 self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
-                self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
-                self.prepareForProcessPayment()
-            default:
-                self.stepErrored(message: "Error checking 3DS Enrollment", stepStatusImageView: self.check3dsStatusImageView)
+                self.begin3DSAuth(simple: html)
             }
+        case "CARD_DOES_NOT_SUPPORT_3DS":
+            // for cards that do not support 3DSecure, go straight to payment confirmation
+            self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
+            self.prepareForProcessPayment()
+        case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
+            // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
+            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+            self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
+            self.prepareForProcessPayment()
+        default:
+            self.stepErrored(message: "Error checking 3DS Enrollment", stepStatusImageView: self.check3dsStatusImageView)
+        }
+    }
+    
+    func check3DSEnrollmentv47Handler(_ result: Result<GatewayMap>) {
+        guard case .success(let response) = result, let recommendaition = response[at: "gatewayResponse.response.gatewayRecommendation"] as? String else {
+            self.stepErrored(message: "Error checking 3DS Enrollment", stepStatusImageView: self.check3dsStatusImageView)
+            return
+        }
+        
+        // if DO_NOT_PROCEED returned in recommendation, should stop transaction
+        if recommendaition == "DO_NOT_PROCEED" {
+            self.stepErrored(message: "3DS Do Not Proceed", stepStatusImageView: self.check3dsStatusImageView)
+        }
+        
+        // if PROCEED in recommendation, and we have HTML for 3DS, perform 3DS
+        if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
+            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+            self.begin3DSAuth(simple: html)
+        } else {
+            // if PROCEED in recommendation, but no HTML, finish the transaction without 3DS
+            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
+            self.prepareForProcessPayment()
         }
     }
     
@@ -363,7 +397,7 @@ extension ProcessPaymentViewController {
         statusTitleLabel?.text = "Payment Successful!"
         statusDescriptionLabel?.text = nil
         
-        setAction(action: reset, title: "Restart")
+        setAction(action: finish, title: "Done")
     }
 }
 
@@ -378,7 +412,7 @@ extension ProcessPaymentViewController {
         statusTitleLabel?.text = message
         statusDescriptionLabel?.text = detail
         
-        setAction(action: self.reset, title: "Restart")
+        setAction(action: self.finish, title: "Done")
     }
     
     fileprivate func stepCompleted(stepStatusImageView: UIImageView) {
