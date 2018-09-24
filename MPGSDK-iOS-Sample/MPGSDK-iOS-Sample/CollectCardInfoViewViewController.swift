@@ -103,7 +103,9 @@ class CollectCardInfoViewViewController: UIViewController {
     }
     
     @objc func applePayAction() {
-        
+        guard let request = viewModel.transaction?.pkPaymentRequest, let apvc = PKPaymentAuthorizationViewController(paymentRequest: request) else { return }
+        apvc.delegate = self
+        self.present(apvc, animated: true, completion: nil)
     }
     
     @IBAction func continueAction(sender: Any) {
@@ -124,6 +126,19 @@ class CollectCardInfoViewViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
- 
 
+}
+
+extension CollectCardInfoViewViewController: PKPaymentAuthorizationViewControllerDelegate {
+    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        controller.dismiss(animated: true) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        viewModel.transaction?.applePayPayment = payment
+        self.completion?(viewModel.transaction!)
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+    }
 }

@@ -59,11 +59,15 @@ class MerchantAPI {
         var payload = GatewayMap(["apiOperation": "PAY"])
         payload[at: "sourceOfFunds.type"] =  "CARD"
         payload[at: "transaction.frequency"] = "SINGLE"
+        payload[at: "transaction.source"] = "INTERNET"
         payload[at: "order.amount"] = transaction.amount
         payload[at: "order.currency"] = transaction.currency
         payload[at: "session.id"] = transaction.session!.id
         if let threeDSecureId = transaction.threeDSecureId {
             payload[at: "3DSecureId"] = threeDSecureId
+        }
+        if transaction.isApplePay {
+            payload[at: "order.walletProvider"] = "APPLE_PAY"
         }
         
         let query = [URLQueryItem(name: "order", value: transaction.orderId), URLQueryItem(name: "transaction", value: transaction.id)]

@@ -43,6 +43,8 @@ struct Transaction {
     
     // Apple Pay Information
     var applePayMerchantIdentifier: String?
+    var countryCode = "US"
+    var supportedNetworks: [PKPaymentNetwork] = [.visa, .masterCard, .discover, .amex]
     var applePayPayment: PKPayment?
     
     var isApplePay: Bool {
@@ -68,6 +70,9 @@ struct Transaction {
         let request = PKPaymentRequest()
         request.paymentSummaryItems = [PKPaymentSummaryItem(label: summary, amount: amount, type: .final)]
         request.merchantIdentifier = merchantId
+        request.countryCode = countryCode
+        request.currencyCode = currency
+        request.supportedNetworks = supportedNetworks
         request.merchantCapabilities = [.capabilityCredit, .capabilityDebit, .capabilityEMV, .capability3DS]
         return request
     }

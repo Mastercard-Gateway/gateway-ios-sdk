@@ -36,6 +36,8 @@ class ProcessPaymentViewController: UIViewController {
     @IBOutlet weak var updateSessionStatusImageView: UIImageView!
     @IBOutlet weak var updateSessionActivityIndicator: UIActivityIndicatorView!
     
+    
+    @IBOutlet weak var check3dsLabel: UILabel?
     @IBOutlet weak var check3dsStatusImageView: UIImageView!
     @IBOutlet weak var check3dsActivityIndicator: UIActivityIndicatorView!
     
@@ -188,6 +190,11 @@ extension ProcessPaymentViewController {
         request[at: "sourceOfFunds.provided.card.expiry.month"] = transaction.expiryMM
         request[at: "sourceOfFunds.provided.card.expiry.year"] = transaction.expiryYY
         
+        // if the transaction has an Apple Pay Token, populate that into the map
+        if let tokenData = transaction.applePayPayment?.token.paymentData, let token = String(data: tokenData, encoding: .utf8) {
+            request[at: "sourceOfFunds.provided.card.devicePayment.paymentToken"] = token
+        }
+        
         // execute the update
         gateway.updateSession(sessionId, apiVersion: apiVersion, payload: request, completion: updateSessionHandler(_:))
     }
@@ -215,6 +222,14 @@ extension ProcessPaymentViewController {
 extension ProcessPaymentViewController {
     // uses the gateway (throught the merchant service) to check the card to see if it is enrolled in 3D Secure
     func check3dsEnrollment() {
+        guard !transaction.isApplePay else {
+            check3dsActivityIndicator.isHidden = true
+            check3dsStatusImageView.isHidden = true
+            check3dsLabel?.attributedText = NSAttributedString(string: "Check 3DS Enrollment", attributes: [.strikethroughStyle: 1])
+            prepareForProcessPayment()
+            return
+        }
+        
         // update the UI
         check3dsActivityIndicator.startAnimating()
         
