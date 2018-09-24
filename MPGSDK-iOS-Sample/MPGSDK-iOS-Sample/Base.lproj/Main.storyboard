@@ -305,19 +305,19 @@
                                         <rect key="frame" x="0.0" y="41.666666666666686" width="315" height="554.33333333333326"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="vro-39-B3I">
-                                                <rect key="frame" x="0.0" y="182" width="315" height="190.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="315" height="263"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Zag-Vn-teu">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="44.666666666666664"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merchant Id" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ast-6N-mvm">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merchant Id" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ast-6N-mvm">
                                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="14.333333333333334"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                                 <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Merchant id" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="odq-X9-Gph">
-                                                                <rect key="frame" x="0.0" y="19.333333333333314" width="315" height="20"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Merchant id" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="odq-X9-Gph">
+                                                                <rect key="frame" x="0.0" y="19.333333333333343" width="315" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="uGI-Ay-21Z"/>
                                                                 </constraints>
@@ -329,7 +329,7 @@
                                                                 </connections>
                                                             </textField>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5B-Ui-QEg">
-                                                                <rect key="frame" x="0.0" y="44.333333333333314" width="315" height="0.3333333333333357"/>
+                                                                <rect key="frame" x="0.0" y="44.333333333333343" width="315" height="0.3333333333333357"/>
                                                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="sJM-cI-eEQ"/>
@@ -338,16 +338,16 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gbt-5t-Bm0">
-                                                        <rect key="frame" x="0.0" y="72.666666666666629" width="315" height="45"/>
+                                                        <rect key="frame" x="0.0" y="72.666666666666686" width="315" height="45"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lij-yl-40o">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lij-yl-40o">
                                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="14.333333333333334"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                                 <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFt-Zf-JIK">
-                                                                <rect key="frame" x="0.0" y="19.333333333333371" width="315" height="20"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFt-Zf-JIK">
+                                                                <rect key="frame" x="0.0" y="19.333333333333314" width="315" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                                 <state key="normal" title="Test">
                                                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -357,7 +357,7 @@
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAs-bh-NbM">
-                                                                <rect key="frame" x="0.0" y="44.333333333333371" width="315" height="0.6666666666666643"/>
+                                                                <rect key="frame" x="0.0" y="44.333333333333343" width="315" height="0.6666666666666643"/>
                                                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="VTa-Yx-kpa"/>
@@ -366,15 +366,15 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bPj-Ge-PWL">
-                                                        <rect key="frame" x="0.0" y="145.66666666666663" width="315" height="44.666666666666657"/>
+                                                        <rect key="frame" x="0.0" y="145.66666666666666" width="315" height="44.666666666666657"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Merchant Server URL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rz7-1O-JFn">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Merchant Server URL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rz7-1O-JFn">
                                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="14.333333333333334"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                                 <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="https://" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="wKY-gw-oL6">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="https://" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="wKY-gw-oL6">
                                                                 <rect key="frame" x="0.0" y="19.333333333333371" width="315" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="yij-Qy-Kg8"/>
@@ -387,10 +387,40 @@
                                                                 </connections>
                                                             </textField>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BP-eU-JYj">
-                                                                <rect key="frame" x="0.0" y="44.333333333333314" width="315" height="0.3333333333333357"/>
+                                                                <rect key="frame" x="0.0" y="44.333333333333371" width="315" height="0.3333333333333357"/>
                                                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="QHS-xj-rd1"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="H32-kX-3pt">
+                                                        <rect key="frame" x="0.0" y="218.33333333333334" width="315" height="44.666666666666657"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Pay Merchant Identifier" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PuJ-xL-nfi">
+                                                                <rect key="frame" x="0.0" y="0.0" width="315" height="14.333333333333334"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                                <color key="textColor" red="1" green="0.35686274509999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="com.merchant.sample" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="Rzi-36-6N3">
+                                                                <rect key="frame" x="0.0" y="19.333333333333314" width="315" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="oWq-kR-2gH"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="yes" keyboardType="URL" returnKeyType="next" textContentType="url"/>
+                                                                <connections>
+                                                                    <action selector="syncApplePayMerchantIdFieldWithSender:" destination="W8z-HD-W4t" eventType="editingChanged" id="cKK-xF-L55"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMf-92-rPy">
+                                                                <rect key="frame" x="0.0" y="44.333333333333314" width="315" height="0.3333333333333357"/>
+                                                                <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="0.5" id="kBd-iJ-rwb"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -407,9 +437,8 @@
                                             <constraint firstAttribute="trailing" secondItem="vro-39-B3I" secondAttribute="trailing" id="1OA-Yn-jPf"/>
                                             <constraint firstItem="vro-39-B3I" firstAttribute="leading" secondItem="Wfv-ro-sIY" secondAttribute="leading" id="2JH-RD-Rmk"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vro-39-B3I" secondAttribute="bottom" id="Bne-i5-uLN"/>
-                                            <constraint firstItem="vro-39-B3I" firstAttribute="centerY" secondItem="Wfv-ro-sIY" secondAttribute="centerY" id="OKN-nw-OUm"/>
                                             <constraint firstItem="vro-39-B3I" firstAttribute="centerX" secondItem="Wfv-ro-sIY" secondAttribute="centerX" id="taG-iP-eZO"/>
-                                            <constraint firstItem="vro-39-B3I" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Wfv-ro-sIY" secondAttribute="top" id="zI6-2z-Rkx"/>
+                                            <constraint firstItem="vro-39-B3I" firstAttribute="top" secondItem="Wfv-ro-sIY" secondAttribute="top" id="zI6-2z-Rkx"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDI-Nt-E2b">
@@ -449,6 +478,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="7pR-m4-oWf"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="applePayMerchantIdField" destination="Rzi-36-6N3" id="mmI-St-ake"/>
                         <outlet property="continueButton" destination="cDI-Nt-E2b" id="XOY-eS-GA7"/>
                         <outlet property="merchantIdField" destination="odq-X9-Gph" id="dcI-lY-42b"/>
                         <outlet property="merchantServerUrlField" destination="wKY-gw-oL6" id="ecj-jf-shW"/>
