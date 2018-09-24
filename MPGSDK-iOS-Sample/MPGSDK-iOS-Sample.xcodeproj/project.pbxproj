@@ -14,6 +14,7 @@
 		6F5F70441F7C006E0048F591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70421F7C006E0048F591 /* LaunchScreen.storyboard */; };
 		6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */; };
 		6FCE10881F84099B007E9A7C /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCE10891F84099B007E9A7C /* MPGSDK.framework */; };
+		B766B5FA2159141A002027AC /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B5F92159141A002027AC /* Transaction.swift */; };
 		B7DB55282154277000D31081 /* CollectCardInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */; };
 		B7DB552A2154278800D31081 /* CollectCardInfoViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */; };
 		B7DC3D392152A466009AA192 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */; };
@@ -31,6 +32,8 @@
 		6F5F70451F7C006E0048F591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantAPI.swift; sourceTree = "<group>"; };
 		6FCE10891F84099B007E9A7C /* MPGSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MPGSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B766B5F821557ED7002027AC /* MPGSDK-iOS-Sample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MPGSDK-iOS-Sample.entitlements"; sourceTree = "<group>"; };
+		B766B5F92159141A002027AC /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectCardInfoViewModel.swift; sourceTree = "<group>"; };
 		B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectCardInfoViewViewController.swift; sourceTree = "<group>"; };
 		B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -70,9 +73,11 @@
 		6F5F70381F7C006E0048F591 /* MPGSDK-iOS-Sample */ = {
 			isa = PBXGroup;
 			children = (
+				B766B5F821557ED7002027AC /* MPGSDK-iOS-Sample.entitlements */,
 				6F5F70391F7C006E0048F591 /* AppDelegate.swift */,
 				B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */,
 				B7DC3D3A2152AC3C009AA192 /* ConfigurationViewModel.swift */,
+				B766B5F92159141A002027AC /* Transaction.swift */,
 				B7DC3D3E2152CFF0009AA192 /* ProcessPaymentViewController.swift */,
 				B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */,
 				B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */,
@@ -135,6 +140,11 @@
 					6F5F70351F7C006E0048F591 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -182,6 +192,7 @@
 				B7DC3D3F2152CFF0009AA192 /* ProcessPaymentViewController.swift in Sources */,
 				6F5F703A1F7C006E0048F591 /* AppDelegate.swift in Sources */,
 				B7DB55282154277000D31081 /* CollectCardInfoViewModel.swift in Sources */,
+				B766B5FA2159141A002027AC /* Transaction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +329,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QJJJ72YP26;
+				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
@@ -333,8 +345,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QJJJ72YP26;
+				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
