@@ -222,10 +222,12 @@ extension ProcessPaymentViewController {
 extension ProcessPaymentViewController {
     // uses the gateway (throught the merchant service) to check the card to see if it is enrolled in 3D Secure
     func check3dsEnrollment() {
+        // if the transaction is an Apple Pay Transaction, 3DSecure is not supported.  Therfore, the app should skip this step and no longer provide a 3DSecureId
         guard !transaction.isApplePay else {
             check3dsActivityIndicator.isHidden = true
             check3dsStatusImageView.isHidden = true
             check3dsLabel?.attributedText = NSAttributedString(string: "Check 3DS Enrollment", attributes: [.strikethroughStyle: 1])
+            transaction.threeDSecureId = nil
             prepareForProcessPayment()
             return
         }
@@ -335,7 +337,11 @@ extension ProcessPaymentViewController {
     
     func prepareForProcessPayment() {
         statusTitleLabel?.text = "Confirm Payment Details"
-        statusDescriptionLabel?.text = "\(transaction.maskedCardNumber!)\n\(transaction.amountFormatted)"
+        if transaction.isApplePay {
+            statusDescriptionLabel?.text = "Apple Pay\n\(transaction.amountFormatted)"
+        } else {
+            statusDescriptionLabel?.text = "\(transaction.maskedCardNumber!)\n\(transaction.amountFormatted)"
+        }
         setAction(action: processPayment, title: "Confirm and Pay")
     }
 }

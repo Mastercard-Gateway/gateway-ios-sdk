@@ -60,7 +60,7 @@ class MerchantAPI {
         payload[at: "sourceOfFunds.type"] =  "CARD"
         payload[at: "transaction.frequency"] = "SINGLE"
         payload[at: "transaction.source"] = "INTERNET"
-        payload[at: "order.amount"] = transaction.amount
+        payload[at: "order.amount"] = transaction.amountString
         payload[at: "order.currency"] = transaction.currency
         payload[at: "session.id"] = transaction.session!.id
         if let threeDSecureId = transaction.threeDSecureId {

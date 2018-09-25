@@ -746,6 +746,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="check3dsActivityIndicator" destination="Pa1-xR-nf4" id="fSm-QF-RL8"/>
+                        <outlet property="check3dsLabel" destination="Gro-ou-8ZM" id="s1f-kt-xQv"/>
                         <outlet property="check3dsStatusImageView" destination="S0L-Qv-B0D" id="Dy1-dw-mRR"/>
                         <outlet property="collectCardActivityIndicator" destination="yU6-aq-mnV" id="xiU-1C-inK"/>
                         <outlet property="collectCardStatusImageView" destination="Oci-I0-Iow" id="Fhu-Qv-UoQ"/>
