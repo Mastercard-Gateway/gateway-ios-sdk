@@ -73,24 +73,10 @@ gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, pay
 
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
+When you launch the sample app, you will be prompted to enter your merchant Id, gateway region, and test merchant server url and Apple Pay Merchant Id if applicable.
+### Apple Pay
+To conduct an Apple Pay transaction using the sample app, you must first complete the steps for [Configuring Apple Pay] provided by Apple.  This will setup your Apple Pay Merchant Id and the Payment Processing Certificate.
 
-
-### Configuration
-
-To configure the sample app, open the `AppDelegate.swift` file. There are three fields which must be completed in order for the sample app to run a test payment.
-
-```swift
-// TEST Gateway Merchant ID
-let gatewayMerchantId = "<#your-merchant-id#>"
-
-// Gateway Region
-let gatewayRegion = GatewayRegion."<#YOUR GATEWAY REGION#>"
-
-// TEST Merchant Server URL (test server app deployed to Heroku)
-// For more information, see: https://github.com/Mastercard/gateway-test-merchant-server
-// ex: https://{your-app-name}.herokuapp.com
-let merchantServerUrl = "<#YOUR MERCHANT SERVER URL#>"
-```
-
+[Configuring Apple Pay]: https://developer.apple.com/library/archive/ApplePay_Guide/Configuration.html
 [Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
 [certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning
