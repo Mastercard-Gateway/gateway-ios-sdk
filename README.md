@@ -73,7 +73,10 @@ gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, pay
 
 ## Sample App
 Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our **[Gateway Test Merchant Server]**. Follow the instructions for that project and copy the resulting URL of the instance you create.
-When you launch the sample app, you will be prompted to enter your merchant Id, gateway region, and test merchant server url.
+When you launch the sample app, you will be prompted to enter your merchant Id, gateway region, and test merchant server url and Apple Pay Merchant Id if applicable.
+### Apple Pay
+To conduct an Apple Pay transaction using the sample app, you must first complete the steps for [Configuring Apple Pay] provided by Apple.  This will setup your Apple Pay Merchant Id and the Payment Processing Certificate.
 
+[Configuring Apple Pay]: https://developer.apple.com/library/archive/ApplePay_Guide/Configuration.html
 [Gateway Test Merchant Server]: https://github.com/Mastercard/gateway-test-merchant-server
 [certificate pinning]: https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning

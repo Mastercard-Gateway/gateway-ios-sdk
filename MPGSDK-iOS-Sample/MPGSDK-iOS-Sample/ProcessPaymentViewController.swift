@@ -17,41 +17,10 @@
 import UIKit
 import MPGSDK
 
-// a structure bundling the session id and the api version on which that session was created.
-struct GatewaySession {
-    var id: String
-    var apiVersion: String
-}
-
 class ProcessPaymentViewController: UIViewController {
     // MARK: - Properties
-    // The Payment Session from the gateway
-    var session: GatewaySession?
-    
-    // basic transaction properties
-    var amount = "1.00"
-    var currency = "USD"
-    var amoundFormatted = "$1.00"
-    
-    
-    // card information
-    var nameOnCard: String?
-    var cardNumber: String?
-    var expiryMM: String?
-    var expiryYY: String?
-    var cvv: String?
-    
-    // a masked card number for the confirmation text
-    var maskedCardNumber: String? {
-        guard let number = cardNumber else { return nil }
-        let last4 = number.suffix(4)
-        let dotCount = number.dropLast(last4.count).count
-        return String(repeating: "•", count: dotCount) + last4
-    }
-    
-    // a 3DSecure ID used to identify the transaction durring the 3DS steps with the gateway
-    var threeDSecureId: String?
-    
+    var transaction: Transaction = Transaction()
+
     // the object used to communicate with the merchant's api
     var merchantAPI: MerchantAPI!
     // the ojbect used to communicate with the gateway
@@ -67,6 +36,8 @@ class ProcessPaymentViewController: UIViewController {
     @IBOutlet weak var updateSessionStatusImageView: UIImageView!
     @IBOutlet weak var updateSessionActivityIndicator: UIActivityIndicatorView!
     
+    
+    @IBOutlet weak var check3dsLabel: UILabel?
     @IBOutlet weak var check3dsStatusImageView: UIImageView!
     @IBOutlet weak var check3dsActivityIndicator: UIActivityIndicatorView!
     
@@ -107,19 +78,11 @@ class ProcessPaymentViewController: UIViewController {
         processPaymentStatusImageView.isHidden = true
         processPaymentActivityIndicator.stopAnimating()
         
-        nameOnCard = nil
-        cardNumber = nil
-        expiryMM = nil
-        expiryYY = nil
-        cvv = nil
-        
-        threeDSecureId = nil
-        
         paymentStatusView?.isHidden = true
         statusTitleLabel?.text = nil
         statusDescriptionLabel?.text = nil
         
-        setAction(action: createSession, title: "Pay \(amoundFormatted)")
+        setAction(action: createSession, title: "Pay \(transaction.amountFormatted)")
     }
     
     func finish() {
@@ -127,9 +90,10 @@ class ProcessPaymentViewController: UIViewController {
     }
     
     /// Called to configure the view controller with the gateway and merchant service information.
-    func configure(merchantId: String, region: GatewayRegion, merchantServiceURL: URL) {
+    func configure(merchantId: String, region: GatewayRegion, merchantServiceURL: URL, applePayMerchantIdentifier: String?) {
         gateway = Gateway(region: region, merchantId: merchantId)
         merchantAPI = MerchantAPI(url: merchantServiceURL)
+        transaction.applePayMerchantIdentifier = applePayMerchantIdentifier
     }
     
     
@@ -144,6 +108,7 @@ class ProcessPaymentViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // if the view being presented is the card collection view, wait register the callbacks for when card information is collected or cancelled
         if let nav = segue.destination as? UINavigationController, let cardVC = nav.viewControllers.first as? CollectCardInfoViewViewController {
+            cardVC.viewModel.transaction = transaction
             cardVC.completion = cardInfoCollected
             cardVC.cancelled = cardInfoCancelled
         }
@@ -174,7 +139,7 @@ extension ProcessPaymentViewController {
                 }
                 
                 // The session was created successfully
-                self.session = GatewaySession(id: session, apiVersion: apiVersion)
+                self.transaction.session = GatewaySession(id: session, apiVersion: apiVersion)
                 self.stepCompleted(stepStatusImageView: self.createSessionStatusImageView)
                 self.collectCardInfo()
             }
@@ -192,13 +157,9 @@ extension ProcessPaymentViewController {
         performSegue(withIdentifier: "collectCardInfo", sender: nil)
     }
     
-    func cardInfoCollected(name: String, number: String, expiryMM: String, expiryYY: String, cvv: String) {
+    func cardInfoCollected(transaction: Transaction) {
         // populate the card information
-        self.nameOnCard = name
-        self.cardNumber = number
-        self.expiryMM = expiryMM
-        self.expiryYY = expiryYY
-        self.cvv = cvv
+        self.transaction = transaction
         // mark the step as completed
         stepCompleted(stepStatusImageView: collectCardStatusImageView)
         collectCardActivityIndicator.stopAnimating()
@@ -219,15 +180,20 @@ extension ProcessPaymentViewController {
         // update the UI
         updateSessionActivityIndicator.startAnimating()
     
-        guard let sessionId = session?.id, let apiVersion = session?.apiVersion else { return }
+        guard let sessionId = transaction.session?.id, let apiVersion = transaction.session?.apiVersion else { return }
         
         // construct the Gateway Map with the desired parameters.
         var request = GatewayMap()
-        request[at: "sourceOfFunds.provided.card.nameOnCard"] = nameOnCard
-        request[at: "sourceOfFunds.provided.card.number"] = cardNumber
-        request[at: "sourceOfFunds.provided.card.securityCode"] = cvv
-        request[at: "sourceOfFunds.provided.card.expiry.month"] = expiryMM
-        request[at: "sourceOfFunds.provided.card.expiry.year"] = expiryYY
+        request[at: "sourceOfFunds.provided.card.nameOnCard"] = transaction.nameOnCard
+        request[at: "sourceOfFunds.provided.card.number"] = transaction.cardNumber
+        request[at: "sourceOfFunds.provided.card.securityCode"] = transaction.cvv
+        request[at: "sourceOfFunds.provided.card.expiry.month"] = transaction.expiryMM
+        request[at: "sourceOfFunds.provided.card.expiry.year"] = transaction.expiryYY
+        
+        // if the transaction has an Apple Pay Token, populate that into the map
+        if let tokenData = transaction.applePayPayment?.token.paymentData, let token = String(data: tokenData, encoding: .utf8) {
+            request[at: "sourceOfFunds.provided.card.devicePayment.paymentToken"] = token
+        }
         
         // execute the update
         gateway.updateSession(sessionId, apiVersion: apiVersion, payload: request, completion: updateSessionHandler(_:))
@@ -256,21 +222,29 @@ extension ProcessPaymentViewController {
 extension ProcessPaymentViewController {
     // uses the gateway (throught the merchant service) to check the card to see if it is enrolled in 3D Secure
     func check3dsEnrollment() {
+        // if the transaction is an Apple Pay Transaction, 3DSecure is not supported.  Therfore, the app should skip this step and no longer provide a 3DSecureId
+        guard !transaction.isApplePay else {
+            check3dsActivityIndicator.isHidden = true
+            check3dsStatusImageView.isHidden = true
+            check3dsLabel?.attributedText = NSAttributedString(string: "Check 3DS Enrollment", attributes: [.strikethroughStyle: 1])
+            transaction.threeDSecureId = nil
+            prepareForProcessPayment()
+            return
+        }
+        
         // update the UI
         check3dsActivityIndicator.startAnimating()
         
-        // A random identifier for the 3D Secure checks
-        let dddId = randomID()
         // A redirect URL for 3D Secure that will redirect the browser back to a page on our merchant service after 3D Secure authentication
-        let redirectURL = merchantAPI.merchantServerURL.absoluteString.appending("/3DSecureResult.php?3DSecureId=\(dddId)")
+        let redirectURL = merchantAPI.merchantServerURL.absoluteString.appending("/3DSecureResult.php?3DSecureId=\(transaction.threeDSecureId!)")
         // check enrollment
-        merchantAPI.check3DSEnrollment(session: session!.id, amount: amount, currency: currency, threeDSecureId: dddId, redirectURL: redirectURL , completion: check3DSEnrollmentHandler)
+        merchantAPI.check3DSEnrollment(transaction: transaction, redirectURL: redirectURL , completion: check3DSEnrollmentHandler)
     }
     
     func check3DSEnrollmentHandler(_ result: Result<GatewayMap>) {
         DispatchQueue.main.async {
             self.check3dsActivityIndicator.stopAnimating()
-            if Int(self.session!.apiVersion)! <= 46 {
+            if Int(self.transaction.session!.apiVersion)! <= 46 {
                 self.check3DSEnrollmentV46Handler(result)
             } else {
                 self.check3DSEnrollmentv47Handler(result)
@@ -289,16 +263,15 @@ extension ProcessPaymentViewController {
         case "CARD_ENROLLED":
             // For enrolled cards, get the htmlBodyContent and present the Gateway3DSecureViewController
             if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
-                self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                 self.begin3DSAuth(simple: html)
             }
         case "CARD_DOES_NOT_SUPPORT_3DS":
-            // for cards that do not support 3DSecure, go straight to payment confirmation
+            // for cards that do not support 3DSecure, go straight to payment confirmation without a 3DSecureID
+            self.transaction.threeDSecureId = nil
             self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
             self.prepareForProcessPayment()
         case "CARD_NOT_ENROLLED", "AUTHENTICATION_NOT_AVAILABLE":
             // for cards that are not enrolled or if authentication is not available, go to payment confirmation but include the 3DSecureID
-            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
             self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
             self.prepareForProcessPayment()
         default:
@@ -319,11 +292,9 @@ extension ProcessPaymentViewController {
         
         // if PROCEED in recommendation, and we have HTML for 3DS, perform 3DS
         if let html = response[at: "gatewayResponse.3DSecure.authenticationRedirect.simple.htmlBodyContent"] as? String {
-            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
             self.begin3DSAuth(simple: html)
         } else {
             // if PROCEED in recommendation, but no HTML, finish the transaction without 3DS
-            self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
             self.prepareForProcessPayment()
         }
     }
@@ -349,13 +320,12 @@ extension ProcessPaymentViewController {
                 self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
             case .completed(gatewayResult: let response):
                 // check for version 46 and earlier api authentication failures and then version 47+ failures
-                if Int(self.session!.apiVersion)! <= 46, let status = response[at: "3DSecure.summaryStatus"] as? String , status == "AUTHENTICATION_FAILED" {
+                if Int(self.transaction.session!.apiVersion)! <= 46, let status = response[at: "3DSecure.summaryStatus"] as? String , status == "AUTHENTICATION_FAILED" {
                     self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
                 } else if let status = response[at: "response.gatewayRecommendation"] as? String, status == "DO_NOT_PROCEED"  {
                     self.stepErrored(message: "3DS Authentication Failed", stepStatusImageView: self.check3dsStatusImageView)
                 } else {
                     // if authentication succeeded, continue to proceess the payment
-                    self.threeDSecureId = response[at: "gatewayResponse.3DSecureId"] as? String
                     self.stepCompleted(stepStatusImageView: self.check3dsStatusImageView)
                     self.prepareForProcessPayment()
                 }
@@ -367,21 +337,25 @@ extension ProcessPaymentViewController {
     
     func prepareForProcessPayment() {
         statusTitleLabel?.text = "Confirm Payment Details"
-        statusDescriptionLabel?.text = "\(maskedCardNumber!)\n\(amoundFormatted)"
+        if transaction.isApplePay {
+            statusDescriptionLabel?.text = "Apple Pay\n\(transaction.amountFormatted)"
+        } else {
+            statusDescriptionLabel?.text = "\(transaction.maskedCardNumber!)\n\(transaction.amountFormatted)"
+        }
         setAction(action: processPayment, title: "Confirm and Pay")
     }
 }
 
 // MARK: - 5. Process Payment
 extension ProcessPaymentViewController {
-    /// Processes the payment by completing the session witht he gateway.
+    /// Processes the payment by completing the session with the gateway.
     func processPayment() {
         // update the UI
         processPaymentActivityIndicator.startAnimating()
         continueButton.isEnabled = false
         continueButton.backgroundColor = .lightGray
         
-        merchantAPI.completeSession(session!.id, orderId: self.randomID(), transactionId: self.randomID(), threeDSecureId: threeDSecureId, amount: amount, currency: currency) { (result) in
+        merchantAPI.completeSession(transaction: transaction) { (result) in
             DispatchQueue.main.async {
                 self.processPaymentHandler(result: result)
             }

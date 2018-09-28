@@ -15,15 +15,21 @@
  */
 
 import UIKit
+import PassKit
 
 class CollectCardInfoViewViewController: UIViewController {
 
+    @IBOutlet weak var fieldStack: UIStackView?
+    
     @IBOutlet weak var nameField: UITextField?
     @IBOutlet weak var numberField: UITextField?
     @IBOutlet weak var expiryMMField: UITextField?
     @IBOutlet weak var expiryYYField: UITextField?
     @IBOutlet weak var cvvField: UITextField?
     @IBOutlet weak var continueButton: UIButton?
+    @IBOutlet weak var orView: UIView?
+    
+    var applePayButton = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .black)
     
     var viewModel = CollectCardInfoViewModel() {
         didSet {
@@ -31,11 +37,14 @@ class CollectCardInfoViewViewController: UIViewController {
         }
     }
     
-    var completion: ((String, String, String, String, String) -> Void)?
+    var completion: ((Transaction) -> Void)?
     var cancelled: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fieldStack?.addArrangedSubview(applePayButton)
+        view.addConstraint(applePayButton.heightAnchor.constraint(equalTo: continueButton!.heightAnchor, multiplier: 1.0))
+        
         renderViewModel()
         // Do any additional setup after loading the view.
     }
@@ -43,6 +52,7 @@ class CollectCardInfoViewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startAvoidingKeyboard()
+        applePayButton.addTarget(self, action: #selector(applePayAction), for: .touchUpInside)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -56,37 +66,51 @@ class CollectCardInfoViewViewController: UIViewController {
     }
     
     func renderViewModel() {
-        nameField?.text = viewModel.name
+        nameField?.text = viewModel.transaction?.nameOnCard
         nameField?.textColor = viewModel.nameValid ? UIColor.darkText : UIColor.red
         
-        numberField?.text = viewModel.cardNumber
+        numberField?.text = viewModel.transaction?.cardNumber
         numberField?.textColor = viewModel.cardNumberValid ? UIColor.darkText : UIColor.red
         
-        expiryMMField?.text = viewModel.expirationMonth
+        expiryMMField?.text = viewModel.transaction?.expiryMM
         expiryMMField?.textColor = viewModel.expirationMonthValid ? UIColor.darkText : UIColor.red
         
-        expiryYYField?.text = viewModel.expirationYear
+        expiryYYField?.text = viewModel.transaction?.expiryYY
         expiryYYField?.textColor = viewModel.expirationYearValid ? UIColor.darkText : UIColor.red
         
-        cvvField?.text = viewModel.cvv
+        cvvField?.text = viewModel.transaction?.cvv
         cvvField?.textColor = viewModel.cvvValid ? UIColor.darkText : UIColor.red
         
         continueButton?.isEnabled = viewModel.isValid
+        
+        if viewModel.applePayCapable && PKPaymentAuthorizationViewController.canMakePayments() {
+            orView?.isHidden = false
+            applePayButton.isHidden = false
+        } else {
+            orView?.isHidden = true
+            applePayButton.isHidden = true
+        }
     }
     
     @IBAction func updateViewModel() {
         var updated = viewModel
-        updated.name = nameField?.text
-        updated.cardNumber = numberField?.text
-        updated.expirationMonth = expiryMMField?.text
-        updated.expirationYear = expiryYYField?.text
-        updated.cvv = cvvField?.text
+        updated.transaction?.nameOnCard   = nameField?.text
+        updated.transaction?.cardNumber = numberField?.text
+        updated.transaction?.expiryMM = expiryMMField?.text
+        updated.transaction?.expiryYY = expiryYYField?.text
+        updated.transaction?.cvv = cvvField?.text
         viewModel = updated
+    }
+    
+    @objc func applePayAction() {
+        guard let request = viewModel.transaction?.pkPaymentRequest, let apvc = PKPaymentAuthorizationViewController(paymentRequest: request) else { return }
+        apvc.delegate = self
+        self.present(apvc, animated: true, completion: nil)
     }
     
     @IBAction func continueAction(sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        completion?(viewModel.name!, viewModel.cardNumber!, viewModel.expirationMonth!, viewModel.expirationYear!, viewModel.cvv!)
+        completion?(viewModel.transaction!)
     }
     
     @IBAction func cancel(sender: Any) {
@@ -102,6 +126,19 @@ class CollectCardInfoViewViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
- 
 
+}
+
+extension CollectCardInfoViewViewController: PKPaymentAuthorizationViewControllerDelegate {
+    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        controller.dismiss(animated: true) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        viewModel.transaction?.applePayPayment = payment
+        self.completion?(viewModel.transaction!)
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+    }
 }

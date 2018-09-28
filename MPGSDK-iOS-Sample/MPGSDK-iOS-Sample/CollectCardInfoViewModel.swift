@@ -15,38 +15,39 @@ limitations under the License.
 */
 
 import Foundation
+import PassKit
 
 struct CollectCardInfoViewModel {
-    var name: String?
-    var cardNumber: String?
-    var expirationMonth: String?
-    var expirationYear: String?
-    var cvv: String?
+    var transaction: Transaction?
     
     var nameValid: Bool {
-        return validate(name, min: 1, max: 256)
+        return validate(transaction?.nameOnCard, min: 1, max: 256)
     }
     
     var cardNumberValid: Bool {
-        return validate(cardNumber, min: 1, max: 19)
+        return validate(transaction?.cardNumber, min: 1, max: 19)
     }
     
     var expirationMonthValid: Bool {
-        return validate(expirationMonth, min: 2, max: 2)
+        return validate(transaction?.expiryMM, min: 2, max: 2)
     }
     
     var expirationYearValid: Bool {
-        return validate(expirationYear, min: 2, max: 2)
+        return validate(transaction?.expiryYY, min: 2, max: 2)
     }
     
     var cvvValid: Bool {
-        return validate(cvv, min: 3, max: 4)
+        return validate(transaction?.cvv, min: 3, max: 4)
     }
     
     var isValid: Bool {
-        return nameValid && cardNumberValid && expirationYearValid && expirationMonthValid && expirationYearValid && cvvValid
+        return (nameValid && cardNumberValid && expirationYearValid && expirationMonthValid && expirationYearValid && cvvValid) || transaction?.applePayPayment != nil
     }
     
+    var applePayCapable: Bool {
+        return transaction?.applePayMerchantIdentifier != nil && !transaction!.applePayMerchantIdentifier!.isEmpty
+    }
+
     fileprivate func validate(_ value: String?, min: Int = 1, max: Int? = nil) -> Bool {
         guard let value = value, value.count >= min else { return false }
         if let max = max, value.count > max {

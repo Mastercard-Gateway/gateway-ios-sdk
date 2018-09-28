@@ -22,6 +22,7 @@ struct ConfigurationViewModel {
     var merchantId: String?
     var region: GatewayRegion = .mtf
     var merchantServiceURLString: String?
+    var applePayMerchantID: String?
     
     // MARK: - Computed Outputs
     var allRegions: [GatewayRegion] { return GatewayRegion.all }
@@ -54,6 +55,7 @@ struct ConfigurationViewModel {
         defaults.set(merchantId, forKey: "merchantId")
         defaults.set(region.rawValue, forKey: "region")
         defaults.set(merchantServiceURL, forKey: "merchantServiceURL")
+        defaults.set(applePayMerchantID, forKey: "applePayMerchantID")
     }
     
     mutating func load(fromUserDefaults defaults: UserDefaults = .standard) {
@@ -64,6 +66,7 @@ struct ConfigurationViewModel {
             region = .mtf
         }
         merchantServiceURL = defaults.url(forKey: "merchantServiceURL")
+        applePayMerchantID = defaults.string(forKey: "applePayMerchantID")
     }
 }
 

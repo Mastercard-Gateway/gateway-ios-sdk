@@ -21,6 +21,7 @@ class ConfigurationViewController: UIViewController {
     @IBOutlet weak var merchantIdField: UITextField?
     @IBOutlet weak var regionButton: UIButton?
     @IBOutlet weak var merchantServerUrlField: UITextField?
+    @IBOutlet weak var applePayMerchantIdField: UITextField?
     
     @IBOutlet weak var continueButton: UIButton?
     
@@ -60,10 +61,15 @@ class ConfigurationViewController: UIViewController {
         viewModel.merchantServiceURLString = merchantServerUrlField?.text
     }
     
+    @IBAction func syncApplePayMerchantIdField(sender: UITextField) {
+        viewModel.applePayMerchantID = applePayMerchantIdField?.text
+    }
+    
     func renderViewModel() {
         merchantIdField?.text = viewModel.merchantId
         regionButton?.setTitle(viewModel.region.name, for: .normal)
         merchantServerUrlField?.text = viewModel.merchantServiceURLString
+        applePayMerchantIdField?.text = viewModel.applePayMerchantID
         
         continueButton?.isEnabled = viewModel.isValid
     }
@@ -91,7 +97,7 @@ class ConfigurationViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let paymentVC = segue.destination as? ProcessPaymentViewController {
-            paymentVC.configure(merchantId: viewModel.merchantId!, region: viewModel.region, merchantServiceURL: viewModel.merchantServiceURL!)
+            paymentVC.configure(merchantId: viewModel.merchantId!, region: viewModel.region, merchantServiceURL: viewModel.merchantServiceURL!, applePayMerchantIdentifier: viewModel.applePayMerchantID)
         }
     }
     
