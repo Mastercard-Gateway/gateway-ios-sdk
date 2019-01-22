@@ -64,7 +64,7 @@ class GatewayTests: XCTestCase {
         })
     }
     
-    func testUpdateSessionUrlRequest() {
+    func testUpdateSessionUrlRequestAPILessThan50() {
         let encoded = "updatePayload".data(using: .utf8)!
         mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
         testSubject.userAgent = "TestAgent/1.0"
@@ -72,12 +72,28 @@ class GatewayTests: XCTestCase {
         mockURLSession.nextDataTask = mockTask
         
         testSubject.updateSession("abc", apiVersion: "44", payload: GatewayMap()) { (result) in }
-
+        
         XCTAssertNotNil(mockURLSession.lastRequest)
         XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc"))
         XCTAssertEqual(mockURLSession.lastRequest?.httpMethod, "PUT")
         XCTAssertEqual(mockURLSession.lastRequest?.httpBody, encoded)
         XCTAssertEqual(mockURLSession.lastRequest!.allHTTPHeaderFields!, ["User-Agent" : "TestAgent/1.0", "Content-Type": "application/json"])
+        XCTAssertTrue(mockTask.resumeWasCalled)
+    }
+    func testUpdateSessionUrlRequestAPIHigherThan50() {
+        let encoded = "updatePayload".data(using: .utf8)!
+        mockEncoder.encodeExpectations.expect(GatewayMap(["device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
+        testSubject.userAgent = "TestAgent/1.0"
+        let mockTask = MockURLSessionDataTask()
+        mockURLSession.nextDataTask = mockTask
+        
+        testSubject.updateSession("abc", apiVersion: "50", payload: GatewayMap()) { (result) in }
+        
+        XCTAssertNotNil(mockURLSession.lastRequest)
+        XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://test-gateway.mastercard.com/api/rest/version/50/merchant/123456789/session/abc"))
+        XCTAssertEqual(mockURLSession.lastRequest?.httpMethod, "PUT")
+        XCTAssertEqual(mockURLSession.lastRequest?.httpBody, encoded)
+        XCTAssertEqual(mockURLSession.lastRequest!.allHTTPHeaderFields!, ["User-Agent" : "TestAgent/1.0", "Content-Type": "application/json", "Authorization": "bWVyY2hhbnQuMTIzNDU2Nzg5OmFiYw=="])
         XCTAssertTrue(mockTask.resumeWasCalled)
     }
     

@@ -52,9 +52,24 @@ public class Gateway: NSObject {
         var task: URLSessionTask? = nil
         do {
             var fullPayload = payload
-            fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
+            var headers: [String : String] = [:]
+            
+            // If the API version is less than 50, we must set the apiOperation
+            // If the API version is 50 or higer, we must set the authentication header
+            if let version = Int(apiVersion) {
+                switch version {
+                case (..<50):
+                    fullPayload["apiOperation"] = "UPDATE_PAYER_DATA"
+                case (50...):
+                    headers["Authorization"] = createSessionAuthHeader(session: session)
+                default: break
+                }
+            }
+            
             fullPayload[at: "device.browser"] = userAgent
-            task = try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, completion: completion)
+            
+            
+            task = try execute(.put, path: "session/\(session)", payload: fullPayload, apiVersion: apiVersion, headers: headers, completion: completion)
         } catch {
             defer {
                 completion(GatewayResult(error))
@@ -76,12 +91,16 @@ public class Gateway: NSObject {
     /// - Returns: The URLSessionTask being used to perform the network request for the purposes of canceling or monitoring the progress.
     /// - Throws: If the APIVersion is not supported or the payload could not be encoded
     @discardableResult
-    func execute(_ method: HTTPMethod, path: String, payload: GatewayMap, apiVersion: String, completion: @escaping (GatewayResult<GatewayMap>) -> Void) throws -> URLSessionTask? {
+    func execute(_ method: HTTPMethod, path: String, payload: GatewayMap, apiVersion: String, headers: [String : String] = [:], completion: @escaping (GatewayResult<GatewayMap>) -> Void) throws -> URLSessionTask? {
         
         let requestURL = try apiURL(for: apiVersion).appendingPathComponent(path)
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
+        // set the custom headers
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try encoder.encode(payload)
@@ -136,5 +155,11 @@ public class Gateway: NSObject {
         let defaultExplination = "An error occurred"
         guard let data = data, let map = try? self.decoder.decode(GatewayMap.self, from: data) else { return defaultExplination }
         return (map[at: "error.explanation"] as? String) ?? defaultExplination
+    }
+    
+    private func createSessionAuthHeader(session: String) -> String {
+        let credsString = "merchant.\(merchantId):\(session)"
+        let credsData = Data(credsString.utf8)
+        return credsData.base64EncodedString()
     }
 }

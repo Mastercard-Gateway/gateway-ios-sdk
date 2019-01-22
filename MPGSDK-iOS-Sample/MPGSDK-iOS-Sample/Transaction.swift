@@ -73,7 +73,7 @@ struct Transaction {
         request.countryCode = countryCode
         request.currencyCode = currency
         request.supportedNetworks = supportedNetworks
-        request.merchantCapabilities = [.capabilityCredit, .capabilityDebit, .capabilityEMV, .capability3DS]
+        request.merchantCapabilities = [.capabilityCredit, .capabilityDebit, .capability3DS]
         return request
     }
     

@@ -256,7 +256,7 @@ enum GatewayValue {
         case let boxes as [GatewayValue]:
             self = .array(boxes)
         case let array as [Any]:
-            let boxes = array.flatMap{ GatewayValue($0) }
+            let boxes = array.compactMap{ GatewayValue($0) }
             self = .array(boxes)
         case let b as Bool:
             self = .bool(b)
