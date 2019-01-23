@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
-               BuildableName = "MPGSDK.framework"
-               BlueprintName = "MPGSDK-iOS"
-               ReferencedContainer = "container:MPGSDK.xcodeproj">
+               BlueprintIdentifier = "6F5F70351F7C006E0048F591"
+               BuildableName = "MPGSDK-iOS-Sample.app"
+               BlueprintName = "MPGSDK-iOS-Sample"
+               ReferencedContainer = "container:MPGSDK-iOS-Sample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,27 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "52D6D9851BEFF229002C0205"
-               BuildableName = "MPGSDK-iOS Tests.xctest"
-               BlueprintName = "MPGSDK-iOS Tests"
-               ReferencedContainer = "container:MPGSDK.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
-            BuildableName = "MPGSDK.framework"
-            BlueprintName = "MPGSDK-iOS"
-            ReferencedContainer = "container:MPGSDK.xcodeproj">
+            BlueprintIdentifier = "6F5F70351F7C006E0048F591"
+            BuildableName = "MPGSDK-iOS-Sample.app"
+            BlueprintName = "MPGSDK-iOS-Sample"
+            ReferencedContainer = "container:MPGSDK-iOS-Sample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -62,15 +51,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
-            BuildableName = "MPGSDK.framework"
-            BlueprintName = "MPGSDK-iOS"
-            ReferencedContainer = "container:MPGSDK.xcodeproj">
+            BlueprintIdentifier = "6F5F70351F7C006E0048F591"
+            BuildableName = "MPGSDK-iOS-Sample.app"
+            BlueprintName = "MPGSDK-iOS-Sample"
+            ReferencedContainer = "container:MPGSDK-iOS-Sample.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,15 +70,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "52D6D97B1BEFF229002C0205"
-            BuildableName = "MPGSDK.framework"
-            BlueprintName = "MPGSDK-iOS"
-            ReferencedContainer = "container:MPGSDK.xcodeproj">
+            BlueprintIdentifier = "6F5F70351F7C006E0048F591"
+            BuildableName = "MPGSDK-iOS-Sample.app"
+            BlueprintName = "MPGSDK-iOS-Sample"
+            ReferencedContainer = "container:MPGSDK-iOS-Sample.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

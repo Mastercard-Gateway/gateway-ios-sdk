@@ -232,10 +232,9 @@ class GatewayMapTests: XCTestCase {
     }
     
     func testDescription() {
-        let expectedDescription = "[\"map\": [\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"], \"array\": [[\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"], [\"true\": true, \"int\": 1, \"double\": 1.25, \"false\": false, \"string\": \"A\"]]]"
         testSubject = GatewayMap(complexValues)
-        XCTAssertEqual(expectedDescription, testSubject.description)
-        XCTAssertEqual(expectedDescription, testSubject.debugDescription)
+        XCTAssertEqual(testSubject.value.description, testSubject.description)
+        XCTAssertEqual(Optional(testSubject.value).debugDescription, testSubject.debugDescription)
     }
     
     func testCodableSupport() {
