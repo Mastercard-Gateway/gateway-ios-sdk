@@ -59,14 +59,14 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 36,
-      "symbol": "Gateway3DSecureError.missingSummaryStatus",
+      "symbol": "Gateway3DSecureError.missingGatewayResponse",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 37,
-      "symbol": "Gateway3DSecureError.missing3DSecureId",
+      "symbol": "Gateway3DSecureError.mappingError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },

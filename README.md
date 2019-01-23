@@ -1,5 +1,3 @@
-#### \*\*DISCLAIMER: Currently, this SDK supports Gateway API versions 46 and below. Please direct all support inquiries to your acquirer.
-
 # Gateway iOS SDK
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)

@@ -14,11 +14,12 @@
 # update_fastlane
 
 default_platform(:ios)
+xcversion(version: "~> 10")
 
 platform :ios do
   desc "Tests all frameworks"
   lane :test do
-    scan
+    scan(scheme: "MPGSDK-iOS")
     xcov(
       workspace: "MPGSDK.xcworkspace",
       scheme: "MPGSDK-iOS",

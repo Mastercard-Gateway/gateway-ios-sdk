@@ -88,8 +88,7 @@
         <section>
           <section class="section">
             
-            <h4 id='disclaimer-currently-this-sdk-supports-gateway-api-versions-46-and-below-please-direct-all-support-inquiries-to-your-acquirer' class='heading'>**DISCLAIMER: Currently, this SDK supports Gateway API versions 46 and below. Please direct all support inquiries to your acquirer.</h4>
-<h1 id='gateway-ios-sdk' class='heading'>Gateway iOS SDK</h1>
+            <h1 id='gateway-ios-sdk' class='heading'>Gateway iOS SDK</h1>
 
 <p><a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
 <a href="https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk"><img src="https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk.svg?branch=master" alt="Build Status"></a></p>
@@ -123,7 +122,7 @@
 <p>In order to use the SDK, you must initialize the Gateway object with your merchant ID and your gateway&rsquo;s region. If you are unsure about which region to select, please direct your inquiry to your gateway support team.</p>
 
 <blockquote>
-<p>Possible region values include, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO12northAmericaA2CmF">GatewayRegion.northAmerica</a></code>, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO11asiaPacificA2CmF">GatewayRegion.asiaPacific</a></code> and <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO6europeA2CmF">GatewayRegion.europe</a></code></p>
+<p>Possible region values include, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO12northAmericayA2CmF">GatewayRegion.northAmerica</a></code>, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO11asiaPacificyA2CmF">GatewayRegion.asiaPacific</a></code> and <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO6europeyA2CmF">GatewayRegion.europe</a></code></p>
 <pre class="highlight plaintext"><code>let gateway = Gateway(region: GatewayRegion.&lt;#YOUR GATEWAY REGION#&gt;, merchantId: "&lt;#YOUR MERCHANT ID#&gt;")
 </code></pre>
 </blockquote>
@@ -145,26 +144,16 @@
 <hr>
 <h2 id='sample-app' class='heading'>Sample App</h2>
 
-<p>Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our <strong><a href="https://github.com/Mastercard/gateway-test-merchant-server">Gateway Test Merchant Server</a></strong>. Follow the instructions for that project and copy the resulting URL of the instance you create.</p>
-<h3 id='configuration' class='heading'>Configuration</h3>
+<p>Included with the sdk is a sample app named MPGSDK-iOS-Sample that demonstrates how to take a payment using the sdk.  This sample app requires a running instance of our <strong><a href="https://github.com/Mastercard/gateway-test-merchant-server">Gateway Test Merchant Server</a></strong>. Follow the instructions for that project and copy the resulting URL of the instance you create.
+When you launch the sample app, you will be prompted to enter your merchant Id, gateway region, and test merchant server url and Apple Pay Merchant Id if applicable.</p>
+<h3 id='apple-pay' class='heading'>Apple Pay</h3>
 
-<p>To configure the sample app, open the <code>AppDelegate.swift</code> file. There are three fields which must be completed in order for the sample app to run a test payment.</p>
-<pre class="highlight swift"><code><span class="c1">// TEST Gateway Merchant ID</span>
-<span class="k">let</span> <span class="nv">gatewayMerchantId</span> <span class="o">=</span> <span class="s">"&lt;#your-merchant-id#&gt;"</span>
-
-<span class="c1">// Gateway Region</span>
-<span class="k">let</span> <span class="nv">gatewayRegion</span> <span class="o">=</span> <span class="kt">GatewayRegion</span><span class="o">.</span><span class="s">"&lt;#YOUR GATEWAY REGION#&gt;"</span>
-
-<span class="c1">// TEST Merchant Server URL (test server app deployed to Heroku)</span>
-<span class="c1">// For more information, see: https://github.com/Mastercard/gateway-test-merchant-server</span>
-<span class="c1">// ex: https://{your-app-name}.herokuapp.com</span>
-<span class="k">let</span> <span class="nv">merchantServerUrl</span> <span class="o">=</span> <span class="s">"&lt;#YOUR MERCHANT SERVER URL#&gt;"</span>
-</code></pre>
+<p>To conduct an Apple Pay transaction using the sample app, you must first complete the steps for <a href="https://developer.apple.com/library/archive/ApplePay_Guide/Configuration.html">Configuring Apple Pay</a> provided by Apple.  This will setup your Apple Pay Merchant Id and the Payment Processing Certificate.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/Mastercard/gateway-merchant-swift" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2018-08-30)</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/Mastercard/gateway-merchant-swift" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2019-01-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

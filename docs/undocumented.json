@@ -38,14 +38,14 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 25,
-      "symbol": "Gateway3DSecureResult.completed",
+      "symbol": "Gateway3DSecureResult.completed(gatewayResult:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 26,
-      "symbol": "Gateway3DSecureResult.error",
+      "symbol": "Gateway3DSecureResult.error(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -59,14 +59,14 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 36,
-      "symbol": "Gateway3DSecureError.missingSummaryStatus",
+      "symbol": "Gateway3DSecureError.missingGatewayResponse",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/Gateway3DSecureViewController.swift",
       "line": 37,
-      "symbol": "Gateway3DSecureError.missing3DSecureId",
+      "symbol": "Gateway3DSecureError.mappingError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -115,14 +115,14 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/GatewayError.swift",
       "line": 20,
-      "symbol": "GatewayError.failedRequest",
+      "symbol": "GatewayError.failedRequest(_:_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/GatewayError.swift",
       "line": 21,
-      "symbol": "GatewayError.invalidAPIVersion",
+      "symbol": "GatewayError.invalidAPIVersion(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -136,7 +136,7 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/GatewayMap.swift",
       "line": 27,
-      "symbol": "GatewayMap.DecodingError.invalidData",
+      "symbol": "GatewayMap.DecodingError.invalidData(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -178,14 +178,14 @@
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/GatewayResult.swift",
       "line": 24,
-      "symbol": "GatewayResult.success",
+      "symbol": "GatewayResult.success(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/e0350161/simplify/mpg-sdk-ios/Sources/GatewayResult.swift",
       "line": 25,
-      "symbol": "GatewayResult.error",
+      "symbol": "GatewayResult.error(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },

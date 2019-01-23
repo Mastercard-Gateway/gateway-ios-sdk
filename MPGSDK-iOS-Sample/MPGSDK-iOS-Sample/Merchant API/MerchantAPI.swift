@@ -91,7 +91,6 @@ class MerchantAPI {
     
     fileprivate func responseHandler<T: Decodable>(_ completion: @escaping (Result<T>) -> Void) -> (Data?, URLResponse?, Error?) -> Void {
         return { (data, response, error) in
-            print(String(data: data!, encoding: .utf8)!)
             if let error = error {
                 completion(Result.error(error))
                 return
@@ -101,6 +100,9 @@ class MerchantAPI {
                 completion(Result.error(MerchantAPIError.failedRequest))
                 return
             }
+            
+            
+            print(String(data: data, encoding: .utf8) ?? "Invalid Data")
             
             do {
                 let response = try self.decoder.decode(T.self, from: data)
