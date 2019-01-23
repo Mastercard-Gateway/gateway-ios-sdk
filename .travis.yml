@@ -6,7 +6,7 @@ branches:
 
 xcode_project: MPGSDK.xcodeproj
 xcode_scheme: MPGSDK-iOS
-osx_image: xcode9.1
+osx_image: xcode10.1
 xcode_sdk: iphonesimulator10.1
 
 script:
