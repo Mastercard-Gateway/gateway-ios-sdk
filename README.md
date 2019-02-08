@@ -17,7 +17,7 @@ Once you have updated a session with card information from the app, you may then
 
 ## Compatibility
 
-The gateway SDK requires **iOS 8+** and is compatible with **Swift 4** projects. Therefore you must use **Xcode 9** when using the Gateway SDK.
+The gateway SDK requires a minimum of **iOS 8+** and is compatible with **Swift 4** projects. Therefore, the GatewaySDK requires **Xcode 9** or newer.
 
 
 ## Installation
