@@ -29,7 +29,7 @@ class GatewayMapTests: XCTestCase {
     override func setUp() {
         testSubject = GatewayMap()
         allSimpleValues =  ["string" : "A", "int" : 1, "double" : 1.25, "true": true, "false" : false]
-        complexValues =  ["map" : allSimpleValues, "array" : [allSimpleValues, allSimpleValues]]
+        complexValues =  ["map" : allSimpleValues!, "array" : [allSimpleValues, allSimpleValues]]
         super.setUp()
     }
     
@@ -89,7 +89,7 @@ class GatewayMapTests: XCTestCase {
         testSubject[at: "map.double"] = 1.25
         testSubject[at: "map.true"] = true
         testSubject[at: "map.false"] = false
-        XCTAssertEqual(testSubject, GatewayMap(["map" : allSimpleValues]))
+        XCTAssertEqual(testSubject, GatewayMap(["map" : allSimpleValues!]))
     }
     
     func testOverrideNonMapWithMap() {

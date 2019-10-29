@@ -82,8 +82,10 @@ class MerchantAPI {
         
         request.httpMethod = method
         
-        let encoder = JSONEncoder()
-        request.httpBody = try? encoder.encode(body)
+        if let body = body {
+            let encoder = JSONEncoder()
+            request.httpBody = try? encoder.encode(body)
+        }
         
         let task = urlSession.dataTask(with: request, completionHandler: responseHandler(completion))
         task.resume()
