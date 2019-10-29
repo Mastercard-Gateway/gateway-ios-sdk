@@ -1,13 +1,9 @@
 language: objective-c
 
-branches:
- only:
- - master
-
 xcode_project: MPGSDK.xcodeproj
 xcode_scheme: MPGSDK-iOS
-osx_image: xcode10.1
-xcode_sdk: iphonesimulator10.1
+osx_image: xcode11.1
+xcode_sdk: iphonesimulator13.1
 
 script:
 - xcodebuild clean build test -workspace MPGSDK.xcworkspace -scheme MPGSDK-iOS -destination "platform=iOS Simulator,name=iPhone X"
