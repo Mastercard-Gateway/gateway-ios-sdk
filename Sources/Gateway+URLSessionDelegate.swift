@@ -28,7 +28,9 @@ extension Gateway: URLSessionDelegate {
         }
         
         // evaluate the certificate chain
-        guard SecTrustEvaluate(serverTrust, nil) == errSecSuccess else {
+        var secResult = SecTrustResultType.invalid
+        let validResults: [SecTrustResultType] = [.proceed, .unspecified]
+        guard SecTrustEvaluate(serverTrust, &secResult) == errSecSuccess, validResults.contains(secResult) else {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
