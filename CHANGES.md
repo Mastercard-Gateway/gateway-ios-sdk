@@ -1,7 +1,11 @@
 # Release Notes
 
 ## [Unreleased]
+
+## [1.1.1]
+### Changed
 - Updated the project and source code to Swift 5
+- Updated podspec file
 
 ## [1.1.1]
 ### Changed
