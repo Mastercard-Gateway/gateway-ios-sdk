@@ -14,7 +14,7 @@
 # update_fastlane
 
 default_platform(:ios)
-xcversion(version: "~> 10")
+xcversion(version: "~> 11")
 
 platform :ios do
   desc "Tests all frameworks"

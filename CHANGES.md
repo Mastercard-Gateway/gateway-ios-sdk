@@ -1,8 +1,12 @@
 # Release Notes
 
 ## [Unreleased]
+### Added
+- Added the India regions
+### Changed
+- Updated Fastlane versions
 
-## [1.1.1]
+## [1.1.2]
 ### Changed
 - Updated the project and source code to Swift 5
 - Updated podspec file

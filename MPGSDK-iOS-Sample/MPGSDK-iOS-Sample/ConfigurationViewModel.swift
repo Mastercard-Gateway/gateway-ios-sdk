@@ -72,7 +72,7 @@ struct ConfigurationViewModel {
 
 // MARK: - Helpers
 extension GatewayRegion {
-    static let all: [GatewayRegion] = [.mtf, .northAmerica, .europe, .asiaPacific]
+    static let all: [GatewayRegion] = [.mtf, .northAmerica, .europe, .asiaPacific, .india]
     
     var name: String {
         switch self {
@@ -84,6 +84,8 @@ extension GatewayRegion {
             return "Europe"
         case .asiaPacific:
             return "Asia Pacific"
+        case .india:
+            return "India"
         }
     }
 }

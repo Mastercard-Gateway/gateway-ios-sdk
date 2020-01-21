@@ -17,10 +17,11 @@
 import Foundation
 
 public enum GatewayRegion: String {
-    case asiaPacific = "ap"
-    case europe = "eu"
-    case northAmerica = "na"
-    case mtf = "test"
+    case asiaPacific = "ap-"
+    case europe = "eu-"
+    case northAmerica = "na-"
+    case india = "in."
+    case mtf = "test-"
     
     var urlPrefix: String {
         return rawValue
