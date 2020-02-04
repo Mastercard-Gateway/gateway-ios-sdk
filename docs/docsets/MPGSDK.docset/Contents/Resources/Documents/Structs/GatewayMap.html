@@ -14,7 +14,7 @@
     <a title="GatewayMap Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MPGSDK Docs</a> (47% documented)</p>
+        <p><a href="../index.html">MPGSDK Docs</a> (46% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -62,6 +62,17 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:10Foundation11JSONDecoderC">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/s:10Foundation11JSONEncoderC">JSONEncoder</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -92,6 +103,10 @@
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">GatewayMap</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GatewayMap</span><span class="p">:</span> <span class="kt">ExpressibleByDictionaryLiteral</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GatewayMap</span><span class="p">:</span> <span class="kt">Codable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GatewayMap</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GatewayMap</span><span class="p">:</span> <span class="kt">CustomDebugStringConvertible</span></code></pre>
 
                 </div>
               </div>
@@ -139,9 +154,11 @@
               <div class="task-name-container">
                 <a name="/PUBLIC"></a>
                 <a name="//apple_ref/swift/Section/PUBLIC" class="dashAnchor"></a>
-                <a href="#/PUBLIC">
-                  <h3 class="section-name">PUBLIC</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/PUBLIC"></a>
+                  <h3 class="section-name"><p>PUBLIC</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -312,11 +329,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Subscripting support for getting and setting values nested under several layers of GatewayMaps and/or arrays using a dot seperated path string
-If you map contains a value at key <q>key1</q> which is itself a map containing a value at key <q>key2</q>, the value is accessed using a path of <q>key1.key2</q>
+If you map contains a value at key &ldquo;key1&rdquo; which is itself a map containing a value at key &ldquo;key2&rdquo;, the value is accessed using a path of &ldquo;key1.key2&rdquo;
 When getting a value, if any of the keys in the path do not exist, the returned value will be nil.
 When setting a value, if any of the keys in the path do not exist, GatewayMaps will be created and inserted automatically.  If a non-map value exists in the middle of the path, that value will be overridden with a map.</p>
 
-<p>Values inside an array can be accessed using subscripting within the path.  For instance, <q>people[3].firstName</q> would access the element at index 3 of the &lsquo;people&rsquo; array and then get the &lsquo;firstName&rsquo; value from that object.  When setting values on an array, empty brackets &lsquo;[]&rsquo; may be used to append an object to the array.</p>
+<p>Values inside an array can be accessed using subscripting within the path.  For instance, &ldquo;people[3].firstName&rdquo; would access the element at index 3 of the &lsquo;people&rsquo; array and then get the &lsquo;firstName&rsquo; value from that object.  When setting values on an array, empty brackets &lsquo;[]&rsquo; may be used to append an object to the array.</p>
 
                       </div>
                       <div class="declaration">
@@ -355,9 +372,11 @@ When setting a value, if any of the keys in the path do not exist, GatewayMaps w
               <div class="task-name-container">
                 <a name="/Dictionary%20Litteral%20Support"></a>
                 <a name="//apple_ref/swift/Section/Dictionary Litteral Support" class="dashAnchor"></a>
-                <a href="#/Dictionary%20Litteral%20Support">
-                  <h3 class="section-name">Dictionary Litteral Support</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Dictionary%20Litteral%20Support"></a>
+                  <h3 class="section-name"><p>Dictionary Litteral Support</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -392,9 +411,11 @@ When setting a value, if any of the keys in the path do not exist, GatewayMaps w
               <div class="task-name-container">
                 <a name="/Codable"></a>
                 <a name="//apple_ref/swift/Section/Codable" class="dashAnchor"></a>
-                <a href="#/Codable">
-                  <h3 class="section-name">Codable</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Codable"></a>
+                  <h3 class="section-name"><p>Codable</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -455,9 +476,11 @@ When setting a value, if any of the keys in the path do not exist, GatewayMaps w
               <div class="task-name-container">
                 <a name="/PRIVATE"></a>
                 <a name="//apple_ref/swift/Section/PRIVATE" class="dashAnchor"></a>
-                <a href="#/PRIVATE">
-                  <h3 class="section-name">PRIVATE</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/PRIVATE"></a>
+                  <h3 class="section-name"><p>PRIVATE</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -486,17 +509,6 @@ When setting a value, if any of the keys in the path do not exist, GatewayMaps w
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/PRIVATE2"></a>
-                <a name="//apple_ref/swift/Section/PRIVATE" class="dashAnchor"></a>
-                <a href="#/PRIVATE2">
-                  <h3 class="section-name">PRIVATE</h3>
-                </a>
-              </div>
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -528,8 +540,8 @@ When setting a value, if any of the keys in the path do not exist, GatewayMaps w
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/Mastercard-Gateway/gateway-ios-sdk" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2019-11-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/Mastercard-Gateway/gateway-ios-sdk" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2020-01-21)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

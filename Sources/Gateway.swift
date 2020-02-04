@@ -146,7 +146,7 @@ public class Gateway: NSObject {
 
     private func apiURL(for apiVersion: String) throws -> URL {
         guard BuildConfig.minimumAPIVersion.compare(apiVersion, options: .numeric) != .orderedDescending else { throw GatewayError.invalidAPIVersion(apiVersion) }
-        return URL(string: "https://\(region.urlPrefix)-gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
+        return URL(string: "https://\(region.urlPrefix)gateway.mastercard.com/api/rest/version/\(String(apiVersion))/merchant/\(merchantId)")!
     }
     
     private func getErrorExplination(_ data: Data?) -> String {
