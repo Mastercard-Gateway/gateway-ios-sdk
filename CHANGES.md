@@ -1,6 +1,13 @@
 # Release Notes
 
 ## [Unreleased]
+
+## [1.1.4]
+### Changed
+- Swift.package file version updated to specify swift 5.0
+- Syncing Changes.md with releases
+
+## [1.1.3]
 ### Added
 - Added the India regions
 ### Changed
