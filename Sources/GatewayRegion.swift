@@ -16,14 +16,15 @@
 
 import Foundation
 
-public enum GatewayRegion: String {
-    case asiaPacific = "ap-"
-    case europe = "eu-"
-    case northAmerica = "na-"
-    case india = "in."
-    case mtf = "test-"
-    
-    var urlPrefix: String {
-        return rawValue
-    }
+public struct GatewayRegion: Equatable {
+    public let id: String
+    public let name: String
+    public let baseURL: String
+}
+
+extension GatewayRegion {
+    public static let asiaPacific: GatewayRegion = GatewayRegion(id: "ap", name: "Asia Pacific", baseURL: "ap-gateway.mastercard.com")
+    public static let europe: GatewayRegion = GatewayRegion(id: "eu", name: "Europe", baseURL: "eu-gateway.mastercard.com")
+    public static let northAmerica: GatewayRegion = GatewayRegion(id: "na", name: "North America", baseURL: "na-gateway.mastercard.com")
+    public static let mtf: GatewayRegion = GatewayRegion(id: "mtf", name: "Test (MTF)", baseURL: "test-gateway.mastercard.com")
 }

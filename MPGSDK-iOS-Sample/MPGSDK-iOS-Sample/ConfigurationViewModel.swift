@@ -53,14 +53,14 @@ struct ConfigurationViewModel {
     // MARK: - Loading and Saving
     func save(toUserDefaults defaults: UserDefaults = .standard) {
         defaults.set(merchantId, forKey: "merchantId")
-        defaults.set(region.rawValue, forKey: "region")
+        defaults.set(region.id, forKey: "region")
         defaults.set(merchantServiceURL, forKey: "merchantServiceURL")
         defaults.set(applePayMerchantID, forKey: "applePayMerchantID")
     }
     
     mutating func load(fromUserDefaults defaults: UserDefaults = .standard) {
         merchantId = defaults.string(forKey: "merchantId")
-        if let regionString = defaults.string(forKey: "region"), let new = GatewayRegion(rawValue: regionString) {
+        if let regionString = defaults.string(forKey: "region"), let new = GatewayRegion.matching(id: regionString) {
             region = new
         } else {
             region = .mtf
@@ -74,18 +74,13 @@ struct ConfigurationViewModel {
 extension GatewayRegion {
     static let all: [GatewayRegion] = [.mtf, .northAmerica, .europe, .asiaPacific, .india]
     
-    var name: String {
-        switch self {
-        case .mtf:
-            return "Test (MTF)"
-        case .northAmerica:
-            return "North America"
-        case .europe:
-            return "Europe"
-        case .asiaPacific:
-            return "Asia Pacific"
-        case .india:
-            return "India"
+    static func matching(id: String) -> GatewayRegion? {
+        var match: GatewayRegion? = nil
+        GatewayRegion.all.forEach {
+            if $0.id == id {
+                match = $0
+            }
         }
+        return match
     }
 }
