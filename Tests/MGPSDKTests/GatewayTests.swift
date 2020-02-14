@@ -74,7 +74,7 @@ class GatewayTests: XCTestCase {
         testSubject.updateSession("abc", apiVersion: "44", payload: GatewayMap()) { (result) in }
         
         XCTAssertNotNil(mockURLSession.lastRequest)
-        XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc"))
+        XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc"))
         XCTAssertEqual(mockURLSession.lastRequest?.httpMethod, "PUT")
         XCTAssertEqual(mockURLSession.lastRequest?.httpBody, encoded)
         XCTAssertEqual(mockURLSession.lastRequest!.allHTTPHeaderFields!, ["User-Agent" : "TestAgent/1.0", "Content-Type": "application/json"])
@@ -90,7 +90,7 @@ class GatewayTests: XCTestCase {
         testSubject.updateSession("abc", apiVersion: "50", payload: GatewayMap()) { (result) in }
         
         XCTAssertNotNil(mockURLSession.lastRequest)
-        XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://test-gateway.mastercard.com/api/rest/version/50/merchant/123456789/session/abc"))
+        XCTAssertEqual(mockURLSession.lastRequest?.url, URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/50/merchant/123456789/session/abc"))
         XCTAssertEqual(mockURLSession.lastRequest?.httpMethod, "PUT")
         XCTAssertEqual(mockURLSession.lastRequest?.httpBody, encoded)
         XCTAssertEqual(mockURLSession.lastRequest!.allHTTPHeaderFields!, ["User-Agent" : "TestAgent/1.0", "Content-Type": "application/json", "Authorization": "bWVyY2hhbnQuMTIzNDU2Nzg5OmFiYw=="])
@@ -104,7 +104,7 @@ class GatewayTests: XCTestCase {
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["response" : "All is good"]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
@@ -128,7 +128,7 @@ class GatewayTests: XCTestCase {
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["response" : "All is good"]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
@@ -150,7 +150,7 @@ class GatewayTests: XCTestCase {
         let encoded = "updatePayload".data(using: .utf8)!
         mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
         testSubject.userAgent = "TestAgent/1.0"
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
@@ -172,7 +172,7 @@ class GatewayTests: XCTestCase {
         let encoded = "updatePayload".data(using: .utf8)!
         mockEncoder.encodeExpectations.expect(GatewayMap(["apiOperation" : "UPDATE_PAYER_DATA", "device" : ["browser" : "TestAgent/1.0"]]), return: encoded)
         testSubject.userAgent = "TestAgent/1.0"
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 301, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 301, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
@@ -197,7 +197,7 @@ class GatewayTests: XCTestCase {
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["error" : ["explination" : 5]]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 404, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 404, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
@@ -222,7 +222,7 @@ class GatewayTests: XCTestCase {
         let mockResponseData = "ResponseData".data(using: .utf8)!
         let mockResponseMap: GatewayMap = ["error" : ["explanation" : "Something went wrong"]]
         mockDecoder.decodeExpectations.expect(mockResponseData, return: mockResponseMap)
-        let mockResponse = HTTPURLResponse(url: URL(string: "https://test-gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 99, httpVersion: nil, headerFields: nil)
+        let mockResponse = HTTPURLResponse(url: URL(string: "https://mtf.gateway.mastercard.com/api/rest/version/44/merchant/123456789/session/abc")!, statusCode: 99, httpVersion: nil, headerFields: nil)
         
         var requestResult: GatewayResult<GatewayMap>? = nil
         
