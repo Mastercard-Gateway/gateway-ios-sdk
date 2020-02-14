@@ -13,7 +13,7 @@
     <a title="MPGSDK  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MPGSDK Docs</a> (46% documented)</p>
+        <p><a href="index.html">MPGSDK Docs</a> (0% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -26,73 +26,6 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="Classes.html">Classes</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/Gateway.html">Gateway</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/Gateway3DSecureViewController.html">Gateway3DSecureViewController</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/Gateway3DSecureError.html">Gateway3DSecureError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/Gateway3DSecureResult.html">Gateway3DSecureResult</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/GatewayError.html">GatewayError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/GatewayRegion.html">GatewayRegion</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/GatewayResult.html">GatewayResult</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/HTTPMethod.html">HTTPMethod</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions.html#/s:10Foundation11JSONDecoderC">JSONDecoder</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Extensions.html#/s:10Foundation11JSONEncoderC">JSONEncoder</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Protocols.html">Protocols</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Protocols/JSONDecoderProtocol.html">JSONDecoderProtocol</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/JSONEncoderProtocol.html">JSONEncoderProtocol</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Structs.html">Structures</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Structs/GatewayMap.html">GatewayMap</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/GatewayMap/DecodingError.html">– DecodingError</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -133,13 +66,14 @@
 <p>In order to use the SDK, you must initialize the Gateway object with your merchant ID and your gateway&rsquo;s region. If you are unsure about which region to select, please direct your inquiry to your gateway support team.</p>
 
 <blockquote>
-<p>Possible region values include, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO12northAmericayA2CmF">GatewayRegion.northAmerica</a></code>, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO11asiaPacificyA2CmF">GatewayRegion.asiaPacific</a></code>, <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO5indiayA2CmF">GatewayRegion.india</a></code> and <code><a href="Enums/GatewayRegion.html#/s:6MPGSDK13GatewayRegionO6europeyA2CmF">GatewayRegion.europe</a></code></p>
+<p>Possible region values include, <code>GatewayRegion.northAmerica</code>, <code>GatewayRegion.asiaPacific</code>, <code>GatewayRegion.india</code>, <code>GatewayRegion.china</code> and <code>GatewayRegion.europe</code>
+For a complete list of regions see the <code>GatewayRegion.swift</code>.</p>
 <pre class="highlight plaintext"><code>let gateway = Gateway(region: GatewayRegion.&lt;#YOUR GATEWAY REGION#&gt;, merchantId: "&lt;#YOUR MERCHANT ID#&gt;")
 </code></pre>
 </blockquote>
 <h3 id='basic-implementation' class='heading'>Basic Implementation</h3>
 
-<p>Using an existing Session Id, you may pass card information directly to the <code><a href="Classes/Gateway.html">Gateway</a></code> object:</p>
+<p>Using an existing Session Id, you may pass card information directly to the <code>Gateway</code> object:</p>
 <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">GatewayMap</span><span class="p">()</span>
 <span class="n">request</span><span class="p">[</span><span class="nv">at</span><span class="p">:</span> <span class="s">"sourceOfFunds.provided.card.nameOnCard"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"&lt;#name on card#&gt;"</span>
 <span class="n">request</span><span class="p">[</span><span class="nv">at</span><span class="p">:</span> <span class="s">"sourceOfFunds.provided.card.number"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"&lt;#card number#&gt;"</span>
@@ -164,7 +98,7 @@ When you launch the sample app, you will be prompted to enter your merchant Id, 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/Mastercard-Gateway/gateway-ios-sdk" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2020-01-21)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/Mastercard-Gateway/gateway-ios-sdk" target="_blank" rel="external">Mastercard Payment Gateway Services</a>. All rights reserved. (Last updated: 2020-02-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

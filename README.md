@@ -44,7 +44,8 @@ import MPGSDK
 ### Configuration
 In order to use the SDK, you must initialize the Gateway object with your merchant ID and your gateway's region. If you are unsure about which region to select, please direct your inquiry to your gateway support team.
 
-> Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific`, `GatewayRegion.india` and `GatewayRegion.europe`
+> Possible region values include, `GatewayRegion.northAmerica`, `GatewayRegion.asiaPacific`, `GatewayRegion.india`, `GatewayRegion.china` and `GatewayRegion.europe`
+> For a complete list of regions see the `GatewayRegion.swift`.
 ```
 let gateway = Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId: "<#YOUR MERCHANT ID#>")
 ```

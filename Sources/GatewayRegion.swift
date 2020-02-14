@@ -16,14 +16,28 @@
 
 import Foundation
 
-public enum GatewayRegion: String {
-    case asiaPacific = "ap-"
-    case europe = "eu-"
-    case northAmerica = "na-"
-    case india = "in."
-    case mtf = "test-"
+/// An object to identify a region in which the Gateway APIs operate and the connection details.
+public struct GatewayRegion: Equatable {
+    public let id: String
+    public let name: String
+    public let baseURL: String
+}
+
+extension GatewayRegion {
+    public static let asiaPacific: GatewayRegion = GatewayRegion(id: "ap", name: "Asia Pacific", baseURL: "ap.gateway.mastercard.com")
+    public static let europe: GatewayRegion = GatewayRegion(id: "eu", name: "Europe", baseURL: "eu.gateway.mastercard.com")
+    public static let northAmerica: GatewayRegion = GatewayRegion(id: "na", name: "North America", baseURL: "na.gateway.mastercard.com")
+    public static let mtf: GatewayRegion = GatewayRegion(id: "mtf", name: "Test (MTF)", baseURL: "mtf.gateway.mastercard.com")
+    public static let india: GatewayRegion = GatewayRegion(id: "in", name: "India", baseURL: "in.gateway.mastercard.com")
+    public static let china: GatewayRegion = GatewayRegion(id: "cn", name: "China", baseURL: "cn.gateway.mastercard.com")
     
-    var urlPrefix: String {
-        return rawValue
+    
+    /// Create a region not already defined by the SDK
+    /// - Parameters:
+    ///   - id: A String to identify the region
+    ///   - name: A friendly description of the region
+    ///   - baseURL: The base URL for all requests.  For example "mtf.gateway.mastercard.com"
+    public static func other(id: String, name: String, baseURL: String) -> GatewayRegion {
+        return GatewayRegion(id: id, name: name, baseURL: baseURL)
     }
 }

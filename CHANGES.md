@@ -1,6 +1,11 @@
 # Release Notes
 
 ## [Unreleased]
+### Added
+- Adding the China on-soil region
+- Providing a way for integrators to use regions that have not yet been added to the SDK.
+### Changed
+- Converting all URLs to use the "<region>.gateway.mastercard.com" pattern
 
 ## [1.1.4]
 ### Changed
