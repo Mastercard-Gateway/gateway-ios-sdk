@@ -27,6 +27,9 @@ enum MerchantAPIError: Error {
     case other(Error)
 }
 
+/**
+ NOTE: This code is sample code only and is not intended to be used for production applications.  Any use in production applications is at your own risk.
+*/
 class MerchantAPI {
     static var shared: MerchantAPI?
     
@@ -58,7 +61,7 @@ class MerchantAPI {
     func completeSession(transaction: Transaction, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "PAY"])
         payload[at: "sourceOfFunds.type"] =  "CARD"
-        payload[at: "transaction.frequency"] = "SINGLE"
+        // payload[at: "transaction.frequency"] = "SINGLE" // NOTE: 'transaction.frequency` is only applicable to API versions <=53
         payload[at: "transaction.source"] = "INTERNET"
         payload[at: "order.amount"] = transaction.amountString
         payload[at: "order.currency"] = transaction.currency
