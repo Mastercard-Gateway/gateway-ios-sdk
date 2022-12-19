@@ -1,6 +1,11 @@
 # Release Notes
 
 ## [Unreleased]
+
+## [1.1.6]
+### Changed
+- Pinned certificate updated. Expiry 2030
+## [1.1.5]
 ### Added
 - Adding the China on-soil region
 - Providing a way for integrators to use regions that have not yet been added to the SDK.

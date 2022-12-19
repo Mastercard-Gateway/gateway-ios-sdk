@@ -73,7 +73,7 @@ class GatewayURLSessionDelegateTests: XCTestCase {
     }
     
     func testCancelWhenCertNotFound() {
-        let certChain = [loadCert("untrusted-leaf"), loadCert("untrusted-intermediate"), loadCert("untrusted-ca")]
+        let certChain = TestCertificates.untrusted.certArray
         var serverTrust: SecTrust?
         SecTrustCreateWithCertificates(certChain as AnyObject,
                                           SecPolicyCreateBasicX509(),
@@ -91,7 +91,7 @@ class GatewayURLSessionDelegateTests: XCTestCase {
     }
     
     func testCancelWhenChainDoesNotEvaluate() {
-        let certChain = [loadCert("invalid-leaf"), loadCert("untrusted-intermediate"), loadCert("untrusted-ca")]
+        let certChain = TestCertificates.invalid.certArray
         var serverTrust: SecTrust?
         SecTrustCreateWithCertificates(certChain as AnyObject,
                                        nil,
@@ -108,7 +108,7 @@ class GatewayURLSessionDelegateTests: XCTestCase {
     }
     
     func testDefaultHandlingWhenCertFound() {
-        let certChain = [loadCert("trusted-leaf"), loadCert("trusted-intermediate"), loadCert("trusted-ca")]
+        let certChain = TestCertificates.trusted.certArray
         var serverTrust: SecTrust?
         SecTrustCreateWithCertificates(certChain as AnyObject,
                                        SecPolicyCreateBasicX509(),
@@ -124,10 +124,5 @@ class GatewayURLSessionDelegateTests: XCTestCase {
             XCTAssertNotNil(credential)
         }
     }
-    
-    private func loadCert(_ named: String) -> SecCertificate? {
-        let certPath = Bundle(for: type(of: self)).path(forResource: named, ofType: "cer")!
-        let certData = try! Data(contentsOf: URL(fileURLWithPath: certPath))
-        return SecCertificateCreateWithData(nil, certData as CFData)
-    }
+
 }

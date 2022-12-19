@@ -12,13 +12,6 @@
 		6F2C1A011FE15F1800D06A3B /* GatewayRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2C1A001FE15F1800D06A3B /* GatewayRegion.swift */; };
 		6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */; };
 		6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4BEC851F698751002C64A3 /* GatewayError.swift */; };
-		6F93652D20068ECE002A52FD /* trusted-ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCF020068AEF006F6DBA /* trusted-ca.cer */; };
-		6F93652E20068ECE002A52FD /* trusted-intermediate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCF320068AF0006F6DBA /* trusted-intermediate.cer */; };
-		6F93652F20068ECE002A52FD /* trusted-leaf.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCF420068AF0006F6DBA /* trusted-leaf.cer */; };
-		6F93653020068ECE002A52FD /* untrusted-intermediate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCF120068AEF006F6DBA /* untrusted-intermediate.cer */; };
-		6F93653120068ECE002A52FD /* untrusted-ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCFD20068B34006F6DBA /* untrusted-ca.cer */; };
-		6F93653220068ECE002A52FD /* untrusted-leaf.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6FAFCCF220068AEF006F6DBA /* untrusted-leaf.cer */; };
-		6F9365342006AC5F002A52FD /* invalid-leaf.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6F9365332006AC5F002A52FD /* invalid-leaf.cer */; };
 		6F9D18FB1FFE862700224916 /* GatewayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D18FA1FFE862700224916 /* GatewayMap.swift */; };
 		6F9D18FD1FFE8EB100224916 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */; };
 		6FAFCCE92004054C006F6DBA /* URLSessionMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F24484A1F75688C0032030D /* URLSessionMocks.swift */; };
@@ -32,6 +25,7 @@
 		6FE9A7871F69633000B7B56A /* GatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A7861F69633000B7B56A /* GatewayTests.swift */; };
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
 		8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
+		AB40AA962950A1E1009DEB60 /* TestCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB40AA952950A1E1009DEB60 /* TestCertificates.swift */; };
 		B7EFCD83204DE15100C9A99E /* Gateway3DSecureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,18 +47,11 @@
 		6F2C1A001FE15F1800D06A3B /* GatewayRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayRegion.swift; sourceTree = "<group>"; };
 		6F38B59A1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gateway+URLSessionDelegate.swift"; sourceTree = "<group>"; };
 		6F4BEC851F698751002C64A3 /* GatewayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayError.swift; sourceTree = "<group>"; };
-		6F9365332006AC5F002A52FD /* invalid-leaf.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "invalid-leaf.cer"; sourceTree = "<group>"; };
 		6F9D18FA1FFE862700224916 /* GatewayMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMap.swift; sourceTree = "<group>"; };
 		6F9D18FC1FFE8EB100224916 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		6FAFCCEA200535CB006F6DBA /* GatewayMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMapTests.swift; sourceTree = "<group>"; };
 		6FAFCCEC20065C45006F6DBA /* GatewayErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayErrorTests.swift; sourceTree = "<group>"; };
 		6FAFCCEE20066E45006F6DBA /* GatewayURLSessionDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayURLSessionDelegateTests.swift; sourceTree = "<group>"; };
-		6FAFCCF020068AEF006F6DBA /* trusted-ca.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trusted-ca.cer"; sourceTree = "<group>"; };
-		6FAFCCF120068AEF006F6DBA /* untrusted-intermediate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "untrusted-intermediate.cer"; sourceTree = "<group>"; };
-		6FAFCCF220068AEF006F6DBA /* untrusted-leaf.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "untrusted-leaf.cer"; sourceTree = "<group>"; };
-		6FAFCCF320068AF0006F6DBA /* trusted-intermediate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trusted-intermediate.cer"; sourceTree = "<group>"; };
-		6FAFCCF420068AF0006F6DBA /* trusted-leaf.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "trusted-leaf.cer"; sourceTree = "<group>"; };
-		6FAFCCFD20068B34006F6DBA /* untrusted-ca.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "untrusted-ca.cer"; sourceTree = "<group>"; };
 		6FE598751FFED17D001FD483 /* Coding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		6FE598771FFED234001FD483 /* JSONCodingMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodingMocks.swift; sourceTree = "<group>"; };
 		6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpectationManager.swift; sourceTree = "<group>"; };
@@ -72,6 +59,7 @@
 		6FE9A7861F69633000B7B56A /* GatewayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatewayTests.swift; sourceTree = "<group>"; };
 		6FE9A78A1F69644100B7B56A /* BuildConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildConfig.swift; sourceTree = "<group>"; };
 		8933C7841EB5B820000D00A4 /* MPGSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPGSDK.swift; sourceTree = "<group>"; };
+		AB40AA952950A1E1009DEB60 /* TestCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCertificates.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* MPGSDK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDK.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* MPGSDKTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDKTests.plist; sourceTree = "<group>"; };
 		B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway3DSecureViewController.swift; sourceTree = "<group>"; };
@@ -124,20 +112,6 @@
 			path = Configs;
 			sourceTree = "<group>";
 		};
-		6FAFCCFC20068AF7006F6DBA /* TestCertificates */ = {
-			isa = PBXGroup;
-			children = (
-				6FAFCCF020068AEF006F6DBA /* trusted-ca.cer */,
-				6FAFCCF320068AF0006F6DBA /* trusted-intermediate.cer */,
-				6FAFCCF420068AF0006F6DBA /* trusted-leaf.cer */,
-				6FAFCCF120068AEF006F6DBA /* untrusted-intermediate.cer */,
-				6FAFCCFD20068B34006F6DBA /* untrusted-ca.cer */,
-				6FAFCCF220068AEF006F6DBA /* untrusted-leaf.cer */,
-				6F9365332006AC5F002A52FD /* invalid-leaf.cer */,
-			);
-			path = TestCertificates;
-			sourceTree = "<group>";
-		};
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,7 +133,6 @@
 		8933C7831EB5B7EB000D00A4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6FAFCCFC20068AF7006F6DBA /* TestCertificates */,
 				6FE9A7861F69633000B7B56A /* GatewayTests.swift */,
 				6F24484A1F75688C0032030D /* URLSessionMocks.swift */,
 				6FE598771FFED234001FD483 /* JSONCodingMocks.swift */,
@@ -167,6 +140,7 @@
 				6FAFCCEC20065C45006F6DBA /* GatewayErrorTests.swift */,
 				6FE5987A1FFFFD16001FD483 /* ExpectationManager.swift */,
 				6FAFCCEE20066E45006F6DBA /* GatewayURLSessionDelegateTests.swift */,
+				AB40AA952950A1E1009DEB60 /* TestCertificates.swift */,
 			);
 			name = Tests;
 			path = Tests/MGPSDKTests;
@@ -287,13 +261,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9365342006AC5F002A52FD /* invalid-leaf.cer in Resources */,
-				6F93652E20068ECE002A52FD /* trusted-intermediate.cer in Resources */,
-				6F93652D20068ECE002A52FD /* trusted-ca.cer in Resources */,
-				6F93652F20068ECE002A52FD /* trusted-leaf.cer in Resources */,
-				6F93653020068ECE002A52FD /* untrusted-intermediate.cer in Resources */,
-				6F93653220068ECE002A52FD /* untrusted-leaf.cer in Resources */,
-				6F93653120068ECE002A52FD /* untrusted-ca.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +296,7 @@
 				6FE5987C1FFFFD5B001FD483 /* ExpectationManager.swift in Sources */,
 				6FAFCCEF20066E45006F6DBA /* GatewayURLSessionDelegateTests.swift in Sources */,
 				6FE598791FFFE444001FD483 /* JSONCodingMocks.swift in Sources */,
+				AB40AA962950A1E1009DEB60 /* TestCertificates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
