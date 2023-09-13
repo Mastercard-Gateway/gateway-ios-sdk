@@ -1,5 +1,5 @@
 # Gateway iOS SDK
-This Mobile SDK supports 3DS 1 only. If you require EMV 3DS support, please obtain the version 2 Mobile SDK by following these instructions: https://na.gateway.mastercard.com/api/documentation/integrationGuidelines/mobileSDK/emv3DSsdk.html
+**This Mobile SDK supports 3-D Secure 1 only.** If you require EMV 3DS support, please obtain the version 2 Mobile SDK by following these instructions: https://na.gateway.mastercard.com/api/documentation/integrationGuidelines/mobileSDK/emv3DSsdk.html
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk)
