@@ -6,12 +6,12 @@ let package = Package(
     products: [
         .library(
             name: "MPGSDK",
-            targets: ["MPGSDK-iOS"]
+            targets: ["MPGSDK"]
         ),
     ],
     targets: [
         .target(
-            name: "MPGSDK-iOS",
+            name: "MPGSDK",
             dependencies: []
         ),    
     ]
