@@ -9,4 +9,10 @@ let package = Package(
             targets: ["MPGSDK"]
         ),
     ],
+    targets: [
+        .target(
+            name: "MPGSDK",
+            dependencies: []
+        ),    
+    ]
 )
