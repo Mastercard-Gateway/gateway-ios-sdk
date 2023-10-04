@@ -2,5 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "MGPSDK"
+    name: "MPGSDK",
+    products: [
+        .library(
+            name: "MPGSDK",
+            targets: ["MPGSDK"]
+        )
+    ],
+    targets: [
+        .target(
+            name: "MPGSDK",
+            dependencies: []
+        )    
+    ]
 )
