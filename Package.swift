@@ -1,24 +1,34 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 import PackageDescription
 
-import PackageDescription
-
-let pkg = Package(name: "MPGSDK")
-pkg.products = [
-    .library(name: "MPGSDK", targets: ["MPGSDK"]),
-]
-
-let mpg: Target = .target(name: "MPGSDK")
-mpg.path = "Sources"
-mpg.exclude = [
-    // List files or directories you want to exclude from the build process
-    // For example: "SomeFile.swift"
-]
-pkg.swiftLanguageVersions = [3, 4, 5]  // Assuming MPGSDK uses Swift 5
-pkg.targets = [
-    mpg,
-    // Add any test targets or other targets related to MPGSDK
-    // For example:
-    // .testTarget(name: "MPGSDKTests", dependencies: ["MPGSDK"], path: "Tests/MPGSDKTests"),
-]
+let package = Package(
+    name: "MPGSDK",
+    platforms: [
+        .iOS(.v12)  // Minimum iOS version set to 12
+    ],
+    products: [
+        .library(
+            name: "MPGSDK",
+            targets: ["MPGSDK"]
+        ),
+    ],
+    dependencies: [
+        // Add any dependencies if MPGSDK has any
+    ],
+    targets: [
+        .target(
+            name: "MPGSDK",
+            dependencies: [],
+            path: "Sources",
+            exclude: [
+                // List files or directories you want to exclude from the build process
+                // For example: "SomeFile.swift"
+            ]
+        ),
+        // Add any test targets or other targets related to MPGSDK
+        // For example:
+        // .testTarget(name: "MPGSDKTests", dependencies: ["MPGSDK"], path: "Tests/MPGSDKTests"),
+    ],
+    swiftLanguageVersions: [.v3, .v4, .v5]
+)
 
