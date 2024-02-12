@@ -1,6 +1,9 @@
 # Release Notes
 
 ## [Unreleased]
+## [1.1.7] - 2024-02-12
+### Added
+- Saudi region (KSA) URL
 
 ## [1.1.6]
 ### Changed

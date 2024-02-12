@@ -30,7 +30,7 @@ extension GatewayRegion {
     public static let mtf: GatewayRegion = GatewayRegion(id: "mtf", name: "Test (MTF)", baseURL: "mtf.gateway.mastercard.com")
     public static let india: GatewayRegion = GatewayRegion(id: "in", name: "India", baseURL: "in.gateway.mastercard.com")
     public static let china: GatewayRegion = GatewayRegion(id: "cn", name: "China", baseURL: "cn.gateway.mastercard.com")
-    
+    public static let saudiArabia: GatewayRegion = GatewayRegion(id: "ksa", name: "Saudi Arabia", baseURL: "ksa.gateway.mastercard.com")
     
     /// Create a region not already defined by the SDK
     /// - Parameters:
