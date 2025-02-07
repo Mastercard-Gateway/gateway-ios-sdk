@@ -1,6 +1,11 @@
 # Release Notes
 
 ## [Unreleased]
+
+## [1.1.8]
+### Changed
+- Pinned certificate updated. New Expirey December 2038
+
 ## [1.1.7] - 2024-02-12
 ### Added
 - Saudi region (KSA) URL
