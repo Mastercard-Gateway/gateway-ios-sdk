@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MGPSDK"
-  s.version      = "1.1.1"
+  s.version      = "1.1.9"
   s.summary      = "Gateway iOS SDK"
   s.description  = <<-DESC
     Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a hosted session directly with the Gateway, you avoid the risk of handling sensitive card details on your server.

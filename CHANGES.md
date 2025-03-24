@@ -1,6 +1,9 @@
 # Release Notes
 
 ## [Unreleased]
+## [1.1.9] - 2025-03-24
+### Changed
+- Updated podspec file.
 
 ## [1.1.8]
 ### Changed
