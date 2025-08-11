@@ -16,6 +16,7 @@
 
 import Foundation
 import MPGSDK
+import UIKit
 
 enum Result<T> {
     case success(T)
@@ -49,6 +50,33 @@ class MerchantAPI {
     func sendPaymentOptionInquiry(completion: @escaping (Result<GatewayMap>) -> Void) {
         issueRequest(path: "/payment-options-inquiry.php", method: "POST", completion: completion)
     }
+    
+    
+    func initiateAuthentication(transaction:Transaction,payload: GatewayMap = GatewayMap(),completion: @escaping (Result<GatewayMap>) -> Void) {
+        var fullPayload = payload
+        fullPayload["apiOperation"] = "INITIATE_AUTHENTICATION"
+        
+        var session = GatewayMap()
+        session["id"] = transaction.session?.id
+        fullPayload["session"] = session
+        
+        let devicePayload = buildDevicePayloadForAuthentication()
+        fullPayload["device"] = devicePayload
+        
+        fullPayload["authentication"] = [
+            "purpose": "PAYMENT_TRANSACTION",
+            "channel": "PAYER_BROWSER"
+        ]
+        
+        fullPayload["order"] = [ "currency": transaction.currency,
+                                 "amount": transaction.amountString]
+        
+        var query: [URLQueryItem] =  [URLQueryItem(name: "orderId", value: transaction.orderId),
+                                      URLQueryItem(name: "transactionId", value: transaction.id)]
+        
+        issueRequest(path: "/start-authentication.php", method: "PUT", query: query, body: fullPayload, completion: completion)
+    }
+    
     
     func check3DSEnrollment(transaction: Transaction, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "CHECK_3DS_ENROLLMENT"])
@@ -120,5 +148,28 @@ class MerchantAPI {
                 completion(Result.error(error))
             }
         }
+    }
+}
+
+// MARK: Utility Functions
+extension MerchantAPI {
+    fileprivate func buildDevicePayloadForAuthentication() -> [String: Any] {
+        let screen = UIScreen.main
+        let locale = Locale.current
+        let timeZone = TimeZone.current
+        
+        return [
+            "browser": "IOS_WKWebView",
+            "browserDetails": [
+                "3DSecureChallengeWindowSize": "FULL_SCREEN",
+                "acceptHeaders": "application/json",
+                "colorDepth": 24,
+                "javaEnabled": false,
+                "language": locale.identifier.components(separatedBy: "@").first ?? "en_US",
+                "screenHeight": Int(screen.bounds.height),
+                "screenWidth": Int(screen.bounds.width),
+                "timeZone": -timeZone.secondsFromGMT() / 60
+            ]
+        ]
     }
 }
