@@ -26,7 +26,11 @@
 		6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9A78A1F69644100B7B56A /* BuildConfig.swift */; };
 		8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* MPGSDK.swift */; };
 		AB40AA962950A1E1009DEB60 /* TestCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB40AA952950A1E1009DEB60 /* TestCertificates.swift */; };
-		B7EFCD83204DE15100C9A99E /* Gateway3DSecureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */; };
+		CAE75DBA2E4A1D3A0036EAAC /* GatewayBrowserPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75DB82E4A1D3A0036EAAC /* GatewayBrowserPaymentController.swift */; };
+		CAE75DBB2E4A1D3A0036EAAC /* Gateway3DSecurePaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75DB72E4A1D3A0036EAAC /* Gateway3DSecurePaymentController.swift */; };
+		CAE75DBC2E4A1D3A0036EAAC /* BaseGatewayPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75DB62E4A1D3A0036EAAC /* BaseGatewayPaymentController.swift */; };
+		CAE75DC02E4A1D820036EAAC /* GatewayPaymentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75DBF2E4A1D810036EAAC /* GatewayPaymentResult.swift */; };
+		CAE75DC22E4A1DB60036EAAC /* GatewayPaymentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75DC12E4A1DB50036EAAC /* GatewayPaymentError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +66,11 @@
 		AB40AA952950A1E1009DEB60 /* TestCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCertificates.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* MPGSDK.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDK.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* MPGSDKTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MPGSDKTests.plist; sourceTree = "<group>"; };
-		B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway3DSecureViewController.swift; sourceTree = "<group>"; };
+		CAE75DB62E4A1D3A0036EAAC /* BaseGatewayPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseGatewayPaymentController.swift; sourceTree = "<group>"; };
+		CAE75DB72E4A1D3A0036EAAC /* Gateway3DSecurePaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gateway3DSecurePaymentController.swift; sourceTree = "<group>"; };
+		CAE75DB82E4A1D3A0036EAAC /* GatewayBrowserPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayBrowserPaymentController.swift; sourceTree = "<group>"; };
+		CAE75DBF2E4A1D810036EAAC /* GatewayPaymentResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayPaymentResult.swift; sourceTree = "<group>"; };
+		CAE75DC12E4A1DB50036EAAC /* GatewayPaymentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayPaymentError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +133,7 @@
 				6F4BEC851F698751002C64A3 /* GatewayError.swift */,
 				6F9D18FA1FFE862700224916 /* GatewayMap.swift */,
 				6FE598751FFED17D001FD483 /* Coding.swift */,
-				B7EFCD82204DE15000C9A99E /* Gateway3DSecureViewController.swift */,
+				CAE75DB92E4A1D3A0036EAAC /* GatewayPayment */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -144,6 +152,26 @@
 			);
 			name = Tests;
 			path = Tests/MGPSDKTests;
+			sourceTree = "<group>";
+		};
+		CAE75DB92E4A1D3A0036EAAC /* GatewayPayment */ = {
+			isa = PBXGroup;
+			children = (
+				CAE75DC12E4A1DB50036EAAC /* GatewayPaymentError.swift */,
+				CAE75DBF2E4A1D810036EAAC /* GatewayPaymentResult.swift */,
+				CAE75DC32E4A1DF50036EAAC /* Controllers */,
+			);
+			path = GatewayPayment;
+			sourceTree = "<group>";
+		};
+		CAE75DC32E4A1DF50036EAAC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CAE75DB62E4A1D3A0036EAAC /* BaseGatewayPaymentController.swift */,
+				CAE75DB72E4A1D3A0036EAAC /* Gateway3DSecurePaymentController.swift */,
+				CAE75DB82E4A1D3A0036EAAC /* GatewayBrowserPaymentController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		DD7502721C68FC1B006590AF /* Frameworks */ = {
@@ -274,13 +302,17 @@
 				6FE9A7851F69632300B7B56A /* Gateway.swift in Sources */,
 				6FE598761FFED17D001FD483 /* Coding.swift in Sources */,
 				6F244D031F701895009A1E9E /* GatewayResult.swift in Sources */,
+				CAE75DBA2E4A1D3A0036EAAC /* GatewayBrowserPaymentController.swift in Sources */,
+				CAE75DBB2E4A1D3A0036EAAC /* Gateway3DSecurePaymentController.swift in Sources */,
+				CAE75DBC2E4A1D3A0036EAAC /* BaseGatewayPaymentController.swift in Sources */,
 				6F9D18FB1FFE862700224916 /* GatewayMap.swift in Sources */,
+				CAE75DC22E4A1DB60036EAAC /* GatewayPaymentError.swift in Sources */,
 				6F4BEC861F698751002C64A3 /* GatewayError.swift in Sources */,
-				B7EFCD83204DE15100C9A99E /* Gateway3DSecureViewController.swift in Sources */,
 				6FE9A78B1F69644100B7B56A /* BuildConfig.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* MPGSDK.swift in Sources */,
 				6F38B59B1F6C0256005DAB93 /* Gateway+URLSessionDelegate.swift in Sources */,
 				6F9D18FD1FFE8EB100224916 /* HTTPMethod.swift in Sources */,
+				CAE75DC02E4A1D820036EAAC /* GatewayPaymentResult.swift in Sources */,
 				6F2C1A011FE15F1800D06A3B /* GatewayRegion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
