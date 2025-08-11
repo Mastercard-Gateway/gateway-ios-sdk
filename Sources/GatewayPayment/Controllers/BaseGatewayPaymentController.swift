@@ -38,10 +38,19 @@ public class BaseGatewayPaymentController: UIViewController {
     /// An activity indicatior that is displayed any time there is activity on the web view
     public var activityIndicator: UIActivityIndicatorView!
     
-    // MARK: - PRIVATE
+    /// The expected host value in the redirect URL used to identify the payment type or flow.
+    /// This helps determine whether the redirect is related to a specific payment flow
+    var gatewayHost: String { "" }
+    
+    /// The query parameter key used to extract payment result data from the redirect URL,
+    /// depending on the payment type
+    /// This key is used to parse the result returned after a redirect flow,
+    var gatewayResultParam: String { "" }
+    
+    /// The custom URL scheme registered by the application to handle redirects from the payment gateway.
+    /// This scheme is used to intercept the return URL after authentication is complete.
+    /// Default value: `"gatewaysdk"`for all type of payment
     fileprivate var gatewayScheme: String = "gatewaysdk"
-    fileprivate var gatewayHost: String = "3dsecure"
-    fileprivate var gatewayResultParam: String = "paymentResult"
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

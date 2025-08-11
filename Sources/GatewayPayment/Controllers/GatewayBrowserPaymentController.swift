@@ -22,18 +22,29 @@ import UIKit
 /// Useful for non-3DS, browser-based payment validations.
 public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
     
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    /// The gateway host identifier used for browser-based payment authentication flows.
+    /// This value helps the system recognize redirects or callbacks that are part of
+    /// a browser payment process.
+    /// - Returns: A `String` value `"browserpayment"` representing the browser payment host.
+    override var gatewayHost: String { "browserpayment" }
+
+    /// The query parameter key used to extract the browser payment result from the callback URL.
+    /// This parameter is typically present in the return URL after the user completes
+    /// the browser-based payment flow. It's used to retrieve the final result returned by the payment gateway.
+    /// - Returns: A `String` value `"orderResult"` used to locate the result data.
+    override var gatewayResultParam: String { "orderResult" }
     
     fileprivate var url: URL? = nil {
         didSet {
             loaderBrowserPayment()
         }
+    }
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     /// Used to authenticate the secure browser payment

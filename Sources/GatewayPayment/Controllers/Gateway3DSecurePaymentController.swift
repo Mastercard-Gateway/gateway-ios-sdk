@@ -21,6 +21,24 @@ import UIKit
 /// to detect when the user completes the authentication process.
 public class Gateway3DSecureViewController: BaseGatewayPaymentController {
     
+    /// The gateway host identifier used for 3D Secure authentication flows.
+    /// This value is used internally to determine if the redirect or callback
+    /// is related to a 3D Secure operation.
+    /// - Returns: A `String` value `"3dsecure"` representing the 3DS-specific host.
+    override var gatewayHost: String { "3dsecure" }
+
+    /// The query parameter key used to extract the 3D Secure authentication result from the callback URL.
+    /// This parameter is typically included in the return URL after a browser-based
+    /// 3D Secure flow and is used to parse the final result returned from the Access Control Server (ACS).
+    /// - Returns: A `String` value `"acsResult"` used to locate the result data.
+    override var gatewayResultParam: String { "acsResult" }
+    
+    fileprivate var bodyContent: String? = nil {
+        didSet {
+            loadContent()
+        }
+    }
+    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -28,12 +46,6 @@ public class Gateway3DSecureViewController: BaseGatewayPaymentController {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    fileprivate var bodyContent: String? = nil {
-        didSet {
-            loadContent()
-        }
-    }    
     
     /// Used to authenticate the payer using 3DSecure 1.0
     /// - Parameters:
