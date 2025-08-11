@@ -25,7 +25,7 @@ class ProcessPaymentViewController: UIViewController {
     var merchantAPI: MerchantAPI!
     // the ojbect used to communicate with the gateway
     var gateway: Gateway!
-    
+    //Test
     // MARK: View Outlets
     @IBOutlet weak var createSessionStatusImageView: UIImageView!
     @IBOutlet weak var createSessionActivityIndicator: UIActivityIndicatorView!
