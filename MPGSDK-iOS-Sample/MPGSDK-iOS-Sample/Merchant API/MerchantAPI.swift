@@ -46,6 +46,10 @@ class MerchantAPI {
         issueRequest(path: "session.php", method: "POST", completion: completion)
     }
     
+    func sendPaymentOptionInquiry(completion: @escaping (Result<GatewayMap>) -> Void) {
+        issueRequest(path: "/payment-options-inquiry.php", method: "POST", completion: completion)
+    }
+    
     func check3DSEnrollment(transaction: Transaction, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
         var payload = GatewayMap(["apiOperation": "CHECK_3DS_ENROLLMENT"])
         payload[at: "order.amount"] = transaction.amountString
