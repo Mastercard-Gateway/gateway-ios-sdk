@@ -71,10 +71,38 @@ class MerchantAPI {
         fullPayload["order"] = [ "currency": transaction.currency,
                                  "amount": transaction.amountString]
         
-        var query: [URLQueryItem] =  [URLQueryItem(name: "orderId", value: transaction.orderId),
-                                      URLQueryItem(name: "transactionId", value: transaction.id)]
+        let query =  [URLQueryItem(name: "orderId", value: transaction.orderId),
+                      URLQueryItem(name: "transactionId", value: transaction.id)]
         
         issueRequest(path: "/start-authentication.php", method: "PUT", query: query, body: fullPayload, completion: completion)
+    }
+    
+    func initiateBrowserPayment(transaction:Transaction, completion: @escaping (Result<GatewayMap>) -> Void) {
+        var payload = GatewayMap()
+        payload["apiOperation"] = "INITIATE_BROWSER_PAYMENT"
+        payload["customer"] = ["phone": 1234567892]
+        
+        let baseURL:String = merchantServerURL.absoluteString
+        let redirectURL: String = "\(baseURL)/browser-payment-callback.php?order=\(transaction.orderId)&transaction=\(transaction.id)"
+        payload["browserPayment"] = [
+            "operation": "PAY",
+            "returnUrl": redirectURL
+        ]
+        
+        payload["order"] = [
+            "currency": transaction.currency,
+            "amount": transaction.amountString
+        ]
+        
+        payload["sourceOfFunds"] =  [
+            "browserPayment": [ "type": transaction.browserPaymentType ?? "" ],
+            "type": "BROWSER_PAYMENT"
+        ]
+        
+        let query = [URLQueryItem(name: "orderId", value: transaction.orderId),
+                     URLQueryItem(name: "transactionId", value: transaction.id)]
+        
+        issueRequest(path: "/start-browser-payment.php", method: "PUT", query: query, body: payload, completion: completion)
     }
     
     
