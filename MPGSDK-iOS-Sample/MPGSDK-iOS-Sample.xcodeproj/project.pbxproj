@@ -20,7 +20,11 @@
 		B7DB552A2154278800D31081 /* CollectCardInfoViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */; };
 		B7DC3D392152A466009AA192 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */; };
 		B7DC3D3B2152AC3C009AA192 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DC3D3A2152AC3C009AA192 /* ConfigurationViewModel.swift */; };
-		B7DC3D3F2152CFF0009AA192 /* ProcessPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DC3D3E2152CFF0009AA192 /* ProcessPaymentViewController.swift */; };
+		CAE75D9C2E4A11990036EAAC /* ProcessPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75D9A2E4A11990036EAAC /* ProcessPaymentViewController.swift */; };
+		CAE75D9D2E4A11990036EAAC /* ProcessingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75D952E4A11990036EAAC /* ProcessingStepView.swift */; };
+		CAE75D9E2E4A11990036EAAC /* PaymentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75D992E4A11990036EAAC /* PaymentStep.swift */; };
+		CAE75D9F2E4A11990036EAAC /* PaymentOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75D982E4A11990036EAAC /* PaymentOption.swift */; };
+		CAE75DA02E4A11990036EAAC /* ProcessingStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAE75D962E4A11990036EAAC /* ProcessingStepView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,7 +57,11 @@
 		B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectCardInfoViewViewController.swift; sourceTree = "<group>"; };
 		B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		B7DC3D3A2152AC3C009AA192 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
-		B7DC3D3E2152CFF0009AA192 /* ProcessPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessPaymentViewController.swift; sourceTree = "<group>"; };
+		CAE75D952E4A11990036EAAC /* ProcessingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingStepView.swift; sourceTree = "<group>"; };
+		CAE75D962E4A11990036EAAC /* ProcessingStepView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProcessingStepView.xib; sourceTree = "<group>"; };
+		CAE75D982E4A11990036EAAC /* PaymentOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOption.swift; sourceTree = "<group>"; };
+		CAE75D992E4A11990036EAAC /* PaymentStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStep.swift; sourceTree = "<group>"; };
+		CAE75D9A2E4A11990036EAAC /* ProcessPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessPaymentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +101,7 @@
 				B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */,
 				B7DC3D3A2152AC3C009AA192 /* ConfigurationViewModel.swift */,
 				B766B5F92159141A002027AC /* Transaction.swift */,
-				B7DC3D3E2152CFF0009AA192 /* ProcessPaymentViewController.swift */,
+				CAE75D9B2E4A11990036EAAC /* PaymentProcessing */,
 				B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */,
 				B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */,
 				6F15AD4B1F7E9E550084D3AD /* UIViewController+KeyboardAvoiding.swift */,
@@ -120,6 +128,26 @@
 				6FCE10891F84099B007E9A7C /* MPGSDK.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CAE75D972E4A11990036EAAC /* ProcessingStepView */ = {
+			isa = PBXGroup;
+			children = (
+				CAE75D952E4A11990036EAAC /* ProcessingStepView.swift */,
+				CAE75D962E4A11990036EAAC /* ProcessingStepView.xib */,
+			);
+			path = ProcessingStepView;
+			sourceTree = "<group>";
+		};
+		CAE75D9B2E4A11990036EAAC /* PaymentProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				CAE75D972E4A11990036EAAC /* ProcessingStepView */,
+				CAE75D982E4A11990036EAAC /* PaymentOption.swift */,
+				CAE75D992E4A11990036EAAC /* PaymentStep.swift */,
+				CAE75D9A2E4A11990036EAAC /* ProcessPaymentViewController.swift */,
+			);
+			path = PaymentProcessing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +219,7 @@
 				6F5F70441F7C006E0048F591 /* LaunchScreen.storyboard in Resources */,
 				6F5F70411F7C006E0048F591 /* Assets.xcassets in Resources */,
 				6F5F703F1F7C006E0048F591 /* Main.storyboard in Resources */,
+				CAE75DA02E4A11990036EAAC /* ProcessingStepView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,9 +233,12 @@
 				6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */,
 				6F15AD4C1F7E9E550084D3AD /* UIViewController+KeyboardAvoiding.swift in Sources */,
 				B7DC3D392152A466009AA192 /* ConfigurationViewController.swift in Sources */,
+				CAE75D9C2E4A11990036EAAC /* ProcessPaymentViewController.swift in Sources */,
+				CAE75D9D2E4A11990036EAAC /* ProcessingStepView.swift in Sources */,
+				CAE75D9E2E4A11990036EAAC /* PaymentStep.swift in Sources */,
+				CAE75D9F2E4A11990036EAAC /* PaymentOption.swift in Sources */,
 				B7DC3D3B2152AC3C009AA192 /* ConfigurationViewModel.swift in Sources */,
 				B7DB552A2154278800D31081 /* CollectCardInfoViewViewController.swift in Sources */,
-				B7DC3D3F2152CFF0009AA192 /* ProcessPaymentViewController.swift in Sources */,
 				6F5F703A1F7C006E0048F591 /* AppDelegate.swift in Sources */,
 				B7DB55282154277000D31081 /* CollectCardInfoViewModel.swift in Sources */,
 				B766B5FA2159141A002027AC /* Transaction.swift in Sources */,
@@ -354,6 +386,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -370,6 +403,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
