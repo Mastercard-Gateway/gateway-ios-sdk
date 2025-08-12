@@ -152,11 +152,12 @@ extension ProcessPaymentViewController {
                     case "browserPayment":
                         let options = value as? [[String: Any]] ?? []
                         for option in options {
-                            let type = option["type"] as? String
-                            let currencyList = option["currencies"] as? [[String:String]]
-                            let currency = currencyList?.first?["currency"]
-                            let displayName: String? = option["displayName"] as? String
+                            guard let type = option["type"] as? String,
+                                  let currencyList = option["currencies"] as? [[String:String]],
+                                  let currency = currencyList.first?["currency"]
+                            else { continue }
                             
+                            let displayName: String? = option["displayName"] as? String
                             let paymentOption = PaymentOption(isBrowserPayment: true,
                                                               type: type,
                                                               currency: currency,
@@ -164,10 +165,12 @@ extension ProcessPaymentViewController {
                             paytmentOptions.append(paymentOption)
                         }
                     case "card":
-                        let cardPaymentInfo = value as? [String: Any] ?? [:]
-                        let currencyList = cardPaymentInfo["currencies"] as? [[String:String]]
-                        let currency = currencyList?.first?["currency"]
-                        let paymentOption = PaymentOption(currency: currency)
+                        guard let cardPaymentInfo = value as? [String: Any],
+                              let currencyList = cardPaymentInfo["currencies"] as? [[String:String]],
+                              let currency = currencyList.first?["currency"]
+                        else { continue }
+                        
+                        let paymentOption = PaymentOption(type: "Card Payment", currency: currency)
                         paytmentOptions.append(paymentOption)
                     default:
                         break

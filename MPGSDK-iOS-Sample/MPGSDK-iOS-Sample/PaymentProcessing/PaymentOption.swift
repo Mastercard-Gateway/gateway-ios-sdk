@@ -20,10 +20,10 @@ struct PaymentOption {
     let currency: String
     let displayName: String?
     
-    init(isBrowserPayment: Bool = false, type: String? = nil, currency: String? = nil, displayName: String? = nil) {
+    init(isBrowserPayment: Bool = false, type: String, currency: String, displayName: String? = nil) {
         self.isBrowserPayment = isBrowserPayment
-        self.type = type ?? "Card Payment"
-        self.currency = currency ?? "USD"
+        self.type = type
+        self.currency = currency
         self.displayName = displayName
     }
 }
