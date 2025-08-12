@@ -17,31 +17,15 @@
 import UIKit
 import WebKit
 
-/// An enum representing the status of the 3DSecure authentication
-///
-/// - completed: The authentication was completed.  The status parameter will be a gateway's "acsResult" field.
-/// - cancelled: The result if 3DSecure authentication was cancelled by the user.
-public enum Gateway3DSecureResult {
-    case completed(gatewayResult: GatewayMap)
-    case error(Gateway3DSecureError)
-    case cancelled
-}
-
-
-/// Errors encountered when processing the 3DS redirect
-///
-/// - missingGatewayResponse: The response from the gateway was missing
-/// - mappingError: Error that occured while attmpting to map the json string
-public enum Gateway3DSecureError: Error {
-    case missingGatewayResponse
-    case mappingError
-}
-
-
-/// A view controller to perform 3DSecure 1.0 authentication using an embeded web view.
-/// This view listens for a redirect in the form of "gatewaysdk://3dsecure?summaryStatus=<STATUS>&3DSecureId=<ID>".  When that redirect occours, it will parse the parameters and return that to the handler provided to the "authenticatePayer" function.
-public class Gateway3DSecureViewController: UIViewController, WKNavigationDelegate {
-
+/// A view controller to perform 3DSecure 1.0 or browser-based Ottu payment authentication using an embedded web view.
+/// This controller is responsible for presenting a WebView to complete authentication flows such as 3D Secure or browser-based redirections.
+/// It listens for a URL redirect in the following format:
+//     gatewaysdk://3dsecure?paymentResult=<jsonData>
+/// When this redirect occurs, the controller will parse the `paymentResult` JSON data embedded in the query parameters
+/// and pass the result to the completion handler provided in the `authenticatePayer(completion:)` function.
+/// This controller is typically used by the payment SDK or host application to authenticate the user as part of the payment flow.
+public class BaseGatewayPaymentController: UIViewController {
+    
     /// The internal webview used to perform authentication.
     var webView: WKWebView!
     
@@ -54,6 +38,20 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
     /// An activity indicatior that is displayed any time there is activity on the web view
     public var activityIndicator: UIActivityIndicatorView!
     
+    /// The expected host value in the redirect URL used to identify the payment type or flow.
+    /// This helps determine whether the redirect is related to a specific payment flow
+    var gatewayHost: String { "" }
+    
+    /// The query parameter key used to extract payment result data from the redirect URL,
+    /// depending on the payment type
+    /// This key is used to parse the result returned after a redirect flow,
+    var gatewayResultParam: String { "" }
+    
+    /// The custom URL scheme registered by the application to handle redirects from the payment gateway.
+    /// This scheme is used to intercept the return URL after authentication is complete.
+    /// Default value: `"gatewaysdk"`for all type of payment
+    fileprivate var gatewayScheme: String = "gatewaysdk"
+    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupView()
@@ -64,29 +62,7 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
         setupView()
     }
     
-    
-    /// Used to authenticate the payer using 3DSecure 1.0
-    ///
-    /// - Parameters:
-    ///   - htmlBodyContent: The HTML body provided by the Check3DSecureEnrollment operation
-    ///   - handler: A closure to handle the 3DSecure 'WebAuthResult'
-    public func authenticatePayer(htmlBodyContent: String, handler: @escaping (Gateway3DSecureViewController, Gateway3DSecureResult) -> Void) {
-        self.completion = handler
-        self.bodyContent = htmlBodyContent
-    }
-    
-    // MARK: - PRIVATE
-    fileprivate var gatewayScheme: String = "gatewaysdk"
-    fileprivate var gatewayHost: String = "3dsecure"
-    fileprivate var gatewayResultParam: String = "acsResult"
-    fileprivate var threeDSecureIdParam: String = "3DSecureId"
-    
-    fileprivate var completion: ((Gateway3DSecureViewController, Gateway3DSecureResult) -> Void)?
-    fileprivate var bodyContent: String? = nil {
-        didSet {
-            loadContent()
-        }
-    }
+    var completion: ((BaseGatewayPaymentController, GatewayPaymentResult) -> Void)?
     
     fileprivate func setupView() {
         view.backgroundColor = .white
@@ -104,10 +80,20 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
         navBar.items = [self.navigationItem]
         view.addSubview(navBar)
         
-        webView = WKWebView()
+        let config = WKWebViewConfiguration()
+        if #available(iOS 14.0, *) {
+            let preferences = WKWebpagePreferences()
+            preferences.allowsContentJavaScript = true
+            config.defaultWebpagePreferences = preferences
+        } else {
+            // For iOS <14
+            config.preferences.javaScriptEnabled = true
+        }
+        webView = WKWebView(frame: self.view.bounds, configuration: config)
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(webView)
+        
+        self.view.addSubview(webView)
         
         var constraints: [NSLayoutConstraint] = []
         if #available(iOSApplicationExtension 11.0, *) {
@@ -126,15 +112,41 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
         NSLayoutConstraint.activate(constraints)
     }
     
-    fileprivate func loadContent() {
-        webView.loadHTMLString(bodyContent ?? "", baseURL: nil)
-    }
-    
     @objc func cancelAction() {
         completion?(self, .cancelled)
     }
+}
+
+// MARK: - WKNavigationDelegate methods
+extension BaseGatewayPaymentController: WKNavigationDelegate {
     
-    // MARK: - WKNavigationDelegate methods
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if let url = navigationAction.request.url,
+           let comp = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           comp.scheme == gatewayScheme, comp.host == gatewayHost {
+            decisionHandler(.cancel)
+            
+            let gatewayResultItem = comp.queryItems?.first { (item) -> Bool in
+                return item.name == gatewayResultParam
+            }
+            
+            guard let gatewayString = gatewayResultItem?.value, let gatewayData = gatewayString.data(using: .utf8) else {
+                completion?(self, .error(GatewayPaymentError.missingGatewayResponse))
+                return
+            }
+            
+            do {
+                let gatewayResult = try JSONDecoder().decode(GatewayMap.self, from: gatewayData)
+                completion?(self, .completed(gatewayResult: gatewayResult))
+            } catch {
+                completion?(self, .error(GatewayPaymentError.mappingError))
+            }
+            return
+        }
+        decisionHandler(.allow)
+    }
+    
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         activityIndicator.startAnimating()
     }
@@ -143,28 +155,12 @@ public class Gateway3DSecureViewController: UIViewController, WKNavigationDelega
         activityIndicator.stopAnimating()
     }
     
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, let comp = URLComponents(url: url, resolvingAgainstBaseURL: false), comp.scheme == gatewayScheme, comp.host == gatewayHost {
-            decisionHandler(.cancel)
-            
-            let gatewayResultItem = comp.queryItems?.first { (item) -> Bool in
-                return item.name == gatewayResultParam
-            }
-            
-            guard let gatewayString = gatewayResultItem?.value, let gatewayData = gatewayString.data(using: .utf8) else {
-                completion?(self, .error(Gateway3DSecureError.missingGatewayResponse))
-                return
-            }
-            
-            do {
-                let gatewayResult = try JSONDecoder().decode(GatewayMap.self, from: gatewayData)
-                completion?(self, .completed(gatewayResult: gatewayResult))
-            } catch {
-                completion?(self, .error(Gateway3DSecureError.mappingError))
-            }
-        } else {
-            decisionHandler(.allow)
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        let err = error as NSError
+        if err.code == -1200, err.localizedDescription.contains("SSL") {
+            completion?(self, .error(.sslError))
+        } else if err.code == 102 {
+            return
         }
     }
-    
 }

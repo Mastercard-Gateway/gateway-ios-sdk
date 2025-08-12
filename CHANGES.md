@@ -1,4 +1,22 @@
 # Release Notes
+## [Unreleased]
+## [1.2.0-beta01] - 2025-08-12
+### Added
+- Added sendPaymentOptionInquiry AP
+- Added initiateAuthentication API along with device info
+- Added initiateBrowserPayment API
+- Added a dynamic step rendering capability for better user experience
+- Added a Browser Payment capability with Base Payment controller and its error handing
+### Changed
+- Update SDK min deployment target to 11 to support latest update
+- Update transaction model to keep Payment type info
+- Update SDK Payment Controller with 3DS and its error handing
+- Update Host and resultParam for 3dSecure and browserPayment
+- Integrate create session API and handle its response as per sample server
+- Integrate Payment Option Inquiry along with option selection capability and updating payment currency support
+- Integrate Initiate Browser Payment API and manage to get Browser payment URL from html String
+- Integrate Update session API
+- Integrate Initiate Authentication API and load HTML div
 
 ## [Unreleased]
 ## [1.1.9] - 2025-03-24

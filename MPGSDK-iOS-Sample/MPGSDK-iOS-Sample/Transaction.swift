@@ -51,6 +51,8 @@ struct Transaction {
         return applePayPayment != nil
     }
     
+    var browserPaymentType:String?
+    var paymentType: PaymentType = .cardPayment
     var orderId: String = Transaction.randomID()
     var id: String = Transaction.randomID()
     

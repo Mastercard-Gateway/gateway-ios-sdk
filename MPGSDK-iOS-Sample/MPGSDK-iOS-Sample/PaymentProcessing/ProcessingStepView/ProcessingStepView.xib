@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProcessingStepView" customModule="MPGSDK_iOS_Sample" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="6QH-sr-xEU" id="6dn-Pg-VDY"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="TPv-l8-lou"/>
+                <outlet property="statusImage" destination="gJN-lu-3yy" id="r0Z-DD-Dym"/>
+                <outlet property="stepName" destination="6iy-lR-igb" id="Mib-BY-seK"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="36"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bkr-If-ECK">
+                    <rect key="frame" x="0.0" y="8" width="393" height="20"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="1. Create Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6iy-lR-igb">
+                            <rect key="frame" x="0.0" y="0.0" width="353" height="20"/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" image="multiply.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gJN-lu-3yy">
+                            <rect key="frame" x="353" y="0.66666666666666607" width="20" height="18.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="gJN-lu-3yy" secondAttribute="height" multiplier="1:1" id="U47-XX-7li"/>
+                            </constraints>
+                        </imageView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6QH-sr-xEU">
+                            <rect key="frame" x="373" y="0.0" width="20" height="20"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="k8b-h5-7LS"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Bkr-If-ECK" secondAttribute="trailing" id="6kG-Z1-C1Y"/>
+                <constraint firstItem="Bkr-If-ECK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="GbC-d8-YOa"/>
+                <constraint firstAttribute="bottom" secondItem="Bkr-If-ECK" secondAttribute="bottom" constant="8" id="eZF-aL-Dt0"/>
+                <constraint firstItem="Bkr-If-ECK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="j0V-6h-NWM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139.69465648854961" y="-240.49295774647888"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

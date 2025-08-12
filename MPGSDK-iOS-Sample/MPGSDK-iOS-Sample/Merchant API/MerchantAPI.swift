@@ -16,6 +16,7 @@
 
 import Foundation
 import MPGSDK
+import UIKit
 
 enum Result<T> {
     case success(T)
@@ -46,16 +47,62 @@ class MerchantAPI {
         issueRequest(path: "session.php", method: "POST", completion: completion)
     }
     
-    func check3DSEnrollment(transaction: Transaction, redirectURL: String, completion: @escaping (Result<GatewayMap>) -> Void) {
-        var payload = GatewayMap(["apiOperation": "CHECK_3DS_ENROLLMENT"])
-        payload[at: "order.amount"] = transaction.amountString
-        payload[at: "order.currency"] = transaction.currency
-        payload[at: "session.id"] = transaction.session?.id
-        payload[at: "3DSecure.authenticationRedirect.responseUrl"] = redirectURL
+    func sendPaymentOptionInquiry(completion: @escaping (Result<GatewayMap>) -> Void) {
+        issueRequest(path: "/payment-options-inquiry.php", method: "POST", completion: completion)
+    }
+    
+    
+    func initiateAuthentication(transaction:Transaction,payload: GatewayMap = GatewayMap(),completion: @escaping (Result<GatewayMap>) -> Void) {
+        var fullPayload = payload
+        fullPayload["apiOperation"] = "INITIATE_AUTHENTICATION"
         
-        let query = [URLQueryItem(name: "3DSecureId", value: transaction.threeDSecureId)]
+        var session = GatewayMap()
+        session["id"] = transaction.session?.id
+        fullPayload["session"] = session
         
-        issueRequest(path: "3DSecure.php", method: "PUT", query: query, body: payload, completion: completion)
+        let devicePayload = buildDevicePayloadForAuthentication()
+        fullPayload["device"] = devicePayload
+        
+        fullPayload["authentication"] = [
+            "purpose": "PAYMENT_TRANSACTION",
+            "channel": "PAYER_BROWSER"
+        ]
+        
+        fullPayload["order"] = [ "currency": transaction.currency,
+                                 "amount": transaction.amountString]
+        
+        let query =  [URLQueryItem(name: "orderId", value: transaction.orderId),
+                      URLQueryItem(name: "transactionId", value: transaction.id)]
+        
+        issueRequest(path: "/start-authentication.php", method: "PUT", query: query, body: fullPayload, completion: completion)
+    }
+    
+    func initiateBrowserPayment(transaction:Transaction, completion: @escaping (Result<GatewayMap>) -> Void) {
+        var payload = GatewayMap()
+        payload["apiOperation"] = "INITIATE_BROWSER_PAYMENT"
+        payload["customer"] = ["phone": 1234567892]
+        
+        let baseURL:String = merchantServerURL.absoluteString
+        let redirectURL: String = "\(baseURL)/browser-payment-callback.php?order=\(transaction.orderId)&transaction=\(transaction.id)"
+        payload["browserPayment"] = [
+            "operation": "PAY",
+            "returnUrl": redirectURL
+        ]
+        
+        payload["order"] = [
+            "currency": transaction.currency,
+            "amount": transaction.amountString
+        ]
+        
+        payload["sourceOfFunds"] =  [
+            "browserPayment": [ "type": transaction.browserPaymentType ?? "" ],
+            "type": "BROWSER_PAYMENT"
+        ]
+        
+        let query = [URLQueryItem(name: "orderId", value: transaction.orderId),
+                     URLQueryItem(name: "transactionId", value: transaction.id)]
+        
+        issueRequest(path: "/start-browser-payment.php", method: "PUT", query: query, body: payload, completion: completion)
     }
     
     func completeSession(transaction: Transaction, completion: @escaping (Result<GatewayMap>) -> Void) {
@@ -116,5 +163,28 @@ class MerchantAPI {
                 completion(Result.error(error))
             }
         }
+    }
+}
+
+// MARK: Utility Functions
+extension MerchantAPI {
+    fileprivate func buildDevicePayloadForAuthentication() -> [String: Any] {
+        let screen = UIScreen.main
+        let locale = Locale.current
+        let timeZone = TimeZone.current
+        
+        return [
+            "browser": "IOS_WKWebView",
+            "browserDetails": [
+                "3DSecureChallengeWindowSize": "FULL_SCREEN",
+                "acceptHeaders": "application/json",
+                "colorDepth": 24,
+                "javaEnabled": false,
+                "language": locale.identifier.components(separatedBy: "@").first ?? "en_US",
+                "screenHeight": Int(screen.bounds.height),
+                "screenWidth": Int(screen.bounds.width),
+                "timeZone": -timeZone.secondsFromGMT() / 60
+            ]
+        ]
     }
 }
