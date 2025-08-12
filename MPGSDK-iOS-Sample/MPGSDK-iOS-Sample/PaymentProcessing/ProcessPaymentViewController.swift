@@ -135,7 +135,7 @@ extension ProcessPaymentViewController {
 // MARK: - 2. Payment Option Inquiry
 extension ProcessPaymentViewController {
     func sendPaymentOptionInquiry() {
-        addStepViews(step: .paymentOptionsEnquiry)
+        addStepViews(step: .paymentOptionsInquiry)
         merchantAPI.sendPaymentOptionInquiry{ [weak self] (result) in
             DispatchQueue.main.async {
                 // stop the activity indictor

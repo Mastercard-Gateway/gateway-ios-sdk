@@ -16,7 +16,7 @@
 
 enum PaymentStep {
     case createSession
-    case paymentOptionsEnquiry
+    case paymentOptionsInquiry
     case selectPaymentOption
     case collectCard
     case updateSession
@@ -30,8 +30,8 @@ enum PaymentStep {
         switch self {
         case .createSession:
             return "Create Session"
-        case .paymentOptionsEnquiry:
-            return "Payment Option Enquiry"
+        case .paymentOptionsInquiry:
+            return "Payment Option Inquiry"
         case .selectPaymentOption:
             return "Select Payment Option"
         case .collectCard:
