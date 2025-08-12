@@ -48,7 +48,7 @@ public enum GatewayPaymentError: Error {
         case .mappingError:
             return "An error occurred while attempting to map the JSON response."
         case .invalidURL:
-            return "The URL provided for the browser-based payment is not valid."
+            return "The URL provided is not valid."
         case .sslError:
             return "An SSL error occurred. A secure connection to the server could not be established."
         case .paymentError(let error):
