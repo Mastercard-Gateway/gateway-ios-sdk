@@ -1,4 +1,10 @@
 # Release Notes
+## [Unreleased]
+## [1.2.0-beta01] - 2025-08-12
+### Added
+- Adding the China on-soil region
+- Providing a way for integrators to use regions that have not yet been added to the SDK.
+### Changed
 
 ## [Unreleased]
 ## [1.1.9] - 2025-03-24
