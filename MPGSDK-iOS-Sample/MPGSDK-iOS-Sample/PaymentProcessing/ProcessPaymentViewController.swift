@@ -417,7 +417,7 @@ extension ProcessPaymentViewController {
                 case .success(let response):
                     if let result = response[at:"result"] as? String, result.lowercased() == "error" {
                         self.stepErrored(message: "Initiate Authenticating Failed: \(self.errorMessage(for: response))")
-                    } else if self.shouldAuthenticatePayer(for: response) {
+                    } else {
                         self.updateLastStep(state: .completed)
                         self.didCompleteAuthentication(with: response)
                     }
@@ -428,7 +428,7 @@ extension ProcessPaymentViewController {
         }
     }
     
-    fileprivate func shouldAuthenticatePayer(for response: GatewayMap) -> Bool {
+    fileprivate func shouldExecuteGatewayPayment(for response: GatewayMap) -> Bool {
         guard let gatewayRecommendation = response[at: "response.gatewayRecommendation"] as? String,
               let authenticationStatus = response[at: "transaction.authenticationStatus"] as? String
         else {
@@ -452,12 +452,16 @@ extension ProcessPaymentViewController {
     }
     
     fileprivate func didCompleteAuthentication(with response: GatewayMap) {
-        guard let html = response[at: "authentication.redirect.html"] as? String
-        else {
-            stepErrored(message: "Initiate Authenticating Failed: No HTML String found")
-            return
+        // Validate if need to execute gateway Payment via a browser HTLM div
+        guard self.shouldExecuteGatewayPayment(for: response) else { return }
+        
+        // Present challenge UI and execute gateway payment
+         if let html = response[at: "authentication.redirect.html"] as? String {
+            executeGatewayPayment(htmlString: html)
         }
-        executeGatewayPayment(htmlString: html)
+        else {
+            stepErrored(message: "Authenticating Failed: Missing required redirect HTML")
+        }
     }
     
     fileprivate func executeGatewayPayment(htmlString: String) {
