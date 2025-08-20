@@ -416,22 +416,45 @@ extension ProcessPaymentViewController {
                 switch result {
                 case .success(let response):
                     if let result = response[at:"result"] as? String, result.lowercased() == "error" {
-                        self.stepErrored(message: "Authenticating Payer Failed: \(self.errorMessage(for: response))")
-                    } else {
+                        self.stepErrored(message: "Initiate Authenticating Failed: \(self.errorMessage(for: response))")
+                    } else if self.shouldAuthenticatePayer(for: response) {
                         self.updateLastStep(state: .completed)
                         self.didCompleteAuthentication(with: response)
                     }
                 case .error(let error):
-                    self.stepErrored(message: "Authenticating Payer Failed with error: \n\(error.localizedDescription)")
+                    self.stepErrored(message: "Initiate Authenticating Failed with error: \n\(error.localizedDescription)")
                 }
             }
+        }
+    }
+    
+    fileprivate func shouldAuthenticatePayer(for response: GatewayMap) -> Bool {
+        guard let gatewayRecommendation = response[at: "response.gatewayRecommendation"] as? String,
+              let authenticationStatus = response[at: "transaction.authenticationStatus"] as? String
+        else {
+            stepErrored(message: "Initiate Authenticating Failed: missing response")
+            return false
+        }
+        
+        switch gatewayRecommendation {
+        case "PROCEED":
+            if authenticationStatus == "AUTHENTICATION_PENDING" || authenticationStatus == "AUTHENTICATION_AVAILABLE" {
+                return true
+            }
+            // No challeneg required, can proceed for final process payment
+            self.updateLastStep(state: .completed)
+            self.prepareForProcessPayment()
+            return false
+        default:
+            stepErrored(message: "Initiate Authenticating Failed: gatewayRecommendation \(gatewayRecommendation)")
+            return false
         }
     }
     
     fileprivate func didCompleteAuthentication(with response: GatewayMap) {
         guard let html = response[at: "authentication.redirect.html"] as? String
         else {
-            stepErrored(message: "Authenticating Payer Failed: No HTML String found")
+            stepErrored(message: "Initiate Authenticating Failed: No HTML String found")
             return
         }
         executeGatewayPayment(htmlString: html)
