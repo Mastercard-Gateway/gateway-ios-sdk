@@ -249,11 +249,6 @@ extension ProcessPaymentViewController {
 extension ProcessPaymentViewController {
     fileprivate func presentBrowserPayment(htmlString: String) {
         addStepViews(step: .authenticateBrowserPayment)
-        guard let paymentURL = getBrowserPaymentURL(from: htmlString)
-        else {
-            stepErrored(message: "Invalid Browser Payment URL")
-            return
-        }
         
         // instatniate the Gateway Browser Payment and present it
         let browserPayView = GatewayBrowserPaymentController(nibName: nil, bundle: nil)
@@ -265,7 +260,7 @@ extension ProcessPaymentViewController {
         browserPayView.navBar.tintColor = brandColor
         
         // Start Browser Payment authentication by providing payment URL
-        browserPayView.authenticatePayer(url: paymentURL, handler: handleBrowserPayment(authView:result:))
+        browserPayView.authenticatePayer(htmlBodyContent: htmlString, handler: handleBrowserPayment(authView:result:))
     }
     
     fileprivate func handleBrowserPayment(authView: BaseGatewayPaymentController, result: GatewayPaymentResult) {
