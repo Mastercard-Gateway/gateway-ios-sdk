@@ -52,6 +52,12 @@ public class BaseGatewayPaymentController: UIViewController {
     /// Default value: `"gatewaysdk"`for all type of payment
     fileprivate var gatewayScheme: String = "gatewaysdk"
     
+    fileprivate var bodyContent: String? = nil {
+        didSet {
+            loadContent()
+        }
+    }
+    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupView()
@@ -63,6 +69,20 @@ public class BaseGatewayPaymentController: UIViewController {
     }
     
     var completion: ((BaseGatewayPaymentController, GatewayPaymentResult) -> Void)?
+    
+    /// Authenticates the payer using an HTML-based flow (e.g., 3DSecure or browser-based payments rendered via HTML).
+    /// - Parameters:
+    ///   - htmlBodyContent: The HTML body provided for rendering the authentication UI.
+    ///   - handler: A closure to handle the result of the authentication process.
+    ///
+    public func authenticatePayer(htmlBodyContent: String, handler: @escaping (BaseGatewayPaymentController, GatewayPaymentResult) -> Void) {
+        self.completion = handler
+        self.bodyContent = htmlBodyContent
+    }
+    
+    fileprivate func loadContent() {
+        webView.loadHTMLString(bodyContent ?? "", baseURL: nil)
+    }
     
     fileprivate func setupView() {
         view.backgroundColor = .white
