@@ -292,23 +292,6 @@ extension ProcessPaymentViewController {
             }
         }
     }
-    
-    fileprivate func getBrowserPaymentURL(from htmlString: String) -> URL? {
-        var paymentURL: URL?
-        let pattern = "<script.*?>([\\s\\S]*?)<\\/script>"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        else { return paymentURL }
-        let range = NSRange(htmlString.startIndex..<htmlString.endIndex, in: htmlString)
-        if let match = regex.firstMatch(in: htmlString, options: [], range: range),
-           let scriptRange = Range(match.range(at: 1), in: htmlString) {
-            let scriptContent = String(htmlString[scriptRange])
-            
-            let scriptComponents = scriptContent.components(separatedBy: "'")
-            let redirectURL = scriptComponents.first(where: { $0.hasPrefix("https") }) ?? ""
-            paymentURL = URL(string: redirectURL)
-        }
-        return paymentURL
-    }
 }
 
 // MARK: - 3B. Collect Card Info
