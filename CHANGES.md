@@ -1,5 +1,15 @@
 # Release Notes
 ## [Unreleased]
+## [1.2.0-beta02] - 2025-08-25
+### Added
+- Integration and handling of Friction-less Card Scenarios within the payment flow.
+- Support for HTML body content param in SDK integration to display payment authentication.
+### Changed
+- Updated access specifiers and marked Gateway controllers as final to prevent unintended code manipulation.
+- Enhanced the base controller to handle HTML body loading and removed child initializer logic (now managed by the base).
+- Streamlined the Friction-less card flow by removing redundant browser URL extraction and ensuring smoother handling directly via the SDK.
+
+## [Unreleased]
 ## [1.2.0-beta01] - 2025-08-12
 ### Added
 - Added sendPaymentOptionInquiry AP
