@@ -249,11 +249,6 @@ extension ProcessPaymentViewController {
 extension ProcessPaymentViewController {
     fileprivate func presentBrowserPayment(htmlString: String) {
         addStepViews(step: .authenticateBrowserPayment)
-        guard let paymentURL = getBrowserPaymentURL(from: htmlString)
-        else {
-            stepErrored(message: "Invalid Browser Payment URL")
-            return
-        }
         
         // instatniate the Gateway Browser Payment and present it
         let browserPayView = GatewayBrowserPaymentController(nibName: nil, bundle: nil)
@@ -265,7 +260,7 @@ extension ProcessPaymentViewController {
         browserPayView.navBar.tintColor = brandColor
         
         // Start Browser Payment authentication by providing payment URL
-        browserPayView.authenticatePayer(url: paymentURL, handler: handleBrowserPayment(authView:result:))
+        browserPayView.authenticatePayer(htmlBodyContent: htmlString, handler: handleBrowserPayment(authView:result:))
     }
     
     fileprivate func handleBrowserPayment(authView: BaseGatewayPaymentController, result: GatewayPaymentResult) {
@@ -296,23 +291,6 @@ extension ProcessPaymentViewController {
                 self.stepErrored(message: "Browser Payment Authentication Failed with error: \n\(error.localizedDescription)")
             }
         }
-    }
-    
-    fileprivate func getBrowserPaymentURL(from htmlString: String) -> URL? {
-        var paymentURL: URL?
-        let pattern = "<script.*?>([\\s\\S]*?)<\\/script>"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        else { return paymentURL }
-        let range = NSRange(htmlString.startIndex..<htmlString.endIndex, in: htmlString)
-        if let match = regex.firstMatch(in: htmlString, options: [], range: range),
-           let scriptRange = Range(match.range(at: 1), in: htmlString) {
-            let scriptContent = String(htmlString[scriptRange])
-            
-            let scriptComponents = scriptContent.components(separatedBy: "'")
-            let redirectURL = scriptComponents.first(where: { $0.hasPrefix("https") }) ?? ""
-            paymentURL = URL(string: redirectURL)
-        }
-        return paymentURL
     }
 }
 
@@ -416,25 +394,52 @@ extension ProcessPaymentViewController {
                 switch result {
                 case .success(let response):
                     if let result = response[at:"result"] as? String, result.lowercased() == "error" {
-                        self.stepErrored(message: "Authenticating Payer Failed: \(self.errorMessage(for: response))")
+                        self.stepErrored(message: "Initiate Authenticating Failed: \(self.errorMessage(for: response))")
                     } else {
                         self.updateLastStep(state: .completed)
                         self.didCompleteAuthentication(with: response)
                     }
                 case .error(let error):
-                    self.stepErrored(message: "Authenticating Payer Failed with error: \n\(error.localizedDescription)")
+                    self.stepErrored(message: "Initiate Authenticating Failed with error: \n\(error.localizedDescription)")
                 }
             }
         }
     }
     
-    fileprivate func didCompleteAuthentication(with response: GatewayMap) {
-        guard let html = response[at: "authentication.redirect.html"] as? String
+    fileprivate func shouldExecuteGatewayPayment(for response: GatewayMap) -> Bool {
+        guard let gatewayRecommendation = response[at: "response.gatewayRecommendation"] as? String,
+              let authenticationStatus = response[at: "transaction.authenticationStatus"] as? String
         else {
-            stepErrored(message: "Authenticating Payer Failed: No HTML String found")
-            return
+            stepErrored(message: "Initiate Authenticating Failed: missing response")
+            return false
         }
-        executeGatewayPayment(htmlString: html)
+        
+        switch gatewayRecommendation {
+        case "PROCEED":
+            if authenticationStatus == "AUTHENTICATION_PENDING" || authenticationStatus == "AUTHENTICATION_AVAILABLE" {
+                return true
+            }
+            // No challeneg required, can proceed for final process payment
+            self.updateLastStep(state: .completed)
+            self.prepareForProcessPayment()
+            return false
+        default:
+            stepErrored(message: "Initiate Authenticating Failed: gatewayRecommendation \(gatewayRecommendation)")
+            return false
+        }
+    }
+    
+    fileprivate func didCompleteAuthentication(with response: GatewayMap) {
+        // Validate if need to execute gateway Payment via a browser HTLM div
+        guard self.shouldExecuteGatewayPayment(for: response) else { return }
+        
+        // Present challenge UI and execute gateway payment
+         if let html = response[at: "authentication.redirect.html"] as? String {
+            executeGatewayPayment(htmlString: html)
+        }
+        else {
+            stepErrored(message: "Authenticating Failed: Missing required redirect HTML")
+        }
     }
     
     fileprivate func executeGatewayPayment(htmlString: String) {

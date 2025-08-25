@@ -20,7 +20,7 @@ import UIKit
 /// Similar in function to `ThreeDSecureViewController`, this controller loads a URL in a WebView and
 /// listens for a custom scheme redirect indicating the result of the user’s interaction with the payment page.
 /// Useful for non-3DS, browser-based payment validations.
-public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
+final public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
     
     /// The gateway host identifier used for browser-based payment authentication flows.
     /// This value helps the system recognize redirects or callbacks that are part of
@@ -34,34 +34,4 @@ public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
     /// - Returns: A `String` value `"orderResult"` used to locate the result data.
     override var gatewayResultParam: String { "orderResult" }
     
-    fileprivate var url: URL? = nil {
-        didSet {
-            loaderBrowserPayment()
-        }
-    }
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    /// Used to authenticate the secure browser payment
-    /// - Parameters:
-    ///   - url: The url provided by the Browser Payment operation
-    ///   - handler: A closure to handle the Browser Payment response
-    public func authenticatePayer(url: URL, handler: @escaping (BaseGatewayPaymentController, GatewayPaymentResult) -> Void) {
-        self.completion = handler
-        self.url = url
-    }
-    
-    fileprivate func loaderBrowserPayment() {
-        guard let paymentURL = url else {
-            completion?(self, .error(.invalidURL))
-            return
-        }
-        let urlRequest = URLRequest(url: paymentURL)
-        webView.load(urlRequest)
-    }
 }

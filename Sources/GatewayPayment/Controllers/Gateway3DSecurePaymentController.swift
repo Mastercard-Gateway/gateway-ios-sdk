@@ -19,7 +19,7 @@ import UIKit
 /// A view controller that handles 3D Secure 1.0 authentication flow using a WKWebView.
 /// Loads the ACS (Access Control Server) page within a WebView and listens for a redirect URL
 /// to detect when the user completes the authentication process.
-public class Gateway3DSecureViewController: BaseGatewayPaymentController {
+final public class Gateway3DSecureViewController: BaseGatewayPaymentController {
     
     /// The gateway host identifier used for 3D Secure authentication flows.
     /// This value is used internally to determine if the redirect or callback
@@ -33,30 +33,4 @@ public class Gateway3DSecureViewController: BaseGatewayPaymentController {
     /// - Returns: A `String` value `"acsResult"` used to locate the result data.
     override var gatewayResultParam: String { "acsResult" }
     
-    fileprivate var bodyContent: String? = nil {
-        didSet {
-            loadContent()
-        }
-    }
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    /// Used to authenticate the payer using 3DSecure 1.0
-    /// - Parameters:
-    ///   - htmlBodyContent: The HTML body provided by the Check3DSecureEnrollment operation
-    ///   - handler: A closure to handle the 3DSecure 'WebAuthResult'
-    public func authenticatePayer(htmlBodyContent: String, handler: @escaping (BaseGatewayPaymentController, GatewayPaymentResult) -> Void) {
-        self.completion = handler
-        self.bodyContent = htmlBodyContent
-    }
-    
-    fileprivate func loadContent() {
-        webView.loadHTMLString(bodyContent ?? "", baseURL: nil)
-    }
 }

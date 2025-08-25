@@ -33,10 +33,10 @@ public class BaseGatewayPaymentController: UIViewController {
     public var navBar: UINavigationBar!
     
     /// The cancel button allowing the user to abandon 3DS Authentication
-    public var cancelButton: UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
     
     /// An activity indicatior that is displayed any time there is activity on the web view
-    public var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator: UIActivityIndicatorView!
     
     /// The expected host value in the redirect URL used to identify the payment type or flow.
     /// This helps determine whether the redirect is related to a specific payment flow
@@ -52,6 +52,12 @@ public class BaseGatewayPaymentController: UIViewController {
     /// Default value: `"gatewaysdk"`for all type of payment
     fileprivate var gatewayScheme: String = "gatewaysdk"
     
+    fileprivate var bodyContent: String? = nil {
+        didSet {
+            loadContent()
+        }
+    }
+    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupView()
@@ -63,6 +69,20 @@ public class BaseGatewayPaymentController: UIViewController {
     }
     
     var completion: ((BaseGatewayPaymentController, GatewayPaymentResult) -> Void)?
+    
+    /// Authenticates the payer using an HTML-based flow (e.g., 3DSecure or browser-based payments rendered via HTML).
+    /// - Parameters:
+    ///   - htmlBodyContent: The HTML body provided for rendering the authentication UI.
+    ///   - handler: A closure to handle the result of the authentication process.
+    ///
+    public func authenticatePayer(htmlBodyContent: String, handler: @escaping (BaseGatewayPaymentController, GatewayPaymentResult) -> Void) {
+        self.completion = handler
+        self.bodyContent = htmlBodyContent
+    }
+    
+    fileprivate func loadContent() {
+        webView.loadHTMLString(bodyContent ?? "", baseURL: nil)
+    }
     
     fileprivate func setupView() {
         view.backgroundColor = .white
@@ -120,7 +140,7 @@ public class BaseGatewayPaymentController: UIViewController {
 // MARK: - WKNavigationDelegate methods
 extension BaseGatewayPaymentController: WKNavigationDelegate {
     
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    final public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         if let url = navigationAction.request.url,
            let comp = URLComponents(url: url, resolvingAgainstBaseURL: false),
