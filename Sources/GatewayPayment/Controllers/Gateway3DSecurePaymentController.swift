@@ -19,7 +19,7 @@ import UIKit
 /// A view controller that handles 3D Secure 1.0 authentication flow using a WKWebView.
 /// Loads the ACS (Access Control Server) page within a WebView and listens for a redirect URL
 /// to detect when the user completes the authentication process.
-public class Gateway3DSecureViewController: BaseGatewayPaymentController {
+final public class Gateway3DSecureViewController: BaseGatewayPaymentController {
     
     /// The gateway host identifier used for 3D Secure authentication flows.
     /// This value is used internally to determine if the redirect or callback

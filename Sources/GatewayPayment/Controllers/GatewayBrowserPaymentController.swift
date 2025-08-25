@@ -20,7 +20,7 @@ import UIKit
 /// Similar in function to `ThreeDSecureViewController`, this controller loads a URL in a WebView and
 /// listens for a custom scheme redirect indicating the result of the user’s interaction with the payment page.
 /// Useful for non-3DS, browser-based payment validations.
-public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
+final public class GatewayBrowserPaymentController: BaseGatewayPaymentController {
     
     /// The gateway host identifier used for browser-based payment authentication flows.
     /// This value helps the system recognize redirects or callbacks that are part of
