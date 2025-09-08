@@ -324,25 +324,27 @@ extension ProcessPaymentViewController {
     
         guard let sessionId = transaction.session?.id, let apiVersion = transaction.session?.apiVersion else { return }
         
-        // construct the Gateway Map with the desired parameters. (nested GatewayMap not dot notation)
-        //Build card expiry map
-        var expiryMap = GatewayMap()
-        expiryMap["month"] = transaction.expiryMM
-        expiryMap["year"] = transaction.expiryYY
-
-        //Build card map
+        // Construct the Gateway Map with the desired parameters. (nested GatewayMap not dot notation)
+        // Build card map
         var cardMap = GatewayMap()
-        cardMap["nameOnCard"] = transaction.nameOnCard
-        cardMap["number"] = transaction.cardNumber
-        cardMap["securityCode"] = transaction.cvv
-        cardMap["expiry"] = expiryMap
-        
         
         // if the transaction has an Apple Pay Token, populate that into the map
         if let tokenData = transaction.applePayPayment?.token.paymentData, let token = String(data: tokenData, encoding: .utf8) {
             var devicePaymentMap = GatewayMap()
             devicePaymentMap["paymentToken"] = token
+            
             cardMap["devicePayment"] = devicePaymentMap
+        } else {
+            cardMap["nameOnCard"] = transaction.nameOnCard
+            cardMap["number"] = transaction.cardNumber
+            cardMap["securityCode"] = transaction.cvv
+            
+            //Build card expiry map
+            var expiryMap = GatewayMap()
+            expiryMap["month"] = transaction.expiryMM
+            expiryMap["year"] = transaction.expiryYY
+            
+            cardMap["expiry"] = expiryMap
         }
         
         // Build provided map
@@ -370,7 +372,9 @@ extension ProcessPaymentViewController {
                     self.stepErrored(message: "Updating Session Failed: \(self.errorMessage(for: response))")
                 } else {
                     self.updateLastStep(state: .completed)
-                    self.initiateAuthentication()
+                    
+                    // Check if Apple Pay Transaction then directly go for Transaction and not call initiate authentication
+                    self.transaction.isApplePay ? self.prepareForProcessPayment() : self.initiateAuthentication()
                 }
             case .error(let error):
                 self.stepErrored(message: "Updating Session Failed with error: \n\(error.localizedDescription)")
