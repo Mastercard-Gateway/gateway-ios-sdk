@@ -1,5 +1,10 @@
 # Release Notes
 ## [Unreleased]
+## [1.2.0-beta03] - 2025-09-12
+### Added
+- Integrate the Apple Pay flow into the sample app to demonstrate Apple Pay functionality.
+
+## [Unreleased]
 ## [1.2.0-beta02] - 2025-08-25
 ### Added
 - Integration and handling of Friction-less Card Scenarios within the payment flow.
