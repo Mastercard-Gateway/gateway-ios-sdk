@@ -1,10 +1,10 @@
 # Gateway iOS SDK
-**This Mobile SDK supports 3-D Secure 1 only.** If you require EMV 3DS support, please obtain the version 2 Mobile SDK by following these instructions: https://na.gateway.mastercard.com/api/documentation/integrationGuidelines/mobileSDK/emv3DSsdk.html
+**This Mobile SDK supports 3-D Secure and Browser Payment.** If you require EMV 3DS support, please obtain the version 2 Mobile SDK by following these instructions: https://na.gateway.mastercard.com/api/documentation/integrationGuidelines/mobileSDK/emv3DSsdk.html
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk.svg?branch=master)](https://travis-ci.org/Mastercard-Gateway/gateway-ios-sdk)
 
-Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
+Our iOS SDK allows you to easily integrate payments into your Swift iOS app. By updating a session directly with the Gateway, you avoid the risk of handling sensitive card details on your server. Also, you can securly load the 3DS and Browser Payment page via SDK. The included [sample app](#sample-app) demonstrates the basics of installing and configuring the SDK to complete a simple payment.
 
 For more information, visit the [**Gateway iOS SDK Wiki**](https://github.com/Mastercard/gateway-ios-sdk/wiki) to find details about the basic transaction lifecycle and 3-D Secure support.
 
@@ -18,7 +18,7 @@ Once you have updated a session with card information from the app, you may then
 
 ## Compatibility
 
-The Gateway SDK requires a minimum of **iOS 8+** and is compatible with **Swift 5** projects. Therefore, the GatewaySDK requires **Xcode 10.2** or newer.
+The Gateway SDK requires a minimum of **iOS 13+** and is compatible with **Swift 5** projects. Therefore, the GatewaySDK requires **Xcode 10.2** or newer.
 
 
 ## Installation
@@ -53,7 +53,7 @@ let gateway = Gateway(region: GatewayRegion.<#YOUR GATEWAY REGION#>, merchantId:
 
 
 ### Basic Implementation
-Using an existing Session Id, you may pass card information directly to the `Gateway` object:
+Using an existing Session Id, you may pass card information directly to the `Gateway` object in case of Card Payment and Apple Pay flow, browser payment flow do not required update session:
 
 ```swift
 var request = GatewayMap()
@@ -68,6 +68,51 @@ gateway.updateSession("<#session id#>", apiVersion: <#Gateway API Version#>, pay
 }
 ```
 
+
+### WebView Integration
+Render the HTML necessary to facilitate the challenge flow for card payments and to securely authenticate browserd payments:
+
+## A. Card Payment 3DSecure Authentication
+```swift
+let threeDSecureView = Gateway3DSecureViewController(nibName: nil, bundle: nil)
+present(threeDSecureView, animated: true)
+threeDSecureView.authenticatePayer(htmlBodyContent: htmlString, handler: handle3DS(authView:result:))
+    
+func handle3DS(authView: BaseGatewayPaymentController, result: GatewayPaymentResult) {
+    // dismiss the 3DSecureViewController
+    authView.dismiss(animated: true) {
+        switch result {
+        case .error(let error):
+            // Handle error event
+        case .completed(gatewayResult: let response):
+            // Handle completion to manage response
+        case .cancelled:
+            // Handle cancel event
+        }
+    }
+}
+```
+
+## B. Browser Payment
+```swift
+let browserPayView = GatewayBrowserPaymentController(nibName: nil, bundle: nil)
+present(browserPayView, animated: true)
+browserPayView.authenticatePayer(htmlBodyContent: htmlString, handler: handleBrowserPayment(authView:result:))
+    
+func handleBrowserPayment(authView: BaseGatewayPaymentController, result: GatewayPaymentResult) {
+    // dismiss the GatewayBrowserPaymentController
+    authView.dismiss(animated: true) {
+        switch result {
+        case .completed(gatewayResult: let response):
+            // Handle completion to manage response
+        case .cancelled:
+            // Handle cancel event
+        case .error(let error):
+            // Handle error event
+        }
+    }
+}
+```
 
 ---
 
