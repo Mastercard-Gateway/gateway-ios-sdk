@@ -1,0 +1,15 @@
+{
+  "originHash" : "9ce0091904224fc324e8333337c4c736a4d38c6b823fc525a70ce3943de4368f",
+  "pins" : [
+    {
+      "identity" : "gateway-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mastercard-Gateway/gateway-ios-sdk.git",
+      "state" : {
+        "branch" : "feature/swift-package-manager",
+        "revision" : "43b9e8905a7dafc6ba55602616e496c25936275a"
+      }
+    }
+  ],
+  "version" : 3
+}

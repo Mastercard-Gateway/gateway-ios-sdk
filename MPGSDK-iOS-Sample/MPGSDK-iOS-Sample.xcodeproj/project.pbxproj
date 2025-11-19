@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,9 +13,8 @@
 		6F5F70411F7C006E0048F591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70401F7C006E0048F591 /* Assets.xcassets */; };
 		6F5F70441F7C006E0048F591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70421F7C006E0048F591 /* LaunchScreen.storyboard */; };
 		6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */; };
+		B4CCC72D2ECDFB04002F57E5 /* MPGSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B4CCC72C2ECDFB04002F57E5 /* MPGSDK */; };
 		B766B5FA2159141A002027AC /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B5F92159141A002027AC /* Transaction.swift */; };
-		B766B5FB2159694E002027AC /* MPGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCE10891F84099B007E9A7C /* MPGSDK.framework */; };
-		B766B5FC2159694E002027AC /* MPGSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCE10891F84099B007E9A7C /* MPGSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7DB55282154277000D31081 /* CollectCardInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */; };
 		B7DB552A2154278800D31081 /* CollectCardInfoViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */; };
 		B7DC3D392152A466009AA192 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DC3D382152A466009AA192 /* ConfigurationViewController.swift */; };
@@ -26,20 +25,6 @@
 		CAE75D9F2E4A11990036EAAC /* PaymentOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE75D982E4A11990036EAAC /* PaymentOption.swift */; };
 		CAE75DA02E4A11990036EAAC /* ProcessingStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAE75D962E4A11990036EAAC /* ProcessingStepView.xib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B766B5FD2159694E002027AC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B766B5FC2159694E002027AC /* MPGSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6F15AD4B1F7E9E550084D3AD /* UIViewController+KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardAvoiding.swift"; sourceTree = "<group>"; };
@@ -69,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B766B5FB2159694E002027AC /* MPGSDK.framework in Frameworks */,
+				B4CCC72D2ECDFB04002F57E5 /* MPGSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +145,6 @@
 				6F5F70321F7C006E0048F591 /* Sources */,
 				6F5F70331F7C006E0048F591 /* Frameworks */,
 				6F5F70341F7C006E0048F591 /* Resources */,
-				B766B5FD2159694E002027AC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -202,6 +186,9 @@
 				Base,
 			);
 			mainGroup = 6F5F702D1F7C006E0048F591;
+			packageReferences = (
+				B4CCC72B2ECDFB04002F57E5 /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */,
+			);
 			productRefGroup = 6F5F70371F7C006E0048F591 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -373,7 +360,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -387,7 +375,10 @@
 				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -404,7 +395,10 @@
 				DEVELOPMENT_TEAM = 659EW42358;
 				INFOPLIST_FILE = "MPGSDK-iOS-Sample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mastercard.MPGSDK-iOS-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -434,6 +428,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B4CCC72B2ECDFB04002F57E5 /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Mastercard-Gateway/gateway-ios-sdk.git";
+			requirement = {
+				branch = "feature/swift-package-manager";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B4CCC72C2ECDFB04002F57E5 /* MPGSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B4CCC72B2ECDFB04002F57E5 /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */;
+			productName = MPGSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6F5F702E1F7C006E0048F591 /* Project object */;
 }
