@@ -1,4 +1,21 @@
 # Release Notes
+## [1.2.0] - 2025-11-17
+### Added
+- Integration and handling of Friction-less Card Scenarios within the payment flow.
+- Support for HTML body content param in SDK integration to display payment authentication.
+- Added sendPaymentOptionInquiry API
+- Added initiateBrowserPayment API
+- Added a dynamic step rendering capability for better user experience
+- Added a Browser Payment capability with Base Payment controller and its error handing
+
+### Changed
+- Updated access specifiers and marked Gateway controllers as final to prevent unintended code manipulation.
+- Enhanced the base controller to handle HTML body loading and removed child initializer logic (now managed by the base).
+- Streamlined the Friction-less card flow by removing redundant browser URL extraction and ensuring smoother handling directly via the SDK.
+- Update SDK Payment Controller with 3DS and its error handing
+- Update Host and resultParam for 3dSecure and browserPayment
+- Refactored/Cleanup sample application code
+
 ## [Unreleased]
 ## [1.2.0-beta03] - 2025-09-12
 ### Added
