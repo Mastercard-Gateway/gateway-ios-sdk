@@ -1,9 +1,0 @@
-language: objective-c
-
-xcode_project: MPGSDK.xcodeproj
-xcode_scheme: MPGSDK-iOS
-osx_image: xcode11.3
-xcode_sdk: iphonesimulator13.2
-
-script:
-- xcodebuild clean build test -workspace MPGSDK.xcworkspace -scheme MPGSDK-iOS -destination "platform=iOS Simulator,name=iPhone 11"

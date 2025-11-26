@@ -14,9 +14,6 @@
       location = "group:MPGSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:GatewaySample.playground">
-   </FileRef>
-   <FileRef
       location = "group:MPGSDK-iOS-Sample/MPGSDK-iOS-Sample.xcodeproj">
    </FileRef>
 </Workspace>
