@@ -13,7 +13,7 @@
 		6F5F70411F7C006E0048F591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70401F7C006E0048F591 /* Assets.xcassets */; };
 		6F5F70441F7C006E0048F591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5F70421F7C006E0048F591 /* LaunchScreen.storyboard */; };
 		6FCE107F1F83C3BD007E9A7C /* MerchantAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE107E1F83C3BD007E9A7C /* MerchantAPI.swift */; };
-		B418C1E62ED8634C00430A0E /* MPGSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B418C1E52ED8634C00430A0E /* MPGSDK */; };
+		B418C2042ED8705600430A0E /* MPGSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B418C2032ED8705600430A0E /* MPGSDK */; };
 		B766B5FA2159141A002027AC /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766B5F92159141A002027AC /* Transaction.swift */; };
 		B7DB55282154277000D31081 /* CollectCardInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55272154277000D31081 /* CollectCardInfoViewModel.swift */; };
 		B7DB552A2154278800D31081 /* CollectCardInfoViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB55292154278800D31081 /* CollectCardInfoViewViewController.swift */; };
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B418C1E62ED8634C00430A0E /* MPGSDK in Frameworks */,
+				B418C2042ED8705600430A0E /* MPGSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +187,7 @@
 			);
 			mainGroup = 6F5F702D1F7C006E0048F591;
 			packageReferences = (
-				B418C1E42ED8634C00430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */,
+				B418C2022ED8705600430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */,
 			);
 			productRefGroup = 6F5F70371F7C006E0048F591 /* Products */;
 			projectDirPath = "";
@@ -430,7 +430,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B418C1E42ED8634C00430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */ = {
+		B418C2022ED8705600430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Mastercard-Gateway/gateway-ios-sdk.git";
 			requirement = {
@@ -441,9 +441,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B418C1E52ED8634C00430A0E /* MPGSDK */ = {
+		B418C2032ED8705600430A0E /* MPGSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B418C1E42ED8634C00430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */;
+			package = B418C2022ED8705600430A0E /* XCRemoteSwiftPackageReference "gateway-ios-sdk" */;
 			productName = MPGSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
