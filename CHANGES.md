@@ -1,4 +1,7 @@
 # Release Notes
+## [1.2.1] - 2025-11-27
+### Added Support for Swift Package Manager
+
 ## [1.2.0] - 2025-11-17
 ### Added
 - Integration and handling of Friction-less Card Scenarios within the payment flow.
