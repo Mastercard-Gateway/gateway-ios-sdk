@@ -1,6 +1,14 @@
 # Release Notes
 ## [1.2.1] - 2025-11-27
-### Added Support for Swift Package Manager
+### Added
+- Swift Package Manager (SPM) Support: 
+   The SDK is now fully compatible with Swift Package Manager.
+    - You can now integrate the SDK directly into Xcode projects via File → Add Packages → https://github.com/Mastercard-Gateway/gateway-ios-sdk.git
+    - Supports versioning via tags, making dependency management simpler and more reliable.
+
+### Improvements
+- Simplified installation for iOS/macOS developers using Xcode.
+- Improved dependency resolution with SPM.
 
 ## [1.2.0] - 2025-11-17
 ### Added
