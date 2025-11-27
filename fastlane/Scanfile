@@ -1,5 +1,0 @@
-scheme("MPGSDK-iOS")
-devices(["iPhone 6"])
-
-clean(true)
-code_coverage(true)

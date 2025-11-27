@@ -23,14 +23,33 @@ The Gateway SDK requires a minimum of **iOS 13+** and is compatible with **Swift
 
 ## Installation
 
-We recommend using [Carthage]( https://github.com/Carthage/Carthage) to integrate the Gateway SDK into your project.
+### Recommended Installation: Gateway SDK v1.2.1
+### Recommended: Swift Package Manager (SPM)
+
+The SDK is **best integrated via Swift Package Manager**. Manual integration or Carthage is available but not recommended.
+
+#### Steps:
+
+1. Open your Xcode project.
+2. Go to `File → Add Package Dependencies...`.
+3. Enter the repository URL: https://github.com/Mastercard-Gateway/gateway-ios-sdk.git
+4. From `Add to Project -> Select Desired Project`.
+5. Add the `MPGSDK` library and Import like described below
+6. Build and run your app
+
+Notes:
+1. Only the Sources and Tests Folder is included. Sample app, docs, and scripts are not part of the package.
+2. If you are upgrading from an older manual SDK version, remove any references to MPGSDK.framework in your project and replace them with the SPM package.
+3. The SDK supports iOS 13+ and Swift 5.
+
+
+Alternatively, [Carthage]( https://github.com/Carthage/Carthage) to integrate the Gateway SDK into your project.
 
 ```
 github "Mastercard-Gateway/gateway-ios-sdk"
 ```
 
 If you do not want to use carthage, you can download the sdk manually and add the MPGSDK as a sub project manually.
-
 
 ## Usage
 
